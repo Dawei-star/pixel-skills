@@ -20,42 +20,46 @@
 - **说** `把这个设计变成代码` → 输出可直接打开的 HTML/CSS/JS
 - **附** 组件模板与样式分析指南
 
-## 安装
+## 安装（30 秒）
 
-没有依赖，不用构建。把目录复制到工具加载 skill 的位置，**重开会话生效**。
+装一次，之后不用管。Claude Code 和 Codex 走插件市场，WorkBuddy 复制目录。**挑一个装就行，别都装**——两边都装，每个 skill 会出现两份。
 
-<details>
-<summary><strong>WorkBuddy</strong></summary>
+### Claude Code
+
+```bash
+claude plugin marketplace add Dawei-star/Skills
+claude plugin install thesis-diagram@dawei-skills
+claude plugin install webpage-cloner@dawei-skills
+```
+
+装完自带更新，仓库推送后自动跟上。
+
+### Codex
+
+```bash
+codex plugin marketplace add Dawei-star/Skills
+codex plugin install thesis-diagram@dawei-skills
+codex plugin install webpage-cloner@dawei-skills
+```
+
+启动时更新。
+
+### WorkBuddy
+
+还没有命令行入口，复制目录：
 
 ```bash
 cp -r thesis-diagram ~/.workbuddy/skills/
 cp -r "photo analyse" ~/.workbuddy/skills/webpage-cloner
 ```
 
-只给当前项目用，复制到 `<项目>/.workbuddy/skills/`。
+改了要重新复制一次，重开会话生效。
 
-</details>
+### 只给当前项目用
 
-<details>
-<summary><strong>Claude Code</strong></summary>
+把命令里的 `~/.workbuddy` 换成 `<项目>/.workbuddy`，`~/.claude` 换成 `<项目>/.claude`。
 
-```bash
-cp -r thesis-diagram ~/.claude/skills/
-cp -r "photo analyse" ~/.claude/skills/webpage-cloner
-```
-
-只给当前项目用，复制到 `<项目>/.claude/skills/`。
-
-</details>
-
-<details>
-<summary><strong>其他工具</strong></summary>
-
-找到它的 skills 目录（一般形如 `~/.<工具名>/skills/`），照上面两句复制。
-
-</details>
-
-第二条命令为什么要改名：`photo analyse` 目录带空格，而它的 `name` 是 `webpage-cloner`。**目录名必须等于 `SKILL.md` 里的 `name`**，只能是 hyphen-case（小写字母、数字、连字符）。不一致时多数工具不报错，只是静默找不到。
+复制那条命令为什么要改名：`photo analyse` 目录名带空格，而它的 `name` 是 `webpage-cloner`。**目录名必须等于 `SKILL.md` 里的 `name`**，只能是小写字母、数字、连字符。不一致时多数工具不报错，只是静默找不到。走插件市场的不用管，`marketplace.json` 已经指好了。
 
 ## 写新 skill
 
