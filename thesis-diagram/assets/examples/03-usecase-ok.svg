@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 360">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+            <rect x="92" y="14" width="300" height="326" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="242" y="30" text-anchor="middle" font-size="10.5">在线订单管理系统</text>
+
+            <circle cx="40" cy="160" r="9" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="169" x2="40" y2="196" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="24" y1="184" x2="58" y2="184" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="196" x2="29" y2="218" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="196" x2="51" y2="218" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="40" y="236" text-anchor="middle">用户</text>
+
+            <line x1="58" y1="184" x2="149" y2="94" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <line x1="58" y1="184" x2="108" y2="190" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <line x1="58" y1="184" x2="150" y2="286" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <ellipse cx="168" cy="75" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="75" text-anchor="middle" dominant-baseline="central">提交订单</text>
+
+            <ellipse cx="168" cy="190" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="190" text-anchor="middle" dominant-baseline="central">查看订单记录</text>
+
+            <ellipse cx="168" cy="305" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="305" text-anchor="middle" dominant-baseline="central">申请退款</text>
+
+            <ellipse cx="318" cy="55" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="55" text-anchor="middle" dominant-baseline="central" font-size="10.5">计算优惠</text>
+
+            <ellipse cx="318" cy="130" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="130" text-anchor="middle" dominant-baseline="central" font-size="10.5">校验库存</text>
+
+            <ellipse cx="318" cy="190" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="190" text-anchor="middle" dominant-baseline="central" font-size="10.5">导出订单</text>
+
+            <ellipse cx="318" cy="305" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="305" text-anchor="middle" dominant-baseline="central" font-size="10.5">上传凭证</text>
+
+            <line x1="224" y1="68" x2="274" y2="61" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="249" y="52" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="209" y1="90" x2="284" y2="118" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="246" y="94" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="228" y1="305" x2="272" y2="305" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="250" y="294" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="272" y1="190" x2="228" y2="190" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="250" y="179" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«extend»</text>
+          </svg>

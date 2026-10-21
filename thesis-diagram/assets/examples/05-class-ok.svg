@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 250">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+            <rect x="20" y="30" width="118" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="20" y1="56" x2="138" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="20" y1="88" x2="138" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="79" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">Order</text>
+            <text x="28" y="70" font-size="9.5">- id: Long</text>
+            <text x="28" y="82" font-size="9.5">- amount: BigDecimal</text>
+            <text x="28" y="103" font-size="9.5">+ pay(): void</text>
+
+            <rect x="190" y="30" width="112" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="190" y1="56" x2="302" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="190" y1="88" x2="302" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="246" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">OrderItem</text>
+            <text x="198" y="70" font-size="9.5">- name: String</text>
+            <text x="198" y="82" font-size="9.5">- qty: Integer</text>
+            <text x="198" y="103" font-size="9.5">+ subtotal(): Dec</text>
+
+            <polygon points="138,72 148,66 158,72 148,78" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1"/>
+            <line x1="158" y1="72" x2="190" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="90" text-anchor="middle" font-size="9.5">1</text>
+            <text x="176" y="62" text-anchor="middle" font-size="9.5">0..*</text>
+
+            <text x="160" y="130" text-anchor="middle" font-size="10" fill="#0F6E56">组合：菱形贴在整体端</text>
+
+            <rect x="20" y="152" width="290" height="76" rx="8" fill="#E8F6F0" stroke="#9FE1CB" stroke-width="1"/>
+            <text x="34" y="172" font-size="10" fill="#0F6E56">一个订单包含多条明细，明细离开订单无意义 →</text>
+            <text x="34" y="190" font-size="10" fill="#0F6E56">用实心菱形（组合），端点标 1 与 0..*。</text>
+            <text x="34" y="208" font-size="10" fill="#0F6E56">若明细可独立存在（如商品目录），改空心菱形。</text>
+          </svg>

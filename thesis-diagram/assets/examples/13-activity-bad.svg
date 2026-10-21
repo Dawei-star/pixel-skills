@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 330">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+            <rect x="106" y="12" width="88" height="28" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="26" text-anchor="middle" dominant-baseline="central">开始</text>
+            <rect x="99" y="6" width="102" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M206,6 L216,16 M216,6 L206,16" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <line x1="150" y1="40" x2="150" y2="54" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="88" y="54" width="124" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="69" text-anchor="middle" dominant-baseline="central">接收订单请求</text>
+
+            <line x1="150" y1="84" x2="150" y2="104" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <polygon points="150,104 212,136 150,168 88,136" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="136" text-anchor="middle" dominant-baseline="central">C &lt; 500 ?</text>
+
+            <polyline points="88,136 54,136 54,198" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <polyline points="212,136 246,136 246,198" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <path d="M63,127 L71,135 M71,127 L63,135" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M227,127 L235,135 M235,127 L227,135" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+
+            <rect x="12" y="198" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="54" y="213" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+            <rect x="204" y="198" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="246" y="213" text-anchor="middle" dominant-baseline="central">自动通过</text>
+
+            <polyline points="54,228 54,256 150,256" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <polyline points="246,228 246,256 150,256" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="150" y1="256" x2="150" y2="286" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="106" y="286" width="88" height="28" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="300" text-anchor="middle" dominant-baseline="central">结束</text>
+            <rect x="99" y="280" width="102" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M206,280 L216,290 M216,280 L206,290" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>

@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文图表规范手册 · 流程图与 UML</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAF9F5;--surface:#FFFFFF;
+  --ink:#1F1E1B;--ink2:#5F5E5A;--ink3:#8F8D85;
+  --line:#E8E5DC;--line2:#D6D2C7;
+  --teal:#0F6E56;--teal-bg:#E8F6F0;--teal-br:#9FE1CB;
+  --red:#A32D2D;--red-bg:#FDEEEE;--red-br:#F5C4C4;
+  --blue:#185FA5;--blue-bg:#EAF2FB;
+  --amber:#8A5406;--amber-bg:#FBF0DC;
+  --gray-bg:#F2F0E9;
+  --r:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+svg text{font-family:inherit;font-size:11px;fill:#1F1E1B}
+.sv{display:block;width:100%;height:auto}
+
+.wrap{display:grid;grid-template-columns:250px minmax(0,1fr);gap:56px;max-width:1340px;margin:0 auto;padding:0 44px}
+
+.toc{position:sticky;top:0;height:100vh;overflow-y:auto;padding:48px 0 40px;font-size:13.5px;line-height:1.6}
+.toc::-webkit-scrollbar{width:0}
+.toc-title{font-size:11px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase;margin-bottom:14px}
+.toc a{display:block;color:var(--ink2);text-decoration:none;padding:5px 0 5px 12px;border-left:2px solid transparent;transition:color .15s,border-color .15s}
+.toc a:hover{color:var(--ink)}
+.toc a.sub{padding-left:26px;font-size:12.5px;color:var(--ink3)}
+.toc a.on{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+.toc a.sub.on{color:var(--teal);font-weight:500}
+
+main{padding:60px 0 140px;min-width:0}
+
+.hero{padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:52px}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.hero h1{font-size:34px;line-height:1.28;font-weight:600;letter-spacing:-.02em;margin-bottom:16px}
+.hero p{color:var(--ink2);font-size:15.5px;max-width:74ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.meta span{font-size:12px;padding:3px 11px;border:1px solid var(--line2);border-radius:999px;color:var(--ink2);background:var(--surface)}
+
+section{margin-bottom:72px;scroll-margin-top:24px}
+article{scroll-margin-top:24px}
+h2{font-size:24px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-size:12px;color:var(--ink3);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+h3{font-size:17.5px;font-weight:600;margin:44px 0 4px}
+h3 .std{font-size:12px;font-weight:400;color:var(--ink3);margin-left:10px}
+h4{font-size:14px;font-weight:600;margin:24px 0 8px;color:var(--ink)}
+.lead{color:var(--ink2);font-size:14.5px;margin:10px 0 22px;max-width:76ch}
+p{max-width:76ch}
+p+p{margin-top:10px}
+
+.rules{list-style:none;display:grid;gap:9px;margin:18px 0 22px}
+.rules li{position:relative;padding-left:20px;font-size:14.5px;max-width:76ch}
+.rules li::before{content:"";position:absolute;left:5px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)}
+.rules li b{font-weight:600}
+.rules li.warn::before{background:var(--red)}
+
+code{font-family:"SF Mono",Consolas,"Courier New",monospace;font-size:.88em;background:var(--gray-bg);padding:1px 5px;border-radius:4px;color:#3F3D36}
+pre{background:#F5F3EC;border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.7;font-family:"SF Mono",Consolas,"Courier New",monospace;color:#3A3830;margin:16px 0}
+pre code{background:none;padding:0;font-size:inherit}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0 12px}
+.cmp-3{grid-template-columns:repeat(3,1fr)}
+.cmp-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.cmp-card.ok{border-color:var(--teal-br)}
+.cmp-card.no{border-color:var(--red-br)}
+.cmp-head{padding:9px 16px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;letter-spacing:.02em}
+.cmp-card.ok .cmp-head{background:var(--teal-bg);color:var(--teal)}
+.cmp-card.no .cmp-head{background:var(--red-bg);color:var(--red)}
+.cmp-head .dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.cmp-body{padding:20px 18px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.cmp-foot{padding:0 18px 18px;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.cmp-foot b{color:var(--ink);font-weight:600}
+
+.sym-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:22px 0 10px}
+.sym{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 8px 12px;text-align:center}
+.sym svg{width:100%;height:58px;display:block;margin-bottom:4px}
+.sym-name{font-size:13px;font-weight:600;line-height:1.4}
+.sym-use{font-size:11.5px;color:var(--ink3);line-height:1.45;margin-top:2px}
+
+.pitfall{background:var(--red-bg);border-left:3px solid var(--red);border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;margin:18px 0;max-width:76ch}
+.pitfall b{color:var(--red);font-weight:600}
+.tip{background:var(--amber-bg);border-left:3px solid #C99A3F;border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;margin:18px 0;max-width:76ch}
+.tip b{color:var(--amber);font-weight:600}
+.note{background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;margin:18px 0;max-width:76ch}
+.note b{color:var(--blue);font-weight:600}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin:18px 0;background:var(--surface);border-radius:10px;overflow:hidden}
+th{text-align:left;font-weight:600;font-size:12.5px;color:var(--ink2);padding:11px 14px;border-bottom:1.5px solid var(--line2);background:var(--gray-bg);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+
+.caption-demo{border:1px dashed var(--line2);border-radius:12px;padding:22px;margin:20px 0;background:var(--surface);text-align:center}
+.cd-fig{height:58px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:12.5px;letter-spacing:.1em;background:var(--gray-bg);border-radius:6px;margin-bottom:8px}
+.cd-cap{font-size:13px;color:var(--ink);font-family:"Songti SC","SimSun",serif}
+.cd-note{font-size:11.5px;color:var(--ink3);margin-top:6px}
+
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:20px 0}
+.check label{display:flex;gap:12px;padding:12px 18px;font-size:14.5px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start;transition:background .12s}
+.check label:last-child{border-bottom:0}
+.check label:hover{background:#FBFAF6}
+.check input{margin-top:5px;accent-color:var(--teal);width:15px;height:15px;flex-shrink:0}
+.check input:checked+span{color:var(--ink3);text-decoration:line-through;text-decoration-color:var(--line2)}
+
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:20px 0}
+.kv div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
+.kv dt{font-size:12px;color:var(--ink3);letter-spacing:.04em;margin-bottom:3px}
+.kv dd{font-size:14px;font-weight:600;line-height:1.5}
+
+.foot{border-top:1px solid var(--line);padding-top:24px;margin-top:20px;font-size:12.5px;color:var(--ink3);max-width:76ch}
+
+@media(max-width:1040px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 24px}
+  .toc{position:static;height:auto;padding:28px 0 20px;border-bottom:1px solid var(--line)}
+  .toc a{display:inline-block;padding:4px 10px;border-left:0;border-bottom:2px solid transparent;margin:0 6px 4px 0;font-size:13px}
+  .toc a.sub{display:none}
+  .toc a.on{border-left:0;border-bottom-color:var(--teal)}
+  main{padding:36px 0 80px}
+  .hero h1{font-size:27px}
+  .cmp,.cmp-3{grid-template-columns:1fr}
+}
+@media print{
+  .toc{display:none}
+  .wrap{display:block;padding:0}
+  body{background:#fff;font-size:11pt}
+  section{page-break-inside:avoid}
+  .cmp-card{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#A32D2D"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+</svg>
+
+<div class="wrap">
+
+<nav class="toc" id="toc">
+  <div class="toc-title">目录</div>
+  <a href="#s0">0　通用规范</a>
+  <a href="#s1">1　流程图</a>
+  <a href="#s1s" class="sub">1.1 符号定义</a>
+  <a href="#s1r" class="sub">1.2 绘制规则</a>
+  <a href="#s1c" class="sub">1.3 对照样例</a>
+  <a href="#s2">2　UML 总览</a>
+  <a href="#s2a" class="sub">2.1 用例图</a>
+  <a href="#s2b" class="sub">2.2 类图</a>
+  <a href="#s2c" class="sub">2.3 时序图</a>
+  <a href="#s2d" class="sub">2.4 活动图</a>
+  <a href="#s2e" class="sub">2.5 状态图</a>
+  <a href="#s2f" class="sub">2.6 部署图</a>
+  <a href="#s2g" class="sub">2.7 组件图与包图</a>
+  <a href="#s3">3　E-R 图</a>
+  <a href="#s4">4　数据流图</a>
+  <a href="#s5">5　架构图</a>
+  <a href="#s6">6　工具与导出</a>
+  <a href="#s7">7　交付前自查</a>
+  <a href="#s8">附　高频扣分点速查</a>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">学位论文 · 图表绘制规范</div>
+  <h1>论文图表规范手册</h1>
+  <p>覆盖流程图、UML 六类图、E-R 图、数据流图与架构图的符号定义、绘制规则和正确／错误对照。所有样例统一使用订单与审核场景，可直接套用到各自的课题。</p>
+  <div class="meta">
+    <span>GB 1526-89</span>
+    <span>ISO 5807:1985</span>
+    <span>UML 2.5.1</span>
+    <span>GB/T 7713.1</span>
+    <span>通用版</span>
+  </div>
+</header>
+
+<section id="s0">
+  <h2><span class="num">00</span>通用规范</h2>
+  <p class="lead">在讨论具体图形之前，有六条规则对<b>所有</b>图都成立。它们与图形语法无关，却几乎决定了评审对图表专业度的第一判断。</p>
+
+  <h3>图号、题注与正文引用</h3>
+  <ul class="rules">
+    <li><b>按章编号</b>：<code>图 3-1</code>、<code>图 4-2</code>，章内连续，全文不重号。跨章不要用"图 12"这种连续编号。</li>
+    <li><b>题注在图下方</b>，居中，与图之间留 6pt，格式为「图 4-2　系统部署图」。<b>表题注在上、图题注在下</b>，这条最容易搞反。</li>
+    <li><b>图内不写标题</b>。标题已经在题注里了，图里再放一次属于重复。</li>
+    <li><b>先引后出</b>：正文必须先出现"如图 4-2 所示"，图才能跟在后面，不能反过来让读者自己找。</li>
+    <li><b>一图一主题</b>。一张图讲两件事，就该拆成两张。</li>
+    <li><b>来源标注</b>：作者自绘写"资料来源：作者绘制"；引用他人须注明出处。</li>
+  </ul>
+
+  <div class="caption-demo">
+    <div class="cd-fig">图 形 区 域</div>
+    <div class="cd-cap">图 4-2　系统部署图</div>
+    <div class="cd-note">题注居中、位于图下方、与图间距 6pt</div>
+  </div>
+
+  <h3>字号、灰度与清晰度</h3>
+  <ul class="rules">
+    <li><b>图内文字不小于正文的 70%</b>。正文小四（12pt）时，图内文字不小于 8.5pt，通常取 9–10.5pt。</li>
+    <li><b>黑白可辨</b>：论文默认黑白打印，不要用颜色承载语义（"红色表示失败"在灰度下消失）。靠线型、形状、文字标注区分。</li>
+    <li><b>导出矢量</b>。SVG / EMF / PDF 优先，PNG 次之，且不低于 300 dpi。<b>禁止直接截图</b>——截图在打印时会糊成一团。</li>
+    <li><b>框内文字要能读完</b>。字号压到 6pt 才能塞下的内容，说明该拆图，而不是该缩字。</li>
+  </ul>
+
+  <div class="tip"><b>一条自检办法：</b>把整页缩到 50% 看一遍。如果此时线条糊成灰块、文字看不清，那它印在纸上就是这个效果。</div>
+
+  <div class="note"><b>怎么套用到自己的课题：</b>把样例里的"用户""订单""审核"换成你系统里的实体，图形结构不用动。判断一张图合不合规，看的是形状、连线、标注，与业务内容无关——这也是本手册能通用到任何课题的原因。</div>
+</section>
+
+<section id="s1">
+  <h2><span class="num">01</span>流程图</h2>
+  <p class="lead">依据 <b>GB 1526-89 / ISO 5807:1985</b>。这是国标里唯一给出完整流程图符号体系的标准，也最容易被评审对照检查。</p>
+
+  <h3 id="s1s">1.1 符号定义<span class="std">GB 1526-89 §4</span></h3>
+  <p>国标规定的符号是<b>固定形状</b>，不是风格选项。十个常用符号如下：</p>
+
+  <div class="sym-grid">
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><rect x="18" y="18" width="84" height="24" rx="12" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">开始</text></svg>
+      <div class="sym-name">终止符</div>
+      <div class="sym-use">开始 / 结束 / 暂停</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><rect x="18" y="18" width="84" height="24" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">处理</text></svg>
+      <div class="sym-name">处理</div>
+      <div class="sym-use">赋值 / 计算 / 动作</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><polygon points="60,10 104,30 60,50 16,30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">条件</text></svg>
+      <div class="sym-name">判断</div>
+      <div class="sym-use">条件分支</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><polygon points="32,18 104,18 88,42 16,42" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">读入</text></svg>
+      <div class="sym-name">输入 / 输出</div>
+      <div class="sym-use">数据的读入与输出</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><path d="M20,16 H100 V40 C86,50 74,30 60,40 C46,50 34,30 20,40 Z" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="28" text-anchor="middle" dominant-baseline="central">报表</text></svg>
+      <div class="sym-name">文档</div>
+      <div class="sym-use">打印 / 纸质文档</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><rect x="18" y="18" width="84" height="24" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><line x1="30" y1="18" x2="30" y2="42" stroke="#2C2C2A" stroke-width="1.3"/><line x1="90" y1="18" x2="90" y2="42" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">子流程</text></svg>
+      <div class="sym-name">预定义处理</div>
+      <div class="sym-use">调用已定义子流程</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><circle cx="60" cy="30" r="14" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">A</text></svg>
+      <div class="sym-name">连接符</div>
+      <div class="sym-use">跨页 / 断线接续</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><polygon points="26,18 94,18 82,42 38,42" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="60" y="30" text-anchor="middle" dominant-baseline="central">人工</text></svg>
+      <div class="sym-name">人工操作</div>
+      <div class="sym-use">须由人执行的动作</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><ellipse cx="60" cy="19" rx="30" ry="7" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><path d="M30,19 V41 A30,7 0 0 0 90,41 V19" fill="none" stroke="#2C2C2A" stroke-width="1.3"/></svg>
+      <div class="sym-name">存储数据</div>
+      <div class="sym-use">数据库 / 文件</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 120 60"><path d="M36,14 H102 V46 H36 L20,30 Z" fill="#fff" stroke="#2C2C2A" stroke-width="1.3" stroke-dasharray="4 2.5"/><text x="66" y="30" text-anchor="middle" dominant-baseline="central">注释</text></svg>
+      <div class="sym-name">注释</div>
+      <div class="sym-use">补充说明，不参与流程</div>
+    </div>
+  </div>
+
+  <div class="note"><b>关于起止符的争议只有一个答案：</b>国标里它叫"终止符"，形状是<b>两端半圆的扁长形</b>（跑道形），矩形四角不能只倒一点圆角。很多绘图工具默认给你一个"圆角矩形"，那不是终止符，只是处理框的装饰版。</div>
+
+  <h3 id="s1r">1.2 绘制规则<span class="std">GB 1526-89 §5</span></h3>
+  <ul class="rules">
+    <li><b>处理框单入口、单出口</b>。一个框拉出两根线，读者就得猜哪根是主流程。</li>
+    <li><b>判断框单入口、多出口，每个出口必须标条件</b>（是／否，或具体取值区间）。不标条件的菱形等于没画。</li>
+    <li><b>流向自上而下、自左而右</b>。回退、循环等逆向流才允许由下往上，且必须画成明确回跳线。</li>
+    <li><b>尽量避免交叉线</b>。必须交叉时，在交叉处画一个跨线小弧，否则会被读成连接点。</li>
+    <li><b>多线汇合处画实心小圆点</b>，或者让各分支独立连到目标框，不要"搭"在别人的线上。</li>
+    <li><b>流程图只写业务动作</b>。数据库字段值、代码变量、接口路径属于实现细节，放注释或正文，不进框。</li>
+  </ul>
+
+  <h3 id="s1c">1.3 正确与错误对照</h3>
+  <p>同样是"金额阈值判断"这段逻辑，下面两版放在一起看，差别一目了然。</p>
+
+  <div class="cmp">
+    <div class="cmp-card ok">
+      <div class="cmp-head"><span class="dot"></span>符合 GB 1526</div>
+      <div class="cmp-body">
+        <svg class="sv" viewBox="0 0 300 340">
+          <rect x="108" y="14" width="84" height="28" rx="14" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="28" text-anchor="middle" dominant-baseline="central">开始</text>
+          <line x1="150" y1="42" x2="150" y2="66" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="90" y="66" width="120" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="81" text-anchor="middle" dominant-baseline="central">取订单金额 C</text>
+          <line x1="150" y1="96" x2="150" y2="120" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <polygon points="150,120 214,154 150,188 86,154" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="154" text-anchor="middle" dominant-baseline="central">C ≥ 500 ?</text>
+          <polyline points="86,154 54,154 54,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <text x="70" y="146" text-anchor="middle" font-size="10.5">否</text>
+          <polyline points="214,154 246,154 246,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <text x="230" y="146" text-anchor="middle" font-size="10.5">是</text>
+          <rect x="12" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="54" y="229" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+          <rect x="204" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="246" y="229" text-anchor="middle" dominant-baseline="central">自动通过</text>
+          <polyline points="54,244 54,268 150,268" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+          <polyline points="246,244 246,268 150,268" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+          <circle cx="150" cy="268" r="2.6" fill="#2C2C2A"/>
+          <line x1="150" y1="268" x2="150" y2="300" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="108" y="300" width="84" height="28" rx="14" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="314" text-anchor="middle" dominant-baseline="central">结束</text>
+        </svg>
+      </div>
+      <div class="cmp-foot">
+        <b>四个关键点：</b>终止符为跑道形；菱形两出口都标了条件；两分支在汇合点打了实心圆点；框内只有业务动作。
+      </div>
+    </div>
+
+    <div class="cmp-card no">
+      <div class="cmp-head"><span class="dot"></span>常见错误</div>
+      <div class="cmp-body">
+        <svg class="sv" viewBox="0 0 300 340">
+          <rect x="102" y="8" width="96" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <path d="M206,10 L216,20 M216,10 L206,20" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          <rect x="108" y="14" width="84" height="28" rx="6" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="28" text-anchor="middle" dominant-baseline="central">开始</text>
+          <line x1="150" y1="42" x2="150" y2="66" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="90" y="66" width="120" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="81" text-anchor="middle" dominant-baseline="central">取订单金额 C</text>
+          <line x1="150" y1="96" x2="150" y2="120" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <polygon points="150,120 214,154 150,188 86,154" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="154" text-anchor="middle" dominant-baseline="central">C ≥ 500 ?</text>
+          <polyline points="86,154 54,154 54,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <polyline points="214,154 246,154 246,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <path d="M63,141 L71,149 M71,141 L63,149" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M227,141 L235,149 M235,141 L227,149" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="12" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="54" y="229" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+          <rect x="204" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="246" y="229" text-anchor="middle" dominant-baseline="central">自动通过</text>
+          <polyline points="54,244 54,268 150,268" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+          <line x1="246" y1="244" x2="108" y2="296" stroke="#2C2C2A" stroke-width="1.1"/>
+          <line x1="150" y1="268" x2="150" y2="300" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="102" y="294" width="96" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <path d="M206,296 L216,306 M216,296 L206,306" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          <rect x="108" y="300" width="84" height="28" rx="6" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="314" text-anchor="middle" dominant-baseline="central">结束</text>
+        </svg>
+      </div>
+      <div class="cmp-foot">
+        <b>四处问题：</b>① 起止用圆角矩形，两套规范都不认；② 菱形出口没标条件；③ "自动通过"的线斜穿左侧连线，形成交叉且无跨线弧；④ 汇合点无标记，读起来像临时搭接。
+      </div>
+    </div>
+  </div>
+
+  <div class="pitfall"><b>最常被扣分的一条：</b>把数据库字段值写进流程图。<code>status 设为 3</code> 这种写法说明画图时在想实现，而不是在想流程。改成"记录状态置为待审核"，字段值留到正文的数据字典里说。</div>
+</section>
+
+<section id="s2">
+  <h2><span class="num">02</span>UML 图形</h2>
+  <p class="lead">依据 <b>UML 2.5.1</b>。UML 与国标流程图是<b>两套独立的语法</b>，起止符号、动作框形状都不同。同一篇论文里只能选一套，混用是评审最容易识别出的问题。</p>
+
+  <div class="note"><b>先把路线定下来：</b>同一篇论文里，流程类图只能认一套语法。走 UML，就全篇实心圆起、带环圆止；走国标流程图，就全篇跑道形终止符。两套各自都合规，混在一起才是错——评审未必会因为"没按国标"扣分，但一定会因为"前后不一致"怀疑你没想清楚。</div>
+
+  <h3>论文里该画哪几张</h3>
+  <table>
+    <thead><tr><th>图种</th><th>必要性</th><th>放在哪一章</th><th>典型内容</th></tr></thead>
+    <tbody>
+      <tr><td>用例图</td><td>必画</td><td>需求分析</td><td>每个角色一张，或合并成一张总图</td></tr>
+      <tr><td>类图</td><td>建议（可按模块拆）</td><td>系统设计</td><td>核心业务实体与接口抽象</td></tr>
+      <tr><td>时序图</td><td>必画 1–2 张核心流程</td><td>系统设计或实现</td><td>登录、下单、审批等主链路</td></tr>
+      <tr><td>活动图</td><td>必画 1–2 张</td><td>系统设计</td><td>带分支、并发或异常处理的业务</td></tr>
+      <tr><td>状态图</td><td>有状态机就画</td><td>系统设计</td><td>订单、工单等有流转过程的对象</td></tr>
+      <tr><td>部署图</td><td>必画</td><td>系统设计</td><td>客户端 / 应用服务器 / 数据存储</td></tr>
+      <tr><td>组件图、包图</td><td>可选</td><td>概要设计</td><td>不画不影响完整性</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><b>数量控制：</b>论文的图不是越多越好。8–12 张核心图，每张都能说清一件事，比堆 25 张截图强。同一个流程不要既画活动图又画时序图又贴界面截图——选一个最能说明问题的。</div>
+
+  <article id="s2a">
+    <h3>2.1 用例图<span class="std">Use Case Diagram</span></h3>
+    <p class="lead">回答"系统给谁用、能做什么"。它<b>不表达顺序</b>，这是最容易画错的地方。</p>
+
+    <h4>元素与语法</h4>
+    <ul class="rules">
+      <li><b>参与者</b>：小人图形，名称写在下方。放在系统边界<b>外侧</b>。</li>
+      <li><b>系统边界</b>：矩形框，系统名写在框内顶部。所有用例必须在框内。</li>
+      <li><b>用例</b>：椭圆，名称写<b>动宾结构</b>——"提交订单""申请退款"，不是"订单功能""步骤一"。</li>
+      <li><b>关联</b>：参与者与用例之间画<b>实线 + 箭头</b>，箭头指向用例，表示"由谁发起"。UML 规范里这个箭头是可选的（导航性），但教材与论文普遍都画，画了更直观——关键是全篇一致，别一张画一张不画。</li>
+      <li><b>包含「include」</b>：虚线箭头，<b>指向被包含的用例</b>。箭尾是主动方。</li>
+      <li><b>扩展「extend」</b>：虚线箭头，<b>指向被扩展的用例</b>（即基础用例）。方向最容易反。</li>
+      <li><b>分层排布</b>：主用例排一列，被 include / extend 的用例整体<b>右移一列并上下错开</b>，连线自然呈扇形。全堆在一列会让 include 关系看不出来。</li>
+      <li><b>泛化</b>：实线 + 空心三角，指向父参与者／父用例。</li>
+    </ul>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 400 360">
+            <rect x="92" y="14" width="300" height="326" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="242" y="30" text-anchor="middle" font-size="10.5">在线订单管理系统</text>
+
+            <circle cx="40" cy="160" r="9" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="169" x2="40" y2="196" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="24" y1="184" x2="58" y2="184" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="196" x2="29" y2="218" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="40" y1="196" x2="51" y2="218" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="40" y="236" text-anchor="middle">用户</text>
+
+            <line x1="58" y1="184" x2="149" y2="94" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <line x1="58" y1="184" x2="108" y2="190" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <line x1="58" y1="184" x2="150" y2="286" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <ellipse cx="168" cy="75" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="75" text-anchor="middle" dominant-baseline="central">提交订单</text>
+
+            <ellipse cx="168" cy="190" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="190" text-anchor="middle" dominant-baseline="central">查看订单记录</text>
+
+            <ellipse cx="168" cy="305" rx="60" ry="20" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="168" y="305" text-anchor="middle" dominant-baseline="central">申请退款</text>
+
+            <ellipse cx="318" cy="55" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="55" text-anchor="middle" dominant-baseline="central" font-size="10.5">计算优惠</text>
+
+            <ellipse cx="318" cy="130" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="130" text-anchor="middle" dominant-baseline="central" font-size="10.5">校验库存</text>
+
+            <ellipse cx="318" cy="190" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="190" text-anchor="middle" dominant-baseline="central" font-size="10.5">导出订单</text>
+
+            <ellipse cx="318" cy="305" rx="46" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="318" y="305" text-anchor="middle" dominant-baseline="central" font-size="10.5">上传凭证</text>
+
+            <line x1="224" y1="68" x2="274" y2="61" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="249" y="52" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="209" y1="90" x2="284" y2="118" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="246" y="94" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="228" y1="305" x2="272" y2="305" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="250" y="294" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«include»</text>
+
+            <line x1="272" y1="190" x2="228" y2="190" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="250" y="179" text-anchor="middle" font-size="8.5" fill="#5F5E5A">«extend»</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>参与者在外、用例在内；用例名是动宾短语；关联线箭头指向用例；include 箭头指向被包含用例，extend 箭头指向基础用例；被包含用例整体右移一层，层级一眼可见。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 320 300">
+            <rect x="80" y="24" width="212" height="252" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+
+            <circle cx="116" cy="60" r="7.5" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="116" y1="68" x2="116" y2="88" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="103" y1="76" x2="129" y2="76" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="116" y1="88" x2="107" y2="104" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="116" y1="88" x2="125" y2="104" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="116" y="118" text-anchor="middle" font-size="10">用户</text>
+            <rect x="92" y="44" width="48" height="82" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+
+            <ellipse cx="230" cy="70" rx="56" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="230" y="70" text-anchor="middle" dominant-baseline="central">步骤一 下单</text>
+
+            <ellipse cx="230" cy="146" rx="56" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="230" y="146" text-anchor="middle" dominant-baseline="central">步骤二 计价</text>
+
+            <ellipse cx="230" cy="222" rx="56" ry="18" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="230" y="222" text-anchor="middle" dominant-baseline="central">步骤三 支付</text>
+
+            <line x1="230" y1="90" x2="230" y2="128" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <line x1="230" y1="166" x2="230" y2="204" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+
+            <rect x="196" y="82" width="76" height="128" rx="6" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M278,84 L288,94 M288,84 L278,94" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>两处问题：</b>① 用例被连成流程，暗示"先下单再计价再支付"——用例图不表达顺序，顺序归活动图或时序图；② 参与者画进了系统边界内，边界就失去了"系统职责范围"的含义。</div>
+      </div>
+    </div>
+
+    <div class="pitfall"><b>include 和 extend 的方向：</b>记住一句话——<b>箭头永远指向"被依赖的那一个"</b>。提交订单 <code>..&gt;</code> 计算优惠（include，下单必然要算优惠）；导出订单 <code>..&gt;</code> 查看订单（extend，导出是可选的扩展）。搞反了会把"必要步骤"说成"可选功能"。</div>
+  </article>
+
+  <article id="s2b">
+    <h3>2.2 类图<span class="std">Class Diagram</span></h3>
+    <p class="lead">类图的价值全在<b>关系符号</b>上。框画得再漂亮，菱形画反了这张图就是错的。</p>
+
+    <h4>六种关系的线型</h4>
+    <table>
+      <thead><tr><th>关系</th><th>符号</th><th>含义</th><th>常见例子</th></tr></thead>
+      <tbody>
+        <tr><td>关联</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><line x1="24" y1="15" x2="120" y2="15" stroke="#2C2C2A" stroke-width="1.2"/><text x="128" y="16" dominant-baseline="central">B</text></svg></td><td>结构上的连接</td><td>用户 —— 订单</td></tr>
+        <tr><td>聚合</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><polygon points="24,15 34,9 44,15 34,21" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/><line x1="44" y1="15" x2="120" y2="15" stroke="#2C2C2A" stroke-width="1.2"/><text x="128" y="16" dominant-baseline="central">B</text></svg></td><td>整体-部分，可分离</td><td>班级 ◇— 学生</td></tr>
+        <tr><td>组合</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><polygon points="24,15 34,9 44,15 34,21" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1.1"/><line x1="44" y1="15" x2="120" y2="15" stroke="#2C2C2A" stroke-width="1.2"/><text x="128" y="16" dominant-baseline="central">B</text></svg></td><td>整体-部分，同生共死</td><td>订单 ◆— 订单项</td></tr>
+        <tr><td>泛化</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><line x1="24" y1="15" x2="118" y2="15" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#tri)"/><text x="126" y="16" dominant-baseline="central">B</text></svg></td><td>继承（is-a）</td><td>管理员 —▷ 用户</td></tr>
+        <tr><td>实现</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><line x1="24" y1="15" x2="118" y2="15" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#tri)"/><text x="126" y="16" dominant-baseline="central">B</text></svg></td><td>实现接口</td><td>订单服务 —▷ 支付接口</td></tr>
+        <tr><td>依赖</td><td><svg width="150" height="30" viewBox="0 0 150 30" style="display:block"><text x="8" y="16" dominant-baseline="central">A</text><line x1="24" y1="15" x2="118" y2="15" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#aro)"/><text x="126" y="16" dominant-baseline="central">B</text></svg></td><td>临时使用</td><td>控制器 ---&gt; 服务</td></tr>
+      </tbody>
+    </table>
+
+    <h4>类框写法</h4>
+    <ul class="rules">
+      <li>三层矩形：<b>类名 / 属性 / 方法</b>，中间用横线分隔，类名居中且首字母大写。</li>
+      <li>可见性符号写在成员前：<code>+</code> public、<code>-</code> private、<code>#</code> protected、<code>~</code> package。</li>
+      <li>格式为 <code>可见性 名称: 类型</code>，如 <code>- confidence: BigDecimal</code>。</li>
+      <li>接口标注 <code>«interface»</code>，抽象类类名用斜体。</li>
+      <li><b>菱形永远画在"整体"那一端</b>。订单包含订单项 → 菱形贴着订单，不贴订单项。</li>
+    </ul>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 320 250">
+            <rect x="20" y="30" width="118" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="20" y1="56" x2="138" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="20" y1="88" x2="138" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="79" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">Order</text>
+            <text x="28" y="70" font-size="9.5">- id: Long</text>
+            <text x="28" y="82" font-size="9.5">- amount: BigDecimal</text>
+            <text x="28" y="103" font-size="9.5">+ pay(): void</text>
+
+            <rect x="190" y="30" width="112" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="190" y1="56" x2="302" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="190" y1="88" x2="302" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="246" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">OrderItem</text>
+            <text x="198" y="70" font-size="9.5">- name: String</text>
+            <text x="198" y="82" font-size="9.5">- qty: Integer</text>
+            <text x="198" y="103" font-size="9.5">+ subtotal(): Dec</text>
+
+            <polygon points="138,72 148,66 158,72 148,78" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1"/>
+            <line x1="158" y1="72" x2="190" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="90" text-anchor="middle" font-size="9.5">1</text>
+            <text x="176" y="62" text-anchor="middle" font-size="9.5">0..*</text>
+
+            <text x="160" y="130" text-anchor="middle" font-size="10" fill="#0F6E56">组合：菱形贴在整体端</text>
+
+            <rect x="20" y="152" width="290" height="76" rx="8" fill="#E8F6F0" stroke="#9FE1CB" stroke-width="1"/>
+            <text x="34" y="172" font-size="10" fill="#0F6E56">一个订单包含多条明细，明细离开订单无意义 →</text>
+            <text x="34" y="190" font-size="10" fill="#0F6E56">用实心菱形（组合），端点标 1 与 0..*。</text>
+            <text x="34" y="208" font-size="10" fill="#0F6E56">若明细可独立存在（如商品目录），改空心菱形。</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>三层结构清晰；可见性符号齐全；多重性标在线两端；组合菱形贴着 Order（整体端）。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 320 250">
+            <rect x="20" y="30" width="118" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="20" y1="56" x2="138" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="20" y1="88" x2="138" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="79" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">Order</text>
+            <text x="28" y="70" font-size="9.5">id</text>
+            <text x="28" y="82" font-size="9.5">amount</text>
+            <text x="28" y="103" font-size="9.5">pay()</text>
+
+            <rect x="190" y="30" width="112" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="190" y1="56" x2="302" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="190" y1="88" x2="302" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="246" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">OrderItem</text>
+            <text x="198" y="70" font-size="9.5">name</text>
+            <text x="198" y="82" font-size="9.5">qty</text>
+            <text x="198" y="103" font-size="9.5">subtotal()</text>
+
+            <line x1="138" y1="72" x2="158" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+            <polygon points="158,72 168,66 178,72 168,78" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1"/>
+            <line x1="178" y1="72" x2="190" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+
+            <rect x="128" y="56" width="62" height="34" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M160,42 L170,52 M170,42 L160,52" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="14" y="24" width="130" height="96" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M148,18 L158,28 M158,18 L148,28" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="20" y="152" width="290" height="76" rx="8" fill="#FDEEEE" stroke="#F5C4C4" stroke-width="1"/>
+            <text x="34" y="172" font-size="10" fill="#A32D2D">① 菱形贴反了，读成"明细包含订单"。</text>
+            <text x="34" y="190" font-size="10" fill="#A32D2D">② 属性没有类型、没有可见性。</text>
+            <text x="34" y="208" font-size="10" fill="#A32D2D">③ 多重性缺失，1 对 1 还是 1 对多看</text>
+            <text x="34" y="222" font-size="10" fill="#A32D2D">　 不出来。</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>三处问题：</b>菱形方向反、成员缺类型与可见性、多重性缺失。</div>
+      </div>
+    </div>
+
+    <div class="pitfall"><b>聚合 vs 组合的判断方法：</b>问一句"整体没了，部分还活着吗"。订单删了，订单项跟着删 → 组合（实心）。班级解散了，学生还在 → 聚合（空心）。这个判断比记符号可靠。</div>
+  </article>
+
+  <article id="s2c">
+    <h3>2.3 时序图<span class="std">Sequence Diagram</span></h3>
+    <p class="lead">按时间顺序讲一次调用是怎么发生的。四个符号定生死：实心箭头＝同步、开放箭头＝异步、虚线返回、激活条。</p>
+
+    <h4>元素与语法</h4>
+    <ul class="rules">
+      <li><b>参与者框</b>在顶部，从左到右按<b>调用发生的先后</b>排列，不要为了美观乱序。</li>
+      <li><b>生命线</b>：参与者下方的虚线，表示该对象存在的时段。</li>
+      <li><b>激活条</b>：生命线上的窄矩形，表示对象正在执行。没有激活条就分不清谁在处理。</li>
+      <li><b>同步消息</b>：实线 + <b>实心箭头</b>，表示调用并等待返回。</li>
+      <li><b>异步消息</b>：实线 + <b>开放箭头</b>（V 形），表示发出去不等结果。</li>
+      <li><b>返回消息</b>：<b>虚线</b> + 开放箭头。用实线画返回是最常见的错。</li>
+      <li><b>组合片段</b>：<code>alt</code>（分支）、<code>opt</code>（可选）、<code>loop</code>（循环）、<code>par</code>（并发），左上角五边形标签，每个分支写 <code>[条件]</code>。</li>
+    </ul>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 360 300">
+            <rect x="14" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="52" y="27" text-anchor="middle" dominant-baseline="central">用户</text>
+            <rect x="132" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="170" y="27" text-anchor="middle" dominant-baseline="central">订单接口</text>
+            <rect x="250" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="288" y="27" text-anchor="middle" dominant-baseline="central">支付服务</text>
+
+            <line x1="52" y1="40" x2="52" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="170" y1="40" x2="170" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="288" y1="40" x2="288" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+
+            <rect x="164" y="66" width="12" height="132" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <rect x="282" y="104" width="12" height="54" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+
+            <line x1="52" y1="74" x2="164" y2="74" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="107" y="66" text-anchor="middle" font-size="9.5">提交订单</text>
+
+            <line x1="176" y1="112" x2="282" y2="112" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="228" y="104" text-anchor="middle" font-size="9.5">调用支付</text>
+
+            <line x1="282" y1="150" x2="176" y2="150" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="228" y="142" text-anchor="middle" font-size="9.5">支付结果</text>
+
+            <line x1="164" y1="190" x2="52" y2="190" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="107" y="182" text-anchor="middle" font-size="9.5">返回订单号</text>
+
+            <rect x="96" y="269" width="168" height="18" fill="#FFFFFF"/>
+            <text x="180" y="278" text-anchor="middle" font-size="9.5" fill="#0F6E56">实线实心＝调用，虚线开放＝返回</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>同步调用用实心箭头；返回用虚线与开放箭头；订单接口与支付服务都有激活条，能看出各自在处理哪一段。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 360 300">
+            <rect x="14" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="52" y="27" text-anchor="middle" dominant-baseline="central">用户</text>
+            <rect x="132" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="170" y="27" text-anchor="middle" dominant-baseline="central">订单接口</text>
+            <rect x="250" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="288" y="27" text-anchor="middle" dominant-baseline="central">支付服务</text>
+
+            <line x1="52" y1="40" x2="52" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="170" y1="40" x2="170" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="288" y1="40" x2="288" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+
+            <line x1="52" y1="82" x2="170" y2="82" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="110" y="74" text-anchor="middle" font-size="9">submit(OrderDTO)</text>
+
+            <line x1="170" y1="130" x2="288" y2="130" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="228" y="122" text-anchor="middle" font-size="9.5">调用支付</text>
+
+            <line x1="288" y1="178" x2="170" y2="178" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="230" y="170" text-anchor="middle" font-size="9.5">返回结果</text>
+
+            <line x1="170" y1="226" x2="52" y2="226" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="112" y="218" text-anchor="middle" font-size="9.5">返回订单号</text>
+
+            <rect x="156" y="166" width="140" height="24" rx="4" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M300,166 L310,176 M310,166 L300,176" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="160" y="58" width="130" height="34" rx="4" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M294,58 L304,68 M304,58 L294,68" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <text x="180" y="266" text-anchor="middle" font-size="9.5" fill="#A32D2D">返回用实线实心箭头</text>
+            <text x="180" y="282" text-anchor="middle" font-size="9.5" fill="#A32D2D">消息名写成 Java 方法签名</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>三处问题：</b>① 返回消息用了实线实心箭头，与调用无法区分；② 全文没有激活条，看不出谁在处理；③ 消息名写成 <code>submit(OrderDTO)</code>，这是代码不是业务动作。</div>
+      </div>
+    </div>
+
+    <div class="pitfall"><b>论文里的时序图要"业务化"：</b>消息名写"提交订单""调用支付""返回订单号"，不写方法签名。评审关心的是系统怎么协作，不是 DAO 叫什么。</div>
+  </article>
+
+  <article id="s2d">
+    <h3>2.4 活动图<span class="std">Activity Diagram</span></h3>
+    <p class="lead">活动图和国标流程图<b>长得很像，符号却完全不同</b>。混用等于两套规范都没遵守，而且是最容易被一眼看出的那类问题。</p>
+
+    <h4>先分清三种"流程类"图</h4>
+    <table>
+      <thead><tr><th>图种</th><th>回答什么问题</th><th>起止符号</th><th>节点的含义</th></tr></thead>
+      <tbody>
+        <tr><td>流程图<br><span style="color:#8F8D85;font-size:12px">GB 1526</span></td><td>处理步骤与数据怎么流</td><td>跑道形终止符</td><td>处理动作</td></tr>
+        <tr><td>活动图<br><span style="color:#8F8D85;font-size:12px">UML</span></td><td>控制流怎么走、哪里并发</td><td>实心圆 / 带环实心圆</td><td>动作（Action）</td></tr>
+        <tr><td>状态图<br><span style="color:#8F8D85;font-size:12px">UML</span></td><td>一个对象经历过哪些状态</td><td>实心圆 / 带环实心圆</td><td>状态（State）</td></tr>
+      </tbody>
+    </table>
+
+    <h4>起止节点：三套画法对照</h4>
+    <div class="cmp cmp-3">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>GB 1526 流程图</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 140 100">
+            <rect x="20" y="38" width="100" height="24" rx="12" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <text x="70" y="50" text-anchor="middle" dominant-baseline="central">开始</text>
+          </svg>
+        </div>
+        <div class="cmp-foot">两端半圆的<b>跑道形</b>，框内写"开始"/"结束"。</div>
+      </div>
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>UML 活动图</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 140 100">
+            <circle cx="70" cy="32" r="8" fill="#2C2C2A"/>
+            <circle cx="70" cy="68" r="12" fill="none" stroke="#2C2C2A" stroke-width="1.4"/>
+            <circle cx="70" cy="68" r="7.5" fill="#2C2C2A"/>
+          </svg>
+        </div>
+        <div class="cmp-foot">实心圆起、带环实心圆止，<b>且不写任何文字</b>。</div>
+      </div>
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>两套都不认</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 140 100">
+            <rect x="20" y="38" width="100" height="24" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <text x="70" y="50" text-anchor="middle" dominant-baseline="central">开始</text>
+            <rect x="13" y="31" width="114" height="38" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M117,22 L127,32 M127,22 L117,32" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cmp-foot">圆角矩形 + 文字。既不是终止符，也不是初始节点。</div>
+      </div>
+    </div>
+
+    <div class="note"><b>为什么这个错特别扎眼：</b>圆角矩形在 UML 里是<b>动作框</b>的规范形状。用它写"开始"，等于告诉读者"这是一个动作，名字叫开始"。语义完全错了。</div>
+
+    <h4>完整活动图</h4>
+    <p>包含初始节点、动作、决策、终止节点四个要素，外加条件标注与汇合点：</p>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 300 330">
+            <circle cx="150" cy="20" r="8" fill="#2C2C2A"/>
+            <line x1="150" y1="28" x2="150" y2="48" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="88" y="48" width="124" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="63" text-anchor="middle" dominant-baseline="central">接收订单请求</text>
+
+            <line x1="150" y1="78" x2="150" y2="100" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <polygon points="150,100 212,132 150,164 88,132" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="132" text-anchor="middle" dominant-baseline="central">C &lt; 500 ?</text>
+
+            <polyline points="88,132 54,132 54,194" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="68" y="123" text-anchor="middle" font-size="10">是</text>
+            <polyline points="212,132 246,132 246,194" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="230" y="123" text-anchor="middle" font-size="10">否</text>
+
+            <rect x="12" y="194" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="54" y="209" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+            <rect x="204" y="194" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="246" y="209" text-anchor="middle" dominant-baseline="central">自动通过</text>
+
+            <polyline points="54,224 54,252 150,252" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <polyline points="246,224 246,252 150,252" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <circle cx="150" cy="252" r="2.8" fill="#2C2C2A"/>
+            <line x1="150" y1="252" x2="150" y2="284" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <circle cx="150" cy="296" r="12" fill="none" stroke="#2C2C2A" stroke-width="1.4"/>
+            <circle cx="150" cy="296" r="8" fill="#2C2C2A"/>
+
+            <text x="66" y="316" text-anchor="middle" font-size="9.5" fill="#0F6E56">实心圆起</text>
+            <text x="234" y="316" text-anchor="middle" font-size="9.5" fill="#0F6E56">带环圆止</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>初始节点无文字；动作框是圆角矩形；菱形出口标条件；分支汇合处画实心圆点；终止节点带外环。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 300 330">
+            <rect x="106" y="12" width="88" height="28" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="26" text-anchor="middle" dominant-baseline="central">开始</text>
+            <rect x="99" y="6" width="102" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M206,6 L216,16 M216,6 L206,16" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <line x1="150" y1="40" x2="150" y2="54" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="88" y="54" width="124" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="69" text-anchor="middle" dominant-baseline="central">接收订单请求</text>
+
+            <line x1="150" y1="84" x2="150" y2="104" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <polygon points="150,104 212,136 150,168 88,136" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="136" text-anchor="middle" dominant-baseline="central">C &lt; 500 ?</text>
+
+            <polyline points="88,136 54,136 54,198" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <polyline points="212,136 246,136 246,198" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <path d="M63,127 L71,135 M71,127 L63,135" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M227,127 L235,135 M235,127 L227,135" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
+
+            <rect x="12" y="198" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="54" y="213" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+            <rect x="204" y="198" width="84" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="246" y="213" text-anchor="middle" dominant-baseline="central">自动通过</text>
+
+            <polyline points="54,228 54,256 150,256" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <polyline points="246,228 246,256 150,256" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="150" y1="256" x2="150" y2="286" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="106" y="286" width="88" height="28" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="150" y="300" text-anchor="middle" dominant-baseline="central">结束</text>
+            <rect x="99" y="280" width="102" height="40" rx="7" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M206,280 L216,290 M216,280 L206,290" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>三处问题：</b>① 起止用圆角矩形写文字；② 菱形出口没有条件是／否；③ 汇合点没画实心圆点，两根线像直接撞在上面。</div>
+      </div>
+    </div>
+
+    <div class="pitfall"><b>分叉与汇合不能用菱形：</b>并发分支用<b>粗黑横线</b>（fork/join bar），不是判断菱形。菱形只表示"二选一或几选一"，粗线表示"同时都走"。这两个混了，并发语义就丢了。</div>
+  </article>
+
+  <article id="s2e">
+    <h3>2.5 状态图<span class="std">State Machine Diagram</span></h3>
+    <p class="lead">只描述<b>一个对象</b>在不同状态之间怎么迁移。它和活动图最核心的区别：活动图的节点是"做什么"，状态图的节点是"处于什么状态"。</p>
+
+    <h4>元素与语法</h4>
+    <ul class="rules">
+      <li><b>状态框</b>：圆角矩形，名称用<b>形容词或动名词</b>——"草稿""待审核""已发布"，不用"提交申请"这种动作。</li>
+      <li><b>转移</b>：实线箭头，标注格式 <code>事件[守卫条件]/动作</code>，如 <code>提交[材料齐全]/受理</code>。</li>
+      <li><b>初始与终止</b>：与活动图相同，实心圆与带环实心圆，无文字。</li>
+      <li><b>每个状态必须可达</b>，不能有孤立的状态；除终态外，每个状态应有出边。</li>
+      <li><b>状态数量控制在 5–9 个</b>。超过就要拆成复合状态，否则图会变成蜘蛛网。</li>
+    </ul>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 380 290">
+            <circle cx="60" cy="24" r="7" fill="#2C2C2A"/>
+            <line x1="60" y1="31" x2="60" y2="48" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="10" y="48" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="60" y="65" text-anchor="middle" dominant-baseline="central">草稿</text>
+
+            <rect x="170" y="48" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="220" y="65" text-anchor="middle" dominant-baseline="central">待审核</text>
+
+            <rect x="170" y="170" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="220" y="187" text-anchor="middle" dominant-baseline="central">已发布</text>
+
+            <rect x="10" y="170" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="60" y="187" text-anchor="middle" dominant-baseline="central">已驳回</text>
+
+            <line x1="110" y1="59" x2="170" y2="59" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="138" y="51" text-anchor="middle" font-size="9.5">提交</text>
+
+            <line x1="60" y1="82" x2="60" y2="170" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="67" y="126" font-size="9.5">校验失败</text>
+
+            <line x1="220" y1="82" x2="220" y2="170" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="226" y="126" font-size="9.5">审核通过</text>
+
+            <polyline points="220,204 220,240 150,240" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <polyline points="60,204 60,240 150,240" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+            <circle cx="150" cy="240" r="2.8" fill="#2C2C2A"/>
+            <line x1="150" y1="240" x2="150" y2="250" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <circle cx="150" cy="262" r="12" fill="none" stroke="#2C2C2A" stroke-width="1.4"/>
+            <circle cx="150" cy="262" r="8" fill="#2C2C2A"/>
+
+            <polyline points="270,187 300,187 300,65 270,65" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <text x="310" y="126" font-size="9.5">撤回修改</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>状态名是"草稿／待审核／已发布"这类状态词；每条转移都标了事件或条件；撤回修改画成明确的回边。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 380 290">
+            <circle cx="60" cy="24" r="7" fill="#2C2C2A"/>
+            <line x1="60" y1="31" x2="60" y2="48" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="10" y="48" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="60" y="65" text-anchor="middle" dominant-baseline="central">提交申请</text>
+
+            <rect x="170" y="48" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="220" y="65" text-anchor="middle" dominant-baseline="central">调用接口</text>
+
+            <rect x="170" y="170" width="100" height="34" rx="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="220" y="187" text-anchor="middle" dominant-baseline="central">写入数据库</text>
+
+            <line x1="110" y1="65" x2="170" y2="65" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+            <line x1="220" y1="82" x2="220" y2="170" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+
+            <rect x="4" y="42" width="112" height="46" rx="6" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M118,36 L128,46 M128,36 L118,46" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="196" y="160" width="112" height="50" rx="6" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+
+            <text x="180" y="238" text-anchor="middle" font-size="9.5" fill="#A32D2D">状态名写成了动作，读起来像活动图</text>
+            <text x="180" y="254" text-anchor="middle" font-size="9.5" fill="#A32D2D">转移上没有任何事件标注</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>两处问题：</b>① 状态名用了动词短语（"提交申请""写入数据库"），这是动作不是状态；② 所有转移都不标事件，读者不知道什么条件下会迁移。</div>
+      </div>
+    </div>
+
+    <div class="tip"><b>判断方法：</b>如果框里的文字能接在"当前处于——"后面（当前处于待审核、当前处于已发布），那是状态；如果接的是"系统要——"（要提交、要调用），那是动作，该放活动图。</div>
+  </article>
+
+  <article id="s2f">
+    <h3>2.6 部署图<span class="std">Deployment Diagram</span></h3>
+    <p class="lead">说明软件<b>跑在哪些物理或虚拟节点上</b>、节点之间怎么通信。节点必须画成立体盒，这是 UML 给它的专属形状。</p>
+
+    <h4>元素与语法</h4>
+    <ul class="rules">
+      <li><b>节点（Node）</b>：立体盒（正面矩形 + 顶面平行四边形 + 侧面平行四边形），标注 <code>«device»</code> 或 <code>«executionEnvironment»</code>。</li>
+      <li><b>构件（Artifact）</b>：节点内的矩形，标 <code>«artifact»</code>，写实际部署物名称（<code>app.jar</code>、<code>nginx.conf</code>）。</li>
+      <li><b>通信路径</b>：节点之间画实线，标注<b>协议</b>——<code>HTTPS</code>、<code>JDBC</code>、<code>Bolt</code>。</li>
+      <li><b>数据库</b>：圆柱体，或节点内标注 <code>«database»</code>。</li>
+      <li>外部依赖（对象存储、第三方 API）放在节点之外，用云形或独立盒子表示。</li>
+    </ul>
+
+    <div class="cmp">
+      <div class="cmp-card ok">
+        <div class="cmp-head"><span class="dot"></span>规范画法</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 180 190">
+            <path d="M22,54 L42,34 L156,34 L136,54 Z" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <path d="M136,54 L156,34 L156,140 L136,160 Z" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <rect x="22" y="54" width="114" height="106" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <text x="79" y="72" text-anchor="middle" font-size="9.5">«device» 云服务器</text>
+            <rect x="36" y="88" width="86" height="44" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="79" y="103" text-anchor="middle" font-size="9">«artifact»</text>
+            <text x="79" y="118" text-anchor="middle" font-size="9">app.jar : 8080</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>要点：</b>立体盒体现"物理节点"的含义；内部构件标明具体部署物与端口。</div>
+      </div>
+
+      <div class="cmp-card no">
+        <div class="cmp-head"><span class="dot"></span>常见错误</div>
+        <div class="cmp-body">
+          <svg class="sv" viewBox="0 0 180 190">
+            <rect x="22" y="42" width="120" height="118" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+            <text x="82" y="62" text-anchor="middle" font-size="9.5">云服务器</text>
+            <rect x="36" y="78" width="92" height="44" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="82" y="93" text-anchor="middle" font-size="9">«artifact»</text>
+            <text x="82" y="108" text-anchor="middle" font-size="9">app.jar</text>
+            <rect x="14" y="34" width="136" height="134" rx="6" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M100,160 L110,170 M110,160 L100,170" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+            <text x="90" y="184" text-anchor="middle" font-size="9" fill="#A32D2D">平面矩形丢失节点语义</text>
+          </svg>
+        </div>
+        <div class="cmp-foot"><b>问题：</b>用平面矩形画节点，和普通类框、组件框没有区别，读者无法判断这是"运行环境"还是"逻辑模块"。</div>
+      </div>
+    </div>
+
+    <div class="pitfall"><b>别把部署图画成分层架构图：</b>部署图的组织维度是<b>机器／运行环境</b>（客户端、应用服务器、数据库服务器），不是<b>逻辑分层</b>（表现层、业务层、数据层）。想讲分层就单独画架构图。</div>
+  </article>
+
+  <article id="s2g">
+    <h3>2.7 组件图与包图<span class="std">Component &amp; Package</span></h3>
+    <p class="lead">可选图种。论文里用得少，但一旦用了，符号就不能错。</p>
+
+    <div class="sym-grid">
+      <div class="sym">
+        <svg viewBox="0 0 140 70">
+          <rect x="32" y="22" width="76" height="38" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <rect x="24" y="16" width="16" height="9" fill="#fff" stroke="#2C2C2A" stroke-width="1"/>
+          <rect x="24" y="25" width="16" height="9" fill="#fff" stroke="#2C2C2A" stroke-width="1"/>
+          <text x="70" y="36" text-anchor="middle" font-size="8.5">«component»</text>
+          <text x="70" y="50" text-anchor="middle" font-size="9">订单服务</text>
+        </svg>
+        <div class="sym-name">构件</div>
+        <div class="sym-use">可替换的软件单元</div>
+      </div>
+      <div class="sym">
+        <svg viewBox="0 0 140 70">
+          <line x1="26" y1="38" x2="88" y2="38" stroke="#2C2C2A" stroke-width="1.2"/>
+          <circle cx="98" cy="38" r="10" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="22" y="41" text-anchor="end" font-size="9">A</text>
+        </svg>
+        <div class="sym-name">提供接口</div>
+        <div class="sym-use">棒棒糖形，圆在提供方</div>
+      </div>
+      <div class="sym">
+        <svg viewBox="0 0 140 70">
+          <line x1="26" y1="38" x2="88" y2="38" stroke="#2C2C2A" stroke-width="1.2"/>
+          <path d="M88,28 A10,10 0 0 0 88,48" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="22" y="41" text-anchor="end" font-size="9">B</text>
+        </svg>
+        <div class="sym-name">需求接口</div>
+        <div class="sym-use">插座形，半圆在需求方</div>
+      </div>
+      <div class="sym">
+        <svg viewBox="0 0 140 70">
+          <path d="M26,20 H60 V29 H110 V54 H26 Z" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="68" y="45" text-anchor="middle" font-size="9">service</text>
+        </svg>
+        <div class="sym-name">包</div>
+        <div class="sym-use">文件夹形，用于分组</div>
+      </div>
+    </div>
+
+    <div class="tip"><b>通用建议：</b>组件图和包图可以作为架构图的补充，但不是必画项。与其画一张符号有误的组件图，不如把精力放在用例图、时序图、活动图这三张上——它们才是评审真正会细看的。</div>
+  </article>
+</section>
+
+<section id="s3">
+  <h2><span class="num">03</span>E-R 图</h2>
+  <p class="lead">数据库设计章节的核心图。先选定记法，再画——<b>陈氏记法和 IE 鸦脚记法不能混用</b>，这是 E-R 图最常见的问题。</p>
+
+  <h3>两种记法</h3>
+  <table>
+    <thead><tr><th>记法</th><th>实体</th><th>联系</th><th>属性</th><th>适用场景</th></tr></thead>
+    <tbody>
+      <tr><td>陈氏（Chen）</td><td>矩形</td><td>菱形</td><td>椭圆</td><td>概念模型、教学、答辩讲解</td></tr>
+      <tr><td>IE 鸦脚（Crow's Foot）</td><td>表框（含字段）</td><td>连线 + 端点符号</td><td>表内字段行</td><td>物理模型、工程文档</td></tr>
+    </tbody>
+  </table>
+
+  <p>IE 鸦脚能同时表达字段、主外键和基数，信息密度高，更适合工程文档。<b>一旦选定就全图统一鸦脚</b>，不要再出现菱形。</p>
+
+  <h3>鸦脚端点符号</h3>
+  <div class="sym-grid">
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="28" y1="35" x2="86" y2="35" stroke="#2C2C2A" stroke-width="1.2"/><line x1="86" y1="24" x2="86" y2="46" stroke="#2C2C2A" stroke-width="1.6"/><line x1="92" y1="24" x2="92" y2="46" stroke="#2C2C2A" stroke-width="1.6"/><text x="102" y="38" font-size="10">1</text></svg>
+      <div class="sym-name">双竖线</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="28" y1="35" x2="86" y2="35" stroke="#2C2C2A" stroke-width="1.2"/><line x1="86" y1="24" x2="86" y2="46" stroke="#2C2C2A" stroke-width="1.6"/><circle cx="96" cy="35" r="5" fill="none" stroke="#2C2C2A" stroke-width="1.3"/><text x="108" y="38" font-size="10">0..1</text></svg>
+      <div class="sym-name">竖线 + 圆</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="28" y1="35" x2="92" y2="35" stroke="#2C2C2A" stroke-width="1.2"/><path d="M92,35 L80,27 M92,35 L78,35 M92,35 L80,43" fill="none" stroke="#2C2C2A" stroke-width="1.2"/><text x="100" y="38" font-size="10">0..*</text></svg>
+      <div class="sym-name">三叉（鸦脚）</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="28" y1="35" x2="92" y2="35" stroke="#2C2C2A" stroke-width="1.2"/><line x1="80" y1="24" x2="80" y2="46" stroke="#2C2C2A" stroke-width="1.4"/><path d="M92,35 L80,27 M92,35 L78,35 M92,35 L80,43" fill="none" stroke="#2C2C2A" stroke-width="1.2"/><text x="100" y="38" font-size="10">1..*</text></svg>
+      <div class="sym-name">竖线 + 鸦脚</div>
+    </div>
+  </div>
+
+  <div class="cmp">
+    <div class="cmp-card ok">
+      <div class="cmp-head"><span class="dot"></span>规范画法</div>
+      <div class="cmp-body">
+        <svg class="sv" viewBox="0 0 300 220">
+          <rect x="20" y="46" width="100" height="90" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <line x1="20" y1="72" x2="120" y2="72" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="70" y="59" text-anchor="middle" dominant-baseline="central" font-weight="600" font-size="10.5">user</text>
+          <text x="28" y="88" font-size="9.5">id : BIGINT  PK</text>
+          <text x="28" y="104" font-size="9.5">username : VC(50)</text>
+          <text x="28" y="120" font-size="9.5">phone : VC(20)</text>
+
+          <rect x="180" y="46" width="100" height="90" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <line x1="180" y1="72" x2="280" y2="72" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="230" y="59" text-anchor="middle" dominant-baseline="central" font-weight="600" font-size="10.5">order</text>
+          <text x="188" y="88" font-size="9.5">id : BIGINT  PK</text>
+          <text x="188" y="104" font-size="9.5">user_id : BIGINT  FK</text>
+          <text x="188" y="120" font-size="9.5">amount : DECIMAL</text>
+
+          <line x1="120" y1="92" x2="180" y2="92" stroke="#2C2C2A" stroke-width="1.2"/>
+          <line x1="120" y1="84" x2="120" y2="100" stroke="#2C2C2A" stroke-width="1.6"/>
+          <path d="M180,92 L168,83 M180,92 L166,92 M180,92 L168,101" fill="none" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="132" y="80" font-size="9.5">1</text>
+          <text x="162" y="80" font-size="9.5">0..*</text>
+
+          <text x="150" y="164" text-anchor="middle" font-size="10" fill="#0F6E56">一个用户提交多个订单</text>
+          <text x="150" y="182" text-anchor="middle" font-size="10" fill="#0F6E56">FK 列与鸦脚端点同时存在，不冲突</text>
+          <text x="150" y="202" text-anchor="middle" font-size="9.5" fill="#8F8D85">PK = 主键，FK = 外键，VC = VARCHAR</text>
+        </svg>
+      </div>
+      <div class="cmp-foot"><b>要点：</b>表框含字段与类型；主外键显式标注；关系线两端都标基数；一张图只用一个记法。</div>
+    </div>
+
+    <div class="cmp-card no">
+      <div class="cmp-head"><span class="dot"></span>常见错误</div>
+      <div class="cmp-body">
+        <svg class="sv" viewBox="0 0 300 220">
+          <rect x="20" y="56" width="84" height="34" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="62" y="73" text-anchor="middle" dominant-baseline="central">用户</text>
+          <rect x="196" y="56" width="84" height="34" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="238" y="73" text-anchor="middle" dominant-baseline="central">订单</text>
+          <polygon points="150,44 180,73 150,102 120,73" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="150" y="73" text-anchor="middle" dominant-baseline="central">下单</text>
+
+          <line x1="104" y1="73" x2="120" y2="73" stroke="#2C2C2A" stroke-width="1.2"/>
+          <line x1="180" y1="73" x2="196" y2="73" stroke="#2C2C2A" stroke-width="1.2"/>
+
+          <rect x="14" y="50" width="96" height="46" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <rect x="190" y="50" width="96" height="46" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <path d="M150,108 L160,118 M160,108 L150,118" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+          <text x="150" y="146" text-anchor="middle" font-size="10" fill="#A32D2D">菱形是陈氏记法的联系，实体却是表框形</text>
+          <text x="150" y="164" text-anchor="middle" font-size="10" fill="#A32D2D">两套记法混在一起</text>
+          <text x="150" y="190" text-anchor="middle" font-size="10" fill="#A32D2D">两端都没标基数，1:1 还是 1:N 无从判断</text>
+        </svg>
+      </div>
+      <div class="cmp-foot"><b>两处问题：</b>① 菱形（陈氏）与表框（鸦脚）混用；② 关系线两端都没有基数标注，等于只说了"有关联"，没说"怎么关联"。</div>
+    </div>
+  </div>
+
+  <div class="pitfall"><b>跨库关联要标出来：</b>当业务库与图库、文档库分属不同存储引擎，跨库字段（如 <code>graph_id</code>、<code>entity_name</code>）无法设物理外键。这类关联用<b>虚线</b>画，并在图注里说明"由应用层保证一致性"——这比假装有外键诚实，也更容易得分。</div>
+</section>
+
+<section id="s4">
+  <h2><span class="num">04</span>数据流图</h2>
+  <p class="lead">依据 GB/T 1526 系列。DFD 讲的是<b>数据</b>在系统里怎么流动、被什么处理、存到哪里，它<b>不表达控制流</b>（没有判断、没有循环）。</p>
+
+  <h3>四个符号</h3>
+  <div class="sym-grid">
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><rect x="24" y="22" width="92" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="70" y="35" text-anchor="middle" dominant-baseline="central">用户</text></svg>
+      <div class="sym-name">外部实体</div>
+      <div class="sym-use">系统之外的数据源或去向</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><rect x="22" y="20" width="96" height="30" rx="8" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/><text x="70" y="35" text-anchor="middle" dominant-baseline="central" font-size="9.5">1 订单处理</text></svg>
+      <div class="sym-name">处理</div>
+      <div class="sym-use">圆角矩形，编号 + 动词</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="24" y1="35" x2="108" y2="35" stroke="#2C2C2A" stroke-width="1.3" marker-end="url(#ar)"/><text x="66" y="27" text-anchor="middle" font-size="9">订单数据</text></svg>
+      <div class="sym-name">数据流</div>
+      <div class="sym-use">箭头，必须标数据名</div>
+    </div>
+    <div class="sym">
+      <svg viewBox="0 0 140 70"><line x1="34" y1="22" x2="34" y2="48" stroke="#2C2C2A" stroke-width="1.3"/><line x1="34" y1="22" x2="110" y2="22" stroke="#2C2C2A" stroke-width="1.3"/><line x1="34" y1="48" x2="110" y2="48" stroke="#2C2C2A" stroke-width="1.3"/><text x="72" y="35" text-anchor="middle" dominant-baseline="central" font-size="9">D1 订单表</text></svg>
+      <div class="sym-name">数据存储</div>
+      <div class="sym-use">右开口矩形，编号 D1、D2</div>
+    </div>
+  </div>
+
+  <h3>绘制规则</h3>
+  <ul class="rules">
+    <li><b>自顶向下分层</b>：顶层图（1 个处理）→ 0 层图（主要处理）→ 1 层图（细化的子处理）。每层必须<b>输入输出平衡</b>，父图的输入输出在子图里要能对上。</li>
+    <li><b>处理必须有编号</b>（1、2、3 或 1.1、1.2），名称用"动词 + 名词"。</li>
+    <li><b>每个处理至少一个输入和一个输出</b>。只有输入没有输出叫"黑洞"，只有输出没有输入叫"奇迹"，都是硬伤。</li>
+    <li><b>两个处理之间不能直接连线</b>，中间必须经过数据存储或外部实体。</li>
+    <li><b>数据流必须标名字</b>，不能只画一根光秃秃的箭头。</li>
+  </ul>
+
+  <div class="pitfall"><b>DFD 不画判断菱形：</b>看到条件分支就说明你在画流程图，不是数据流图。DFD 只关心"什么数据、从哪来、到哪去、被谁处理"。</div>
+</section>
+
+<section id="s5">
+  <h2><span class="num">05</span>架构图</h2>
+  <p class="lead">架构图没有国标，但有一条隐含共识：<b>它表达的是逻辑分层，不是物理部署</b>。</p>
+
+  <div class="cmp">
+    <div class="cmp-card ok">
+      <div class="cmp-head"><span class="dot"></span>分层架构图</div>
+      <div class="cmp-body">
+        <svg class="sv" viewBox="0 0 320 300">
+          <rect x="10" y="18" width="300" height="60" rx="8" fill="#F2F0E9" stroke="#D6D2C7" stroke-width="1"/>
+          <text x="24" y="38" font-size="10" fill="#5F5E5A">表现层</text>
+          <rect x="94" y="30" width="94" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="141" y="47" text-anchor="middle" dominant-baseline="central" font-size="9.5">Web 前端</text>
+          <rect x="202" y="30" width="94" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="249" y="47" text-anchor="middle" dominant-baseline="central" font-size="9.5">移动端</text>
+
+          <rect x="10" y="88" width="300" height="60" rx="8" fill="#F2F0E9" stroke="#D6D2C7" stroke-width="1"/>
+          <text x="24" y="108" font-size="10" fill="#5F5E5A">接入层</text>
+          <rect x="94" y="100" width="202" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="195" y="117" text-anchor="middle" dominant-baseline="central" font-size="9.5">Nginx · 静态托管 + 反向代理</text>
+
+          <rect x="10" y="158" width="300" height="60" rx="8" fill="#F2F0E9" stroke="#D6D2C7" stroke-width="1"/>
+          <text x="24" y="178" font-size="10" fill="#5F5E5A">业务层</text>
+          <rect x="94" y="170" width="96" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="142" y="187" text-anchor="middle" dominant-baseline="central" font-size="9.5">应用服务</text>
+          <rect x="200" y="170" width="96" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="248" y="187" text-anchor="middle" dominant-baseline="central" font-size="9.5">任务调度</text>
+
+          <rect x="10" y="228" width="300" height="60" rx="8" fill="#F2F0E9" stroke="#D6D2C7" stroke-width="1"/>
+          <text x="24" y="248" font-size="10" fill="#5F5E5A">数据层</text>
+          <rect x="94" y="240" width="62" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="125" y="257" text-anchor="middle" dominant-baseline="central" font-size="9">MySQL</text>
+          <rect x="162" y="240" width="62" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="193" y="257" text-anchor="middle" dominant-baseline="central" font-size="9">Redis</text>
+          <rect x="230" y="240" width="66" height="34" rx="5" fill="#fff" stroke="#2C2C2A" stroke-width="1.1"/>
+          <text x="263" y="257" text-anchor="middle" dominant-baseline="central" font-size="9">对象存储</text>
+        </svg>
+      </div>
+      <div class="cmp-foot"><b>要点：</b>层与层之间边界清晰；每个方框标了<b>具体技术</b>而不是空泛的"服务层"；同层元素对齐排布。</div>
+    </div>
+
+    <div class="cmp-card no">
+      <div class="cmp-head"><span class="dot"></span>常见问题</div>
+      <div class="cmp-body" style="justify-content:flex-start">
+        <ul class="rules" style="margin:0">
+          <li class="warn"><b>方框只写"业务层""数据层"</b>，没有具体技术栈——评审看不出你到底用了什么。</li>
+          <li class="warn"><b>把部署图当架构图画</b>，画了一堆服务器和箭头，读者看不出分层。</li>
+          <li class="warn"><b>层内元素不对齐</b>，大小不一、间距随意，看起来像草图。</li>
+          <li class="warn"><b>箭头双向乱指</b>。依赖方向应单向自上而下，跨层调用才允许例外并加注。</li>
+          <li class="warn"><b>一张图塞 30 个框</b>。超出一屏就该拆成"总体架构 + 模块详图"。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <h2><span class="num">06</span>工具与导出</h2>
+  <p class="lead">工具选对了，规范问题一大半会自己消失——因为标准符号是内建的，不必逐个手动画。</p>
+
+  <h3>推荐组合</h3>
+  <table>
+    <thead><tr><th>用途</th><th>工具</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td>UML 各类图</td><td>PlantUML</td><td>符号由语法保证，不会画错形状；可版本管理；纯文本好改</td></tr>
+      <tr><td>需要精调版式</td><td>draw.io / Visio</td><td>图形库内置标准符号，可导出 SVG / EMF</td></tr>
+      <tr><td>快速原型</td><td>ProcessOn</td><td>在线协作方便，但导出质量一般</td></tr>
+      <tr><td>最终排版</td><td>Word / LaTeX</td><td>插入矢量图，不要插图床截图</td></tr>
+    </tbody>
+  </table>
+
+  <h3>PlantUML 关键配置</h3>
+  <p>三行 skinparam 就能保证灰度可读、无阴影、字体一致：</p>
+<pre><code>skinparam monochrome true
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false</code></pre>
+
+  <p>活动图的正确骨架（注意 <code>start</code> / <code>stop</code> 会自动渲染成实心圆与带环实心圆，不必自己画）：</p>
+<pre><code>@startuml
+start
+:接收订单请求;
+if (金额 &lt; 500 ?) then (是)
+  :转人工审核;
+else (否)
+  :自动通过;
+endif
+stop
+@enduml</code></pre>
+
+  <p>用例图的 include / extend 方向，记法就是"箭头指向被依赖方"：</p>
+<pre><code>F1 ..&gt; F1a : &lt;&lt;include&gt;&gt;   ' 提交订单 依赖 计算优惠
+F2a ..&gt; F2 : &lt;&lt;extend&gt;&gt;    ' 导出报告 扩展 查看记录</code></pre>
+
+  <h3>导出设置</h3>
+  <ul class="rules">
+    <li><b>优先 SVG 或 EMF</b>。Word 里插入 EMF 可无损缩放，打印不糊。</li>
+    <li>必须用 PNG 时加 <code>-DPLANTUML_LIMIT_SIZE=8192</code> 放宽尺寸上限，否则大图会被截断。</li>
+    <li>PNG 分辨率不低于 <b>300 dpi</b>；整页宽度的图，像素宽度不低于 2000px。</li>
+    <li>导出后<b>转灰度看一眼</b>：如果两条不同含义的线变成同一种灰，就得改线型。</li>
+    <li>文件名与图号对应（<code>fig4-4-triage.svg</code>），后期改图不会找错。</li>
+  </ul>
+
+  <div class="tip"><b>别用截图当插图：</b>把工具界面截图贴进 Word 是最省事也最扣分的做法。截图在 100% 缩放下看着还行，打印出来线条发虚、文字毛边。正确做法是导出 SVG 或 EMF 再插入——Word 里能无损缩放，放大到 200% 依然锐利。</div>
+</section>
+
+<section id="s7">
+  <h2><span class="num">07</span>交付前自查</h2>
+  <p class="lead">把这份清单对着论文逐条过一遍，勾完再定稿。</p>
+
+  <div class="check">
+    <label><input type="checkbox"><span>每张图都有图号，按章编号，全文无重号</span></label>
+    <label><input type="checkbox"><span>每张图都有题注，位于图下方，居中，格式统一</span></label>
+    <label><input type="checkbox"><span>正文先出现"如图 X-X 所示"，图才跟在后面</span></label>
+    <label><input type="checkbox"><span>图内没有重复的标题文字</span></label>
+    <label><input type="checkbox"><span>图内文字不小于正文的 70%，缩到 50% 仍可辨认</span></label>
+    <label><input type="checkbox"><span>所有图走同一套符号体系（流程图 或 UML，不混用）</span></label>
+    <label><input type="checkbox"><span>起止节点形状符合所选体系（跑道形 / 实心圆+带环圆）</span></label>
+    <label><input type="checkbox"><span>判断或决策的每个出口都标了条件</span></label>
+    <label><input type="checkbox"><span>多线汇合处画了实心圆点，或各分支独立连到目标</span></label>
+    <label><input type="checkbox"><span>没有交叉线；有交叉的加了跨线弧</span></label>
+    <label><input type="checkbox"><span>图内没有数据库字段值、代码变量名、方法签名</span></label>
+    <label><input type="checkbox"><span>用例名是动宾结构，不是"步骤一/步骤二"</span></label>
+    <label><input type="checkbox"><span>类图的聚合/组合菱形画在整体端，多重性已标注</span></label>
+    <label><input type="checkbox"><span>时序图的返回消息用虚线，且有激活条</span></label>
+    <label><input type="checkbox"><span>E-R 图只用一种记法，关系两端都标了基数</span></label>
+    <label><input type="checkbox"><span>部署图的节点是立体盒，不是平面矩形</span></label>
+    <label><input type="checkbox"><span>所有图导出为矢量或 ≥300dpi，非截图</span></label>
+    <label><input type="checkbox"><span>转灰度后仍能区分不同含义的线与形状</span></label>
+    <label><input type="checkbox"><span>同一流程没有重复画成多张不同图种的图</span></label>
+    <label><input type="checkbox"><span>引用他人图表已注明来源</span></label>
+  </div>
+</section>
+
+<section id="s8">
+  <h2><span class="num">附</span>高频扣分点速查</h2>
+  <p class="lead">把前面各节的问题汇总成一张表，答辩前对着自己的图逐行扫一遍。命中任何一条"必改"，都值得当场动手。</p>
+
+  <table>
+    <thead><tr><th>症状</th><th>问题出在哪</th><th>改法</th><th>程度</th></tr></thead>
+    <tbody>
+      <tr><td>图号重复或跳号</td><td>手动编号改了一半就忘了</td><td>按章编号；批量改号时从大到小倒序替换，否则会互相覆盖</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>图题写在图上方</td><td>把"表题在上"的规则套到了图上</td><td>图题在下、表题在上，这条没有例外</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>正文没提到就先出图</td><td>图是"贴"进去的，不是"引"进来的</td><td>前一段必须有"如图 X-X 所示"</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>图内又写了一遍标题</td><td>工具默认带 title，导出时没关</td><td>删掉图内标题，标题交给题注</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>开始/结束是圆角矩形</td><td>用了工具给的默认圆角矩形</td><td>国标改用跑道形，UML 改用实心圆 + 带环实心圆</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>同篇里两套符号混用</td><td>不同章节换了工具或模板</td><td>全篇选一套，其余按它统一改</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>菱形出口没标"是/否"</td><td>以为箭头方向自明</td><td>每条分支都标条件，含 <code>60 ≤ c &lt; 85</code> 这类区间写法</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>两条分支叠成 T 形</td><td>汇合处没画节点</td><td>打一个实心圆点，或让各分支独立连到目标框</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>一个处理框拉出两条线</td><td>把判断省成了处理</td><td>拆出一个菱形，多出口只能属于判断框</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>用例之间画箭头</td><td>把用例图当流程图用</td><td>删箭头，顺序交给活动图或时序图</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>类图菱形贴错端</td><td>记符号时记成了"贴部分"</td><td>菱形永远贴整体那一端</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>时序图返回画成实线</td><td>返回和调用用了同一种箭头</td><td>返回改虚线 + 开放箭头</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>流程图里写 <code>status=3</code></td><td>画图时在想实现</td><td>改写业务动作，字段值移到数据字典</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+      <tr><td>截图当插图</td><td>图省事</td><td>导出 SVG / EMF，或 ≥300dpi PNG</td><td><span style="color:#A32D2D;font-weight:600">必改</span></td></tr>
+      <tr><td>灰度打印后分不清</td><td>用颜色承载语义</td><td>改用线型、形状、文字标注来区分</td><td><span style="color:#8A5406;font-weight:600">建议</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>定稿前 60 秒快检</h3>
+  <p>不用逐条对表，做三个动作就能筛掉大部分问题。</p>
+  <div class="kv">
+    <div>
+      <dt>第一步</dt>
+      <dd>页面缩到 50% 看一眼</dd>
+      <p style="font-size:12.5px;color:var(--ink2);margin-top:4px;line-height:1.6">线条糊成灰块、文字认不出的，印在纸上就是这个效果。</p>
+    </div>
+    <div>
+      <dt>第二步</dt>
+      <dd>打印一张黑白的</dd>
+      <p style="font-size:12.5px;color:var(--ink2);margin-top:4px;line-height:1.6">两条不同含义的线如果变成同一种灰，就得改线型。</p>
+    </div>
+    <div>
+      <dt>第三步</dt>
+      <dd>遮住所有图，只读正文</dd>
+      <p style="font-size:12.5px;color:var(--ink2);margin-top:4px;line-height:1.6">读不出每张图在讲什么，说明正文的引用句没写清楚。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    本手册依据 GB 1526-89《信息处理 数据流程图、程序流程图、系统流程图、程序网络图和系统资源图的文件编制符号及约定》、ISO 5807:1985、UML 2.5.1 与 GB/T 7713.1《学位论文编写规则》编写。样例统一使用订单与审核场景，可替换为各自课题的业务内容后直接使用。
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('section[id],h3[id]'));
+  var links=[].slice.call(document.querySelectorAll('#toc a'));
+  function onScroll(){
+    var cur='';
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top<140) cur=secs[i].id;
+    }
+    links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

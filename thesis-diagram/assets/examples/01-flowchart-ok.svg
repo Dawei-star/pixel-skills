@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+          <rect x="108" y="14" width="84" height="28" rx="14" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="28" text-anchor="middle" dominant-baseline="central">开始</text>
+          <line x1="150" y1="42" x2="150" y2="66" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="90" y="66" width="120" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="81" text-anchor="middle" dominant-baseline="central">取订单金额 C</text>
+          <line x1="150" y1="96" x2="150" y2="120" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <polygon points="150,120 214,154 150,188 86,154" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="154" text-anchor="middle" dominant-baseline="central">C ≥ 500 ?</text>
+          <polyline points="86,154 54,154 54,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <text x="70" y="146" text-anchor="middle" font-size="10.5">否</text>
+          <polyline points="214,154 246,154 246,214" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <text x="230" y="146" text-anchor="middle" font-size="10.5">是</text>
+          <rect x="12" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="54" y="229" text-anchor="middle" dominant-baseline="central">转人工审核</text>
+          <rect x="204" y="214" width="84" height="30" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="246" y="229" text-anchor="middle" dominant-baseline="central">自动通过</text>
+          <polyline points="54,244 54,268 150,268" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+          <polyline points="246,244 246,268 150,268" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+          <circle cx="150" cy="268" r="2.6" fill="#2C2C2A"/>
+          <line x1="150" y1="268" x2="150" y2="300" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+          <rect x="108" y="300" width="84" height="28" rx="14" fill="#fff" stroke="#2C2C2A" stroke-width="1.3"/>
+          <text x="150" y="314" text-anchor="middle" dominant-baseline="central">结束</text>
+        </svg>

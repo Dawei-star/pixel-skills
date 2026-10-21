@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+          <rect x="20" y="56" width="84" height="34" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="62" y="73" text-anchor="middle" dominant-baseline="central">用户</text>
+          <rect x="196" y="56" width="84" height="34" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="238" y="73" text-anchor="middle" dominant-baseline="central">订单</text>
+          <polygon points="150,44 180,73 150,102 120,73" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+          <text x="150" y="73" text-anchor="middle" dominant-baseline="central">下单</text>
+
+          <line x1="104" y1="73" x2="120" y2="73" stroke="#2C2C2A" stroke-width="1.2"/>
+          <line x1="180" y1="73" x2="196" y2="73" stroke="#2C2C2A" stroke-width="1.2"/>
+
+          <rect x="14" y="50" width="96" height="46" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <rect x="190" y="50" width="96" height="46" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <path d="M150,108 L160,118 M160,108 L150,118" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+          <text x="150" y="146" text-anchor="middle" font-size="10" fill="#A32D2D">菱形是陈氏记法的联系，实体却是表框形</text>
+          <text x="150" y="164" text-anchor="middle" font-size="10" fill="#A32D2D">两套记法混在一起</text>
+          <text x="150" y="190" text-anchor="middle" font-size="10" fill="#A32D2D">两端都没标基数，1:1 还是 1:N 无从判断</text>
+        </svg>

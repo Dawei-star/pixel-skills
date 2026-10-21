@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+            <rect x="14" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="52" y="27" text-anchor="middle" dominant-baseline="central">用户</text>
+            <rect x="132" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="170" y="27" text-anchor="middle" dominant-baseline="central">订单接口</text>
+            <rect x="250" y="14" width="76" height="26" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <text x="288" y="27" text-anchor="middle" dominant-baseline="central">支付服务</text>
+
+            <line x1="52" y1="40" x2="52" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="170" y1="40" x2="170" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+            <line x1="288" y1="40" x2="288" y2="286" stroke="#2C2C2A" stroke-width="1" stroke-dasharray="5 4"/>
+
+            <rect x="164" y="66" width="12" height="132" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <rect x="282" y="104" width="12" height="54" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+
+            <line x1="52" y1="74" x2="164" y2="74" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="107" y="66" text-anchor="middle" font-size="9.5">提交订单</text>
+
+            <line x1="176" y1="112" x2="282" y2="112" stroke="#2C2C2A" stroke-width="1.2" marker-end="url(#ar)"/>
+            <text x="228" y="104" text-anchor="middle" font-size="9.5">调用支付</text>
+
+            <line x1="282" y1="150" x2="176" y2="150" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="228" y="142" text-anchor="middle" font-size="9.5">支付结果</text>
+
+            <line x1="164" y1="190" x2="52" y2="190" stroke="#2C2C2A" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+            <text x="107" y="182" text-anchor="middle" font-size="9.5">返回订单号</text>
+
+            <rect x="96" y="269" width="168" height="18" fill="#FFFFFF"/>
+            <text x="180" y="278" text-anchor="middle" font-size="9.5" fill="#0F6E56">实线实心＝调用，虚线开放＝返回</text>
+          </svg>

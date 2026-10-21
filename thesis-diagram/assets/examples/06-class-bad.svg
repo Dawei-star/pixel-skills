@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 250">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+            <rect x="20" y="30" width="118" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="20" y1="56" x2="138" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="20" y1="88" x2="138" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="79" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">Order</text>
+            <text x="28" y="70" font-size="9.5">id</text>
+            <text x="28" y="82" font-size="9.5">amount</text>
+            <text x="28" y="103" font-size="9.5">pay()</text>
+
+            <rect x="190" y="30" width="112" height="84" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+            <line x1="190" y1="56" x2="302" y2="56" stroke="#2C2C2A" stroke-width="1.1"/>
+            <line x1="190" y1="88" x2="302" y2="88" stroke="#2C2C2A" stroke-width="1.1"/>
+            <text x="246" y="43" text-anchor="middle" dominant-baseline="central" font-weight="600">OrderItem</text>
+            <text x="198" y="70" font-size="9.5">name</text>
+            <text x="198" y="82" font-size="9.5">qty</text>
+            <text x="198" y="103" font-size="9.5">subtotal()</text>
+
+            <line x1="138" y1="72" x2="158" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+            <polygon points="158,72 168,66 178,72 168,78" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1"/>
+            <line x1="178" y1="72" x2="190" y2="72" stroke="#2C2C2A" stroke-width="1.2"/>
+
+            <rect x="128" y="56" width="62" height="34" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M160,42 L170,52 M170,42 L160,52" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="14" y="24" width="130" height="96" rx="5" fill="none" stroke="#A32D2D" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M148,18 L158,28 M158,18 L148,28" stroke="#A32D2D" stroke-width="1.9" stroke-linecap="round"/>
+
+            <rect x="20" y="152" width="290" height="76" rx="8" fill="#FDEEEE" stroke="#F5C4C4" stroke-width="1"/>
+            <text x="34" y="172" font-size="10" fill="#A32D2D">① 菱形贴反了，读成"明细包含订单"。</text>
+            <text x="34" y="190" font-size="10" fill="#A32D2D">② 属性没有类型、没有可见性。</text>
+            <text x="34" y="208" font-size="10" fill="#A32D2D">③ 多重性缺失，1 对 1 还是 1 对多看</text>
+            <text x="34" y="222" font-size="10" fill="#A32D2D">　 不出来。</text>
+          </svg>
