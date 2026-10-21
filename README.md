@@ -32,17 +32,15 @@ claude plugin install thesis-diagram@dawei-skills
 claude plugin install webpage-cloner@dawei-skills
 ```
 
-装完自带更新，仓库推送后自动跟上。
+装完重启会话生效。更新：`claude plugin marketplace update dawei-skills`。
 
 ### Codex
 
 ```bash
 codex plugin marketplace add Dawei-star/Skills
-codex plugin install thesis-diagram@dawei-skills
-codex plugin install webpage-cloner@dawei-skills
 ```
 
-启动时更新。
+加完在 Codex 的插件面板里把 thesis-diagram 和 webpage-cloner 勾上。手动更新：`codex plugin marketplace upgrade`。
 
 ### WorkBuddy
 
@@ -57,7 +55,7 @@ cp -r "photo analyse" ~/.workbuddy/skills/webpage-cloner
 
 ### 只给当前项目用
 
-把命令里的 `~/.workbuddy` 换成 `<项目>/.workbuddy`，`~/.claude` 换成 `<项目>/.claude`。
+复制那种装法，把 `~/.workbuddy` 换成 `<项目>/.workbuddy` 就行。
 
 复制那条命令为什么要改名：`photo analyse` 目录名带空格，而它的 `name` 是 `webpage-cloner`。**目录名必须等于 `SKILL.md` 里的 `name`**，只能是小写字母、数字、连字符。不一致时多数工具不报错，只是静默找不到。走插件市场的不用管，`marketplace.json` 已经指好了。
 
