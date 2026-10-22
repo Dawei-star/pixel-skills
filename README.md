@@ -1,6 +1,6 @@
 # Pixel Skills
 
-**简体中文** · [English](language/en/README.md) · [日本語](language/japan/README.md) · [한국어](language/korea/README.md)
+**简体中文** · [English](docs/language/en/README.md) · [日本語](docs/language/japan/README.md) · [한국어](docs/language/korea/README.md)
 
 参照物都在，做出来还是走样。论文图有国标，画出来还是五花八门；设计稿的色值就摆在那儿，复刻出来还是差一截。问题不在不知道标准，而在于没人逐条核对——人眼对「差不多」太宽容。
 
@@ -10,16 +10,24 @@ Pixel Skills is a set of agent skills that turn an objective reference — a nat
 
 ---
 
-<p align="center">  
-  <img src="assets/icon.png" width="260" alt="Pixel Skills">  
+<p align="center">
+  
+  <img src="docs/assets/icon.png" width="260" alt="Pixel Skills">
+  
 </p>
 
-<p align="center">  
-  <img src="https://img.shields.io/badge/platform-any-lightgrey" alt="platform">  
-  <img src="https://img.shields.io/badge/format-SKILL.md-blue" alt="format">  
-  <img src="https://img.shields.io/github/stars/Dawei-star/pixel-skills" alt="stars">  
-  <img src="https://img.shields.io/github/issues/Dawei-star/pixel-skills" alt="issues">  
-  <img src="https://img.shields.io/github/last-commit/Dawei-star/pixel-skills" alt="last commit">  
+<p align="center">
+  
+  <img src="https://img.shields.io/badge/platform-any-lightgrey" alt="platform">
+  
+  <img src="https://img.shields.io/badge/format-SKILL.md-blue" alt="format">
+  
+  <img src="https://img.shields.io/github/stars/Dawei-star/pixel-skills" alt="stars">
+  
+  <img src="https://img.shields.io/github/issues/Dawei-star/pixel-skills" alt="issues">
+  
+  <img src="https://img.shields.io/github/last-commit/Dawei-star/pixel-skills" alt="last commit">
+  
 </p>
 
 ## 这是个会长大的库
@@ -66,6 +74,13 @@ npx skills add Dawei-star/pixel-skills -g
 
 `-g` 装到用户级，所有项目可用；不加就只装当前项目。它会自己探测本机有哪些 agent，Cursor、Gemini CLI、Copilot、Windsurf 这些都在支持列表里；想指名就 `-a claude-code`，多个用空格隔开。
 
+只装其中一个，加 `--skill`：
+
+```bash
+npx skills add Dawei-star/pixel-skills --skill thesis-diagram -g
+npx skills add Dawei-star/pixel-skills --skill webpage-cloner -g
+```
+
 先看仓库里有什么：`npx skills add Dawei-star/pixel-skills --list`。更新：`npx skills update`。
 
 ### 只给当前项目用
@@ -86,9 +101,12 @@ webpage-cloner/
 ├── references/           components.md 组件模板、style-analysis.md 拆图方法
 └── assets/               reset.css
 
-language/                 en / japan / korea / zn
-assets/icon.png           仓库图标
+docs/
+├── language/             en / japan / korea / zn
+└── assets/icon.png       仓库图标
 ```
+
+根目录只留 `SKILL.md` 目录——`docs/` 里的东西不参与安装，`skills` CLI 只认带 `SKILL.md` 的目录。
 
 `type-introduce/` 不在仓库里——那是图例的源头，手册发布在线上，改完重跑 `extract_examples.py` 重新抽图例。
 

@@ -1,6 +1,6 @@
 # Pixel Skills
 
-[简体中文](../../README.md) · **English** · [日本語](../japan/README.md) · [한국어](../korea/README.md)
+[简体中文](../../../README.md) · **English** · [日本語](../japan/README.md) · [한국어](../korea/README.md)
 
 The reference exists. The output still drifts. Thesis figures have a national standard, and they still come out inconsistent. The design's colour values are right there in the mockup, and the rebuild still misses by a shade. The problem isn't not knowing the standard — it's that nobody checks against it item by item. The eye is too forgiving of "close enough".
 
@@ -24,14 +24,14 @@ They cover shape, size and format. Whether the content is right is still on you.
 
 ## What's inside
 
-### [thesis-diagram](../../thesis-diagram/) — generate and audit thesis figures
+### [thesis-diagram](../../../thesis-diagram/) — generate and audit thesis figures
 
 - **Read** [the online handbook](https://www.axxiu.cn/project/GAIe9QK1/) → symbol definitions for six diagram types, right/wrong pairs, a pre-submission checklist
 - **Say** `draw me a use case diagram` → emits source per GB 1526 / UML 2.5
 - **Say** `is this flowchart compliant?` → a script checks arrow attachment, text overflow, terminator shape
 - **Ships with** 20 right/wrong examples as standalone SVGs, coordinates ready to copy
 
-### [webpage-cloner](../../webpage-cloner/) — screenshot to front-end code
+### [webpage-cloner](../../../webpage-cloner/) — screenshot to front-end code
 
 - **Read** [the online handbook](https://www.axxiu.cn/project/hm0v82sg/) → how to measure colours and spacing, right/wrong pairs, pre-delivery checks
 - **Say** `rebuild this screenshot` → extracts palette, type scale, spacing
@@ -49,6 +49,13 @@ npx skills add Dawei-star/pixel-skills -g
 ```
 
 `-g` installs at user level, so every project can use it; drop it to install into the current project only. The CLI detects which agents you already have — Cursor, Gemini CLI, Copilot and Windsurf are all supported. To name them explicitly add `-a claude-code`; separate several with spaces.
+
+To install just one, add `--skill`:
+
+```bash
+npx skills add Dawei-star/pixel-skills --skill thesis-diagram -g
+npx skills add Dawei-star/pixel-skills --skill webpage-cloner -g
+```
 
 See what's in the repo first: `npx skills add Dawei-star/pixel-skills --list`. Update: `npx skills update`.
 

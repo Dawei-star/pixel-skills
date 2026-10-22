@@ -1,6 +1,6 @@
 # Pixel Skills
 
-[简体中文](../../README.md) · [English](../en/README.md) · [日本語](../japan/README.md) · **한국어**
+[简体中文](../../../README.md) · [English](../en/README.md) · [日本語](../japan/README.md) · **한국어**
 
 > 기준은 있는데, 결과물은 여전히 어긋난다.
 
@@ -10,14 +10,14 @@
 
 ## 무엇이 들어 있나
 
-### [thesis-diagram](../../thesis-diagram/) — 논문 그림 생성과 검사
+### [thesis-diagram](../../../thesis-diagram/) — 논문 그림 생성과 검사
 
 - **읽기** [온라인 매뉴얼](https://www.axxiu.cn/project/GAIe9QK1/) → 여섯 가지 그림의 기호 정의, 정오 대조, 제출 전 체크리스트
 - **말하면** `유스케이스 다이어그램 그려줘` → GB 1526 / UML 2.5 기준 소스 출력
 - **말하면** `이 순서도 규격에 맞아?` → 화살표 접합, 글자 넘침, 종료 기호 모양을 스크립트로 검사
 - **포함** 정오 예시 20점. 독립 SVG라 좌표를 그대로 가져다 쓸 수 있음
 
-### [webpage-cloner](../../webpage-cloner/) — 스크린샷에서 프런트엔드 코드로
+### [webpage-cloner](../../../webpage-cloner/) — 스크린샷에서 프런트엔드 코드로
 
 - **읽기** [온라인 매뉴얼](https://www.axxiu.cn/project/hm0v82sg/) → 색과 여백을 재는 방법, 정오 대조, 납품 전 점검
 - **말하면** `이 스크린샷 다시 만들어줘` → 팔레트·서체·여백 추출
@@ -35,6 +35,13 @@ npx skills add Dawei-star/pixel-skills -g
 ```
 
 `-g`를 붙이면 사용자 단위로 설치되어 모든 프로젝트에서 쓸 수 있고, 빼면 현재 프로젝트에만 설치됩니다. 설치된 에이전트를 자동으로 감지하며 Cursor, Gemini CLI, Copilot, Windsurf 등이 지원 목록에 있습니다. 직접 지정하려면 `-a claude-code`, 여러 개는 공백으로 구분합니다.
+
+하나만 설치하려면 `--skill`을 붙입니다.
+
+```bash
+npx skills add Dawei-star/pixel-skills --skill thesis-diagram -g
+npx skills add Dawei-star/pixel-skills --skill webpage-cloner -g
+```
 
 먼저 저장소에 뭐가 있는지 보려면 `npx skills add Dawei-star/pixel-skills --list`. 업데이트는 `npx skills update`.
 

@@ -1,6 +1,6 @@
 # Pixel Skills
 
-[简体中文](../../README.md) · [English](../en/README.md) · **日本語** · [한국어](../korea/README.md)
+[简体中文](../../../README.md) · [English](../en/README.md) · **日本語** · [한국어](../korea/README.md)
 
 > 参照物はある。それでも仕上がりは崩れる。
 
@@ -10,14 +10,14 @@
 
 ## 収録内容
 
-### [thesis-diagram](../../thesis-diagram/) — 論文図の生成と検査
+### [thesis-diagram](../../../thesis-diagram/) — 論文図の生成と検査
 
 - **読む** [オンラインマニュアル](https://www.axxiu.cn/project/GAIe9QK1/) → 6 種類の図の記号定義、正誤対照、提出前チェックリスト
 - **言う** `ユースケース図を描いて` → GB 1526 / UML 2.5 に沿ったソースを出力
 - **言う** `このフローチャートは規格に合ってる?` → 矢印の接続、文字のはみ出し、端子の形をスクリプトで検査
 - **付属** 正誤例 20 点。独立した SVG で、座標はそのまま流用できる
 
-### [webpage-cloner](../../webpage-cloner/) — スクリーンショットからフロントエンドコードへ
+### [webpage-cloner](../../../webpage-cloner/) — スクリーンショットからフロントエンドコードへ
 
 - **読む** [オンラインマニュアル](https://www.axxiu.cn/project/hm0v82sg/) → 色と余白の測り方、正誤対照、納品前チェック
 - **言う** `このスクショを再現して` → 配色・書体・余白を抽出
@@ -35,6 +35,13 @@ npx skills add Dawei-star/pixel-skills -g
 ```
 
 `-g` を付けるとユーザー単位で入り、すべてのプロジェクトから使えます。付けなければ現在のプロジェクトだけ。導入済みのエージェントは自動で検出され、Cursor、Gemini CLI、Copilot、Windsurf などに対応しています。明示するなら `-a claude-code`、複数はスペース区切り。
+
+一つだけ入れるなら `--skill` を付けます。
+
+```bash
+npx skills add Dawei-star/pixel-skills --skill thesis-diagram -g
+npx skills add Dawei-star/pixel-skills --skill webpage-cloner -g
+```
 
 先に中身を確認するなら `npx skills add Dawei-star/pixel-skills --list`。更新は `npx skills update`。
 
