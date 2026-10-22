@@ -29,29 +29,16 @@
 ### Claude Code / Codex / 其他
 
 ```bash
-npx skills add Dawei-star/Skills -g
+npx skills add Dawei-star/pixel-skills -g
 ```
 
 `-g` 装到用户级，所有项目可用；不加就只装当前项目。它会自己探测本机有哪些 agent，Cursor、Gemini CLI、Copilot、Windsurf 这些都在支持列表里；想指名就 `-a claude-code`，多个用空格隔开。
 
-Windows 上建议加 `--copy`：默认走符号链接，没开发者权限时会静默退化成拷贝，不如直接说清楚。
-
-先看仓库里有什么：`npx skills add Dawei-star/Skills --list`。更新：`npx skills update`。
-
-### WorkBuddy
-
-`npx skills` 的 agent 列表里没有 WorkBuddy，用 degit 直接拉目录：
-
-```bash
-npx degit Dawei-star/Skills/thesis-diagram "$HOME/.workbuddy/skills/thesis-diagram"
-npx degit Dawei-star/Skills/webpage-cloner "$HOME/.workbuddy/skills/webpage-cloner"
-```
-
-更新：原命令加 `--force` 重跑，整目录替换。重开会话生效。
+先看仓库里有什么：`npx skills add Dawei-star/pixel-skills --list`。更新：`npx skills update`。
 
 ### 只给当前项目用
 
-`npx skills add` 不加 `-g`。WorkBuddy 把上面两条里的 `$HOME/.workbuddy` 换成 `<项目>/.workbuddy`。
+`npx skills add` 不加 `-g`。
 
 ## 写新 skill
 
