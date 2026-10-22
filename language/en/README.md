@@ -2,11 +2,25 @@
 
 [简体中文](../../README.md) · **English** · [日本語](../japan/README.md) · [한국어](../korea/README.md)
 
-> The reference exists. The output still drifts.
+The reference exists. The output still drifts. Thesis figures have a national standard, and they still come out inconsistent. The design's colour values are right there in the mockup, and the rebuild still misses by a shade. The problem isn't not knowing the standard — it's that nobody checks against it item by item. The eye is too forgiving of "close enough".
 
-Thesis figures have a national standard, and they still come out inconsistent. The design's colour values are right there in the mockup, and the rebuild still misses by a shade. The problem isn't not knowing the standard — it's that nobody checks against it item by item. The eye is too forgiving of "close enough".
+Pixel Skills is a set of agent skills that turn an objective reference — a national standard, a design mockup, a working build — into something that can run: the rules go into `SKILL.md`, whatever is judgeable becomes a script, whatever is measurable ends up as a number.
 
-These two skills turn the standard into something executable: rules go into `SKILL.md`, anything judgeable goes to a script, anything measurable becomes a number. **They cover shape, size and format. Whether the content is right is still on you.**
+They cover shape, size and format. Whether the content is right is still on you.
+
+---
+
+<p align="center">
+  <img src="../../assets/icon.png" width="260" alt="Pixel Skills">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-any-lightgrey" alt="platform">
+  <img src="https://img.shields.io/badge/format-SKILL.md-blue" alt="format">
+  <a href="https://github.com/Dawei-star/pixel-skills/stargazers"><img src="https://img.shields.io/github/stars/Dawei-star/pixel-skills" alt="stars"></a>
+  <a href="https://github.com/Dawei-star/pixel-skills/issues"><img src="https://img.shields.io/github/issues/Dawei-star/pixel-skills" alt="issues"></a>
+  <img src="https://img.shields.io/github/last-commit/Dawei-star/pixel-skills" alt="last commit">
+</p>
 
 ## What's inside
 
@@ -49,3 +63,9 @@ Keep `SKILL.md` to flow and index; push the detail into `references/` and `asset
 Write `description` as trigger conditions — the words users will actually say. Don't use YAML folded blocks (`>`); some validators read `>` as an angle bracket.
 
 The directory name must equal `name` in `SKILL.md`: lowercase letters, digits, hyphens. Most tools won't raise an error on a mismatch — they just silently fail to find it.
+
+## Contributing
+
+What this repo lacks isn't ideas — it's hands. If you have work of the kind where the standard exists and the output still drifts, or you want to add rules, examples or corrections to the two skills here, send it over. Rough ideas are fine too — just describe what you ran into.
+
+**Email**: [seatamisi@163.com](mailto:seatamisi@163.com) · or open an [issue](https://github.com/Dawei-star/pixel-skills/issues)
