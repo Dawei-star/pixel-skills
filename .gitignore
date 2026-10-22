@@ -1,2 +1,6 @@
-.workbuddy/memory/
+# 本地工具状态（记忆、临时文件）
+.workbuddy/
 type-introduce/
+
+# 本地交付产物，不入库
+outputs/
