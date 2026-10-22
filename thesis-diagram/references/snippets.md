@@ -112,3 +112,38 @@ return x0 + dx * s, y0 + dy * s
 ```
 
 主用例一列，被依赖用例右移一列并上下错开。参考尺寸：画布 400×360，主用例 `cx=168 rx=60`，次用例 `cx=318 rx=46`，垂直间距 ≥ 75。
+
+### PlantUML 样板（关联必须带箭头）
+
+```
+@startuml
+left to right direction
+skinparam monochrome true
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor 用户 as U
+rectangle 在线订单管理系统 {
+  usecase "提交订单" as UC1
+  usecase "查看订单记录" as UC2
+  usecase "申请退款" as UC3
+  usecase "计算优惠" as UC4
+}
+
+U --> UC1
+U --> UC2
+U --> UC3
+UC1 ..> UC4 : <<include>>
+@enduml
+```
+
+`-->` 才有箭头，`--` 出来是光杆线，别用。`..>` 给 include / extend，箭头指向被依赖方。`left to right direction` 让参与者落左侧、系统边界在右，比默认的上下布局更接近教材版式。
+
+手写 SVG 时，每条关联线的 `<line>` 都要带 `marker-end="url(#ar)"`，终点取椭圆边界交点：
+
+```
+t = 1 / sqrt((dx/rx)² + (dy/ry)²)      // (dx,dy) 为椭圆中心 → 连线起点（参与者）的向量
+交点 = (cx + dx·t, cy + dy·t)
+```
+
+箭尖再沿连线方向外扩 1px 贴住边界，留给 marker 的 `refX` 吃掉。

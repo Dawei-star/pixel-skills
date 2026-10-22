@@ -23,6 +23,27 @@ agent_created: true
 
 PlantUML 出图发虚或错位时，先调 `skinparam`（`monochrome true`、`shadowing false`、`linetype ortho`），不要急着换工具。
 
+## 用例图的箭头
+
+参与者与用例之间写 `-->`，不要写 `--`：
+
+```
+@startuml
+left to right direction
+actor 专家
+rectangle 农事决策系统 {
+  usecase "查看任务中心" as UC1
+  usecase "识别结果复核" as UC2
+}
+专家 --> UC1
+专家 --> UC2
+@enduml
+```
+
+`--` 画出来是一条没有箭头的直线，导出后与普通连线无异；评审最常见的读法是"关系没画清、方向不明"。**论文场景一律带箭头，箭头指向用例**，不指向参与者。include / extend 用 `..>`，方向指向被依赖的那一个。
+
+手写 SVG 时同理：`<line>` 必须带 `marker-end`，且终点落在椭圆边界上（见下文交点公式）。
+
 ## 工作流
 
 1. **定图号**：按章编号 `<章>-<序>`，如 `图 4-2`。批量改号必须从大到小倒序替换，正序会互相覆盖。
@@ -81,6 +102,7 @@ python scripts/check_diagram.py 页面.html --grayscale
 ## 输出禁忌
 
 - 图内不写标题，标题归题注
+- 参与者—用例的关联线必须带箭头（`-->` 或 `marker-end`），光杆线一律返工
 - 处理框不写数据库字段值、方法签名、代码变量名
 - 不用界面截图充当系统图
 - 不用颜色区分语义（论文默认黑白打印）
