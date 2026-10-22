@@ -1,5 +1,7 @@
 # Pixel Skills
 
+**简体中文** · [English](language/en/README.md) · [日本語](language/japan/README.md) · [한국어](language/korea/README.md)
+
 > 参照物都在，做出来还是走样。
 
 论文图有国标，画出来还是五花八门；设计稿的色值就摆在那儿，复刻出来还是差一截。问题不在不知道标准，而在于没人逐条核对——人眼对「差不多」太宽容。
