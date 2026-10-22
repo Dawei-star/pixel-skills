@@ -17,8 +17,8 @@ Pixel Skills is a set of agent skills that turn an objective reference — a nat
 <p align="center">  
   <img src="https://img.shields.io/badge/platform-any-lightgrey" alt="platform">  
   <img src="https://img.shields.io/badge/format-SKILL.md-blue" alt="format">  
-  <a href="https://github.com/Dawei-star/pixel-skills/stargazers"><img src="https://img.shields.io/github/stars/Dawei-star/pixel-skills" alt="stars"></a>  
-  <a href="https://github.com/Dawei-star/pixel-skills/issues"><img src="https://img.shields.io/github/issues/Dawei-star/pixel-skills" alt="issues"></a>  
+  <img src="https://img.shields.io/github/stars/Dawei-star/pixel-skills" alt="stars">  
+  <img src="https://img.shields.io/github/issues/Dawei-star/pixel-skills" alt="issues">  
   <img src="https://img.shields.io/github/last-commit/Dawei-star/pixel-skills" alt="last commit">  
 </p>
 
