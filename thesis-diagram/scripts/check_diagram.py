@@ -90,6 +90,251 @@ def parse_points(raw):
     return list(zip(nums[0::2], nums[1::2]))
 
 
+CURVE_CMDS = set("CSQTAcsqta")
+
+
+def strip_defs(svg):
+    """Markers live in <defs>; their geometry is not part of the drawing."""
+    return re.sub(r"<defs\b.*?</defs>", "", svg, flags=re.S)
+
+
+def segments_of(tag, a):
+    """Vertex list of a connector element, or None when it is decoration."""
+    if tag == "line":
+        return [(fnum(a, "x1"), fnum(a, "y1")), (fnum(a, "x2"), fnum(a, "y2"))]
+    if tag in ("polyline", "polygon"):
+        pts = parse_points(a.get("points", ""))
+        return pts if len(pts) >= 2 else None
+    if tag == "path":
+        d = a.get("d", "")
+        # 只有纯 M/L 折线才算连接线：带曲线、弧、或 H/V 简写的多为装饰图形
+        if any(c in d for c in CURVE_CMDS) or re.search(r"[HVhv]", d):
+            return None
+        nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", d)]
+        pts = list(zip(nums[0::2], nums[1::2]))
+        return pts if len(pts) >= 2 else None
+    return None
+
+
+def iter_edges(svg):
+    """Yield (raw_attrs, vertices, has_arrow) for every connector."""
+    body = strip_defs(svg)
+    for m in ELEM_RE.finditer(body):
+        tag, raw = m.group(1), m.group(2)
+        if tag not in ("line", "polyline", "polygon", "path"):
+            continue
+        a = attrs_of(raw)
+        pts = segments_of(tag, a)
+        if not pts:
+            continue
+        yield raw, pts, "marker-end" in raw
+
+
+def collect_nodes(svg):
+    """Box-shaped elements: rect / circle / ellipse, as bboxes plus geometry."""
+    body = strip_defs(svg)
+    nodes = []
+    for m in ELEM_RE.finditer(body):
+        tag, raw = m.group(1), m.group(2)
+        a = attrs_of(raw)
+        if tag == "rect":
+            x, y, w, h = (fnum(a, "x"), fnum(a, "y"),
+                          fnum(a, "width"), fnum(a, "height"))
+            if w <= 0 or h <= 0:
+                continue
+            nodes.append({"kind": "rect", "g": (x, y, w, h),
+                          "box": (x, y, x + w, y + h)})
+        elif tag == "circle":
+            cx, cy, r = fnum(a, "cx"), fnum(a, "cy"), fnum(a, "r")
+            if r < 4:
+                continue  # 汇合圆点、端点装饰不是图元
+            nodes.append({"kind": "ellipse", "g": (cx, cy, r, r),
+                          "box": (cx - r, cy - r, cx + r, cy + r)})
+        elif tag == "ellipse":
+            cx, cy = fnum(a, "cx"), fnum(a, "cy")
+            rx, ry = fnum(a, "rx"), fnum(a, "ry")
+            if rx <= 0 or ry <= 0:
+                continue
+            nodes.append({"kind": "ellipse", "g": (cx, cy, rx, ry),
+                          "box": (cx - rx, cy - ry, cx + rx, cy + ry)})
+    return nodes
+
+
+def box_contains(outer, inner, eps=1.0):
+    return (outer[0] - eps <= inner[0] and outer[1] - eps <= inner[1]
+            and inner[2] <= outer[2] + eps and inner[3] <= outer[3] + eps)
+
+
+def box_overlap(a, b):
+    w = min(a[2], b[2]) - max(a[0], b[0])
+    h = min(a[3], b[3]) - max(a[1], b[1])
+    return w > 1.0 and h > 1.0
+
+
+def point_inside(node, px, py, inset=0.0):
+    if node["kind"] == "rect":
+        x, y, w, h = node["g"]
+        return (x + inset < px < x + w - inset
+                and y + inset < py < y + h - inset)
+    cx, cy, rx, ry = node["g"]
+    if rx - inset <= 0 or ry - inset <= 0:
+        return False
+    return ((px - cx) / (rx - inset)) ** 2 + ((py - cy) / (ry - inset)) ** 2 < 1.0
+
+
+def node_dist(node, px, py):
+    if node["kind"] == "rect":
+        return dist_point_rect(px, py, *node["g"])
+    return dist_point_ellipse(px, py, *node["g"])
+
+
+def sample_segment(x1, y1, x2, y2, step=2.0):
+    n = max(1, int(math.hypot(x2 - x1, y2 - y1) / step))
+    for i in range(n + 1):
+        t = i / n
+        yield x1 + (x2 - x1) * t, y1 + (y2 - y1) * t
+
+
+def seg_intersection(p, q, r, s):
+    """Proper intersection point of pq and rs, or None."""
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    d1, d2 = cross(r, s, p), cross(r, s, q)
+    d3, d4 = cross(p, q, r), cross(p, q, s)
+    if ((d1 > 0) != (d2 > 0)) and ((d3 > 0) != (d4 > 0)):
+        den = (q[0] - p[0]) * (s[1] - r[1]) - (q[1] - p[1]) * (s[0] - r[0])
+        if abs(den) < 1e-9:
+            return None
+        t = ((r[0] - p[0]) * (s[1] - r[1]) - (r[1] - p[1]) * (s[0] - r[0])) / den
+        return (p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1]))
+    return None
+
+
+def check_edge_through_nodes(svg):
+    """A connector must not run across a box it does not start or end on."""
+    nodes = collect_nodes(svg)
+    if not nodes:
+        return []
+    containers = set()
+    for i, n in enumerate(nodes):
+        inside = [j for j, m in enumerate(nodes)
+                  if j != i and box_contains(n["box"], m["box"], 1.5)]
+        if len(inside) >= 2:
+            containers.add(i)
+
+    issues, seen = [], set()
+    for raw, pts, _ in iter_edges(svg):
+        # 虚线是辅助线：时序图的生命线本来就从激活条背后穿过，不算穿框
+        if "dasharray" in raw:
+            continue
+        touching = {i for i, n in enumerate(nodes)
+                    if any(node_dist(n, x, y) <= 4.0 for x, y in (pts[0], pts[-1]))}
+        for i, (x1, y1) in enumerate(pts[:-1]):
+            x2, y2 = pts[i + 1]
+            for n_i, node in enumerate(nodes):
+                if n_i in touching or n_i in containers:
+                    continue
+                hit = next((p for p in sample_segment(x1, y1, x2, y2, 1.5)
+                            if point_inside(node, p[0], p[1], 1.5)), None)
+                if hit and (n_i, round(hit[0])) not in seen:
+                    seen.add((n_i, round(hit[0])))
+                    issues.append({
+                        "kind": "edge-through-node",
+                        "detail": f"连线横穿图元（图元 {node['kind']} 中心 "
+                                  f"({(node['box'][0] + node['box'][2]) / 2:.0f},"
+                                  f"{(node['box'][1] + node['box'][3]) / 2:.0f})）",
+                        "at": f"({hit[0]:.0f},{hit[1]:.0f})",
+                        "fix": "改走外侧通道，或调换两个图元的上下/左右顺序",
+                    })
+                    break
+    return issues
+
+
+def check_edge_crossings(svg):
+    """Two arrows crossing each other reads as a wiring mistake."""
+    edges = [(pts, raw) for raw, pts, has_arrow in iter_edges(svg) if has_arrow]
+    issues = []
+    for i in range(len(edges)):
+        pts_a = edges[i][0]
+        for j in range(i + 1, len(edges)):
+            pts_b = edges[j][0]
+            for k in range(len(pts_a) - 1):
+                for m in range(len(pts_b) - 1):
+                    hit = seg_intersection(pts_a[k], pts_a[k + 1],
+                                           pts_b[m], pts_b[m + 1])
+                    if not hit:
+                        continue
+                    ends = (pts_a[0], pts_a[-1], pts_b[0], pts_b[-1])
+                    if any(math.hypot(hit[0] - e[0], hit[1] - e[1]) <= 6
+                           for e in ends):
+                        continue
+                    issues.append({
+                        "kind": "edge-crossing",
+                        "detail": "两条连线交叉，读者会误判依赖方向",
+                        "at": f"({hit[0]:.0f},{hit[1]:.0f})",
+                        "fix": "拉开两侧通道，或调整图元顺序让线不交",
+                    })
+    return issues
+
+
+def check_node_overlap(svg):
+    """Boxes must not sit on top of each other (nesting is fine)."""
+    nodes = collect_nodes(svg)
+    issues = []
+    for i in range(len(nodes)):
+        for j in range(i + 1, len(nodes)):
+            a, b = nodes[i]["box"], nodes[j]["box"]
+            if box_contains(a, b) or box_contains(b, a):
+                continue
+            if box_overlap(a, b):
+                cx = (max(a[0], b[0]) + min(a[2], b[2])) / 2
+                cy = (max(a[1], b[1]) + min(a[3], b[3])) / 2
+                issues.append({
+                    "kind": "node-overlap",
+                    "detail": "两个图元重叠",
+                    "at": f"({cx:.0f},{cy:.0f})",
+                    "fix": "拉开间距；层距/列距不足时先放大画布",
+                })
+    return issues
+
+
+def check_text_in_box(svg):
+    """A label must fit inside the shape it is centred in."""
+    nodes = collect_nodes(svg)
+    if not nodes:
+        return []
+    issues = []
+    for m in re.finditer(r"<text\b([^>]*)>(.*?)</text>", svg, re.S):
+        a = attrs_of(m.group(1))
+        content = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()
+        if not content:
+            continue
+        px, py = fnum(a, "x"), fnum(a, "y")
+        host = None
+        for node in nodes:
+            if point_inside(node, px, py, -1.0):
+                if host is None or (node["box"][2] - node["box"][0]) < \
+                        (host["box"][2] - host["box"][0]):
+                    host = node
+        if not host:
+            continue
+        fs = fnum(a, "font-size", 11.0)
+        w = text_width(content, fs, fnum(a, "letter-spacing", 0.0))
+        if host["kind"] == "rect":
+            avail = (host["box"][2] - host["box"][0]) - 8
+        else:
+            avail = host["g"][2] * 1.8
+        # text_width 是刻意偏悲观的估算，留 10% 余量免得把正常排版判成溢出
+        if w > avail + max(4.0, avail * 0.10):
+            issues.append({
+                "kind": "text-in-box",
+                "detail": f"文字宽约 {w:.0f}px，超出所在框可用宽度 {avail:.0f}px",
+                "at": f'"{content[:20]}" @({px:.0f},{py:.0f})',
+                "fix": "缩短文案、缩小字号、拆行，或把框加宽",
+            })
+    return issues
+
+
 def collect_shapes(svg, skip_arrows=False):
     """Return drawable geometry that an arrow tip is allowed to touch.
 
@@ -169,7 +414,14 @@ def check_arrows(svg, tolerance, warn_band=9.0):
 
         near = [s for s in targets if dist_to_shapes(tip[0], tip[1], [s]) <= warn_band]
         if not near:
-            continue  # arrow ends in open space on purpose (annotation etc.)
+            # 以前这里直接 continue，结果"箭尖悬在空地上"——最严重的缺陷之一——被静默放过
+            issues.append({
+                "kind": "arrow-floating",
+                "detail": f"箭尖 {warn_band:.0f}px 内没有任何图元，指向不明",
+                "at": f"({tip[0]:.0f},{tip[1]:.0f})",
+                "fix": "把终点移到目标图元的边界上，或补上被漏掉的图元",
+            })
+            continue
 
         gap = min(dist_to_shapes(tip[0], tip[1], [s]) for s in near)
         if gap > tolerance:
@@ -206,6 +458,15 @@ def check_bounds(svg, W, H):
             xs = [p[0] for p in pts]
             ys = [p[1] for p in pts]
             box = (min(xs), min(ys), max(xs), max(ys))
+        elif tag == "line":
+            xs = [fnum(a, "x1"), fnum(a, "x2")]
+            ys = [fnum(a, "y1"), fnum(a, "y2")]
+            box = (min(xs), min(ys), max(xs), max(ys))
+        elif tag == "path":
+            bb = bbox_of(tag, a)
+            if not bb:
+                continue
+            box = (bb[0], bb[1], bb[0] + bb[2], bb[1] + bb[3])
 
         if not box:
             continue
@@ -456,6 +717,11 @@ def check_svg(svg, index, tolerance, grayscale):
     issues += check_terminator_shape(svg)
     issues += check_stroke_width(svg)
     issues += check_usecase_flow_arrows(svg)
+    # 全局几何：局部检查都过了但整张图仍然读不通的那一类缺陷
+    issues += check_edge_through_nodes(svg)
+    issues += check_edge_crossings(svg)
+    issues += check_node_overlap(svg)
+    issues += check_text_in_box(svg)
     if grayscale:
         issues += check_grayscale(svg)
 
@@ -509,8 +775,13 @@ def main():
 
     labels = {
         "arrow-gap": "箭头未贴合",
+        "arrow-floating": "箭头悬空",
         "out-of-bounds": "图元越界",
         "text-overflow": "文字溢出",
+        "text-in-box": "文字挤爆所在框",
+        "edge-through-node": "连线横穿图元",
+        "edge-crossing": "连线交叉",
+        "node-overlap": "图元重叠",
         "terminator": "终止符形状",
         "usecase-flow": "用例间流程箭头",
         "stroke-width": "线宽不统一",

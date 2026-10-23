@@ -1,0 +1,25 @@
+{
+  "layout": "usecase",
+  "boundary": "农事决策系统",
+  "actors": [{"id": "u", "text": "农技员"}],
+  "nodes": [
+    {"id": "uc1", "text": "查看任务中心", "col": 0},
+    {"id": "uc2", "text": "识别结果复核", "col": 0},
+    {"id": "uc3", "text": "提交农事记录", "col": 0},
+    {"id": "uc4", "text": "导出巡田报告", "col": 0},
+    {"id": "c1", "text": "筛选待办", "col": 1},
+    {"id": "c2", "text": "加载影像", "col": 1},
+    {"id": "c3", "text": "校验置信度", "col": 1},
+    {"id": "c4", "text": "生成 PDF", "col": 1}
+  ],
+  "edges": [
+    {"from": "u", "to": "uc1", "kind": "assoc"},
+    {"from": "u", "to": "uc2", "kind": "assoc"},
+    {"from": "u", "to": "uc3", "kind": "assoc"},
+    {"from": "u", "to": "uc4", "kind": "assoc"},
+    {"from": "uc1", "to": "c1", "kind": "include"},
+    {"from": "uc2", "to": "c2", "kind": "include"},
+    {"from": "uc2", "to": "c3", "kind": "include"},
+    {"from": "uc4", "to": "c4", "kind": "include"}
+  ]
+}

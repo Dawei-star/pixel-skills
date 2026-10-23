@@ -1,0 +1,37 @@
+{
+  "layout": "linear",
+  "nodes": [
+    {"id": "s", "text": "开始", "shape": "start"},
+    {"id": "a", "text": "采集多源农情数据", "shape": "process"},
+    {"id": "b", "text": "缺失值填补与去噪", "shape": "process"},
+    {"id": "c", "text": "数据完整？", "shape": "decision"},
+    {"id": "c1", "text": "标记异常样本", "shape": "process", "col": 1},
+    {"id": "d", "text": "特征提取", "shape": "process"},
+    {"id": "e", "text": "模型推理", "shape": "process"},
+    {"id": "f", "text": "置信度≥0.8？", "shape": "decision"},
+    {"id": "f1", "text": "转人工复核", "shape": "process", "col": -1},
+    {"id": "f2", "text": "直接入库", "shape": "process", "col": 1},
+    {"id": "g", "text": "结果合并", "shape": "process"},
+    {"id": "h", "text": "生成农事建议", "shape": "process"},
+    {"id": "i", "text": "推送任务中心", "shape": "process"},
+    {"id": "j", "text": "结束", "shape": "end"}
+  ],
+  "edges": [
+    ["s", "a"],
+    ["a", "b"],
+    ["b", "c"],
+    {"from": "c", "to": "c1", "label": "否"},
+    {"from": "c", "to": "d", "label": "是"},
+    ["c1", "d"],
+    ["d", "e"],
+    ["e", "f"],
+    {"from": "f", "to": "f1", "label": "否"},
+    {"from": "f", "to": "f2", "label": "是"},
+    ["f1", "g"],
+    ["f2", "g"],
+    ["g", "h"],
+    ["h", "i"],
+    ["i", "j"],
+    {"from": "g", "to": "e", "label": "复核不通过", "dashed": true}
+  ]
+}
