@@ -11,6 +11,7 @@ Exit code 1 when any problem is found, 0 when clean.
 """
 
 import argparse
+import html
 import json
 import math
 import re
@@ -222,7 +223,7 @@ def check_text(svg, W, H):
     issues = []
     for m in re.finditer(r"<text\b([^>]*)>(.*?)</text>", svg, re.S):
         a = attrs_of(m.group(1))
-        content = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+        content = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()
         if not content:
             continue
 
@@ -270,7 +271,7 @@ def check_terminator_shape(svg):
 
     for m in re.finditer(r"<text\b([^>]*)>(.*?)</text>", svg, re.S):
         a = attrs_of(m.group(1))
-        content = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+        content = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()
         if content not in ("开始", "结束", "开始/结束", "start", "end", "Start", "End"):
             continue
         px, py = fnum(a, "x"), fnum(a, "y")
@@ -293,6 +294,80 @@ def check_terminator_shape(svg):
                 "detail": f'圆角矩形 rx={rx:.0f}，跑道形应为 {want:.0f}（= 高/2）',
                 "at": f'"{content}" @({px:.0f},{py:.0f})',
                 "fix": f"rx 改为 {want:.0f}；若走 UML 路线则删掉文字、改用实心圆",
+            })
+    return issues
+
+
+def bbox_of(tag, a):
+    """Approximate bounding box for path/polygon from its coordinates."""
+    if tag == "polygon" or tag == "polyline":
+        pts = parse_points(a.get("points", ""))
+        if not pts:
+            return None
+        xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+        return min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
+    if tag == "path":
+        nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", a.get("d", ""))]
+        pairs = list(zip(nums[0::2], nums[1::2]))
+        if not pairs:
+            return None
+        xs, ys = [p[0] for p in pairs], [p[1] for p in pairs]
+        return min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
+    return None
+
+
+def check_stroke_width(svg):
+    """One diagram, one line weight. Dashed auxiliary lines (lifelines etc.)
+    are exempt -- thin dashed is a legitimate convention."""
+    issues = []
+    widths = {}
+    for m in ELEM_RE.finditer(svg):
+        tag, raw = m.group(1), m.group(2)
+        if tag == "text":
+            continue
+        a = attrs_of(raw)
+        if "stroke-dasharray" in raw or "stroke-dasharray" in a.get("style", ""):
+            continue
+        style = a.get("style", "")
+        # PlantUML 的 actor 胶囊 / 数据库圆柱装饰描边是 #181818（硬编码 1.5），
+        # 与正文线不是同一套，只统计纯黑描边的图元
+        stroke = a.get("stroke", "")
+        mc = re.search(r"stroke:\s*(#[0-9A-Fa-f]{6})", style)
+        if mc:
+            stroke = mc.group(1)
+        if stroke and stroke.lower() not in ("#000000", "black"):
+            continue
+        w = None
+        mw = re.search(r"stroke-width:\s*([0-9.]+)", style)
+        if mw:
+            w = float(mw.group(1))
+        elif a.get("stroke-width"):
+            try:
+                w = float(a["stroke-width"])
+            except ValueError:
+                w = None
+        if w is None or w <= 0:
+            continue
+        # 大尺寸容器框（时序图的 alt/opt 组合片段等）按 UML 惯例用粗描边强调边界
+        if tag == "rect" and (fnum(a, "width") > 150 or fnum(a, "height") > 150):
+            continue
+        # 组合片段左上角的标签页是小封闭 path，同样属于强调边框的一部分
+        if tag in ("path", "polygon"):
+            box = bbox_of(tag, a)
+            if box and box[2] < 100 and box[3] < 20:
+                continue
+        widths.setdefault(round(w, 1), 0)
+        widths[round(w, 1)] += 1
+
+    if len(widths) > 1:
+        span = max(widths) - min(widths)
+        if span >= 0.5:
+            detail = ", ".join(f"{w}×{n}处" for w, n in sorted(widths.items()))
+            issues.append({
+                "kind": "stroke-width",
+                "detail": f"线宽不统一：{detail}",
+                "at": "stroke-width",
+                "fix": "全部图元统一成同一 stroke-width（虚线辅助线可保持细）",
             })
     return issues
 
@@ -379,6 +454,7 @@ def check_svg(svg, index, tolerance, grayscale):
     issues += check_bounds(svg, W, H)
     issues += check_text(svg, W, H)
     issues += check_terminator_shape(svg)
+    issues += check_stroke_width(svg)
     issues += check_usecase_flow_arrows(svg)
     if grayscale:
         issues += check_grayscale(svg)
@@ -437,6 +513,7 @@ def main():
         "text-overflow": "文字溢出",
         "terminator": "终止符形状",
         "usecase-flow": "用例间流程箭头",
+        "stroke-width": "线宽不统一",
         "color": "非灰度颜色",
         "no-viewbox": "缺少 viewBox",
     }

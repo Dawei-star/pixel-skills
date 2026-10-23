@@ -23,6 +23,15 @@ agent_created: true
 
 PlantUML 出图发虚或错位时，先调 `skinparam`（`monochrome true`、`shadowing false`、`linetype ortho`），不要急着换工具。
 
+## 线要直、粗细要匀
+
+PlantUML 默认样式有两个天然缺陷，评审一眼就能看出来：
+
+1. **曲线绕行**：默认样条布线，长距离 include 画出 S 弯，跨边界关联绕大弧线。加 `skinparam linetype ortho` 强制横平竖直。
+2. **线宽不匀**：默认椭圆边框 0.5、连线 1.0、actor 小人 0.5，同一张图三种粗细。所有 `<图种>BorderThickness` 拉齐到 1.0（完整清单见 `references/snippets.md` 样板），三个易漏的：`usecaseBorderThickness`、`actorBorderThickness`、`sequenceParticipantBorderThickness`。
+
+例外：时序图生命线 0.5 细虚线是 UML 惯例（辅助线细于消息线），actor 胶囊和数据库圆柱的 1.5 是 PlantUML 硬编码的装饰描边，`check_diagram.py` 对这两类已豁免，看到不用管。
+
 ## 用例图的箭头
 
 参与者与用例之间写 `-->`，不要写 `--`：
@@ -70,6 +79,7 @@ python scripts/check_diagram.py 页面.html --grayscale
 | 文字溢出 | 估算宽度超出 viewBox | 换了个更长的词 |
 | 终止符形状 | 写着"开始/结束"的框 `rx ≠ 高/2` | 用了工具默认圆角矩形 |
 | 用例间流程箭头 | 两个椭圆之间连了实线箭头 | 把用例图当流程图用 |
+| 线宽不统一 | 同一图出现 ≥0.5px 差的多档 stroke-width（虚线辅助线豁免） | 用工具默认值直接出图 |
 | 非灰度颜色 | RGB 极差 > 8（`--grayscale`） | 用颜色承载语义 |
 
 `--tolerance` 放宽贴合容差，`--json` 供程序解析。

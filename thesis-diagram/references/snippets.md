@@ -77,6 +77,24 @@
 
 ---
 
+## PlantUML 活动图判断节点（必加，否则有三大硬伤）
+
+PlantUML 新版 activity 语法的默认画法有三个问题：① 条件文字顶破菱形边框；
+② if/endif 汇合处自动画一个**空心小菱形**（UML 合并节点，教材流程图里看着像画错）；
+③ 连线为绕进空心菱形而产生拐弯。统一样式里必须加：
+
+```plantuml
+' 条件文字写在菱形内，菱形随文字自动撑大
+skinparam ConditionStyle Inside
+' 分支汇合处：用水平线代替默认的空心合并菱形
+skinparam ConditionEndStyle hline
+```
+
+注意 `ConditionStyle Diamond` 是"空菱形 + 文字挂在外面"，不符合教材惯例，不要用。
+分支本身以 `stop` 结束时不存在汇合，`hline` 不生效也无需处理。
+
+---
+
 ## 椭圆上的交点
 
 从 `(x0,y0)` 指向椭圆 `(cx,cy,rx,ry)`，取靠近起点的交点：
@@ -121,6 +139,19 @@ left to right direction
 skinparam monochrome true
 skinparam shadowing false
 skinparam packageStyle rectangle
+
+' 线型：禁用默认样条曲线，长距离 include 会画出 S 弯、跨边界关联会绕大弧线
+skinparam linetype ortho
+' 线宽：PlantUML 默认椭圆 0.5 / 连线 1.0 / actor 0.5，同图粗细不一，全部拉齐到 1
+skinparam usecaseBorderThickness 1.0
+skinparam actorBorderThickness 1.0
+skinparam rectangleBorderThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam activityBorderThickness 1.0
+skinparam stateBorderThickness 1.0
+' 时序图：参与者边框拉齐；生命线 0.5 细虚线是 UML 惯例，保留
+skinparam sequenceParticipantBorderThickness 1.0
+skinparam sequenceActorBorderThickness 1.0
 
 actor 用户 as U
 rectangle 在线订单管理系统 {
