@@ -32,6 +32,16 @@ def attrs_of(raw):
     return {k: v for k, v in ATTR_RE.findall(raw)}
 
 
+def has_stroke(a):
+    """PlantUML 把描边写在 style 里（style="stroke:#181818;stroke-width:1"），
+    只查 stroke 属性会把它的所有框误判成文字底垫。"""
+    stroke = a.get("stroke", "").strip().lower()
+    if stroke and stroke != "none":
+        return True
+    m = re.search(r"stroke:\s*([^;]+)", a.get("style", ""))
+    return bool(m and m.group(1).strip().lower() != "none")
+
+
 def fnum(attrs, key, default=0.0):
     try:
         return float(attrs.get(key, default))
@@ -98,21 +108,108 @@ def strip_defs(svg):
     return re.sub(r"<defs\b.*?</defs>", "", svg, flags=re.S)
 
 
+PATH_ARGS = {"M": 2, "L": 2, "H": 1, "V": 1, "C": 6, "S": 4, "Q": 4, "T": 2, "A": 7, "Z": 0}
+TOKEN_RE = re.compile(r"[A-Za-z]|-?(?:\d+\.?\d*|\.\d+)")
+
+
+def path_polylines(d, steps=8):
+    """把 path 的 d 拆成若干段折线，一段一个 M。
+
+    PlantUML 的连线是三次贝塞尔（C 命令），不采样就整条看不见；弧（A）按终点直连近似。
+    """
+    toks = TOKEN_RE.findall(d or "")
+    subs, cur = [], []
+    cmd, i = None, 0
+    cx = cy = 0.0
+    start = (0.0, 0.0)
+
+    while i < len(toks):
+        tok = toks[i]
+        if tok.isalpha():
+            cmd = tok
+            i += 1
+            if cmd.upper() == "Z":
+                if cur:
+                    cur.append(start)
+                    subs.append(cur)
+                    cur = []
+            continue
+        if cmd is None:
+            i += 1
+            continue
+
+        upper = cmd.upper()
+        rel = cmd.islower()
+        n = PATH_ARGS.get(upper, 2)
+        try:
+            vals = [float(v) for v in toks[i:i + n]]
+        except ValueError:
+            i += 1
+            continue
+        if len(vals) < n:
+            break
+        i += n
+
+        if upper == "H":
+            cx = cx + vals[0] if rel else vals[0]
+            cur.append((cx, cy))
+        elif upper == "V":
+            cy = cy + vals[0] if rel else vals[0]
+            cur.append((cx, cy))
+        elif upper == "M":
+            x, y = vals
+            cx, cy = (cx + x, cy + y) if rel else (x, y)
+            start = (cx, cy)
+            if cur:
+                subs.append(cur)
+            cur = [(cx, cy)]
+        elif upper in ("L", "T"):
+            x, y = vals[-2], vals[-1]
+            cx, cy = (cx + x, cy + y) if rel else (x, y)
+            cur.append((cx, cy))
+        elif upper in ("C", "S", "Q"):
+            px, py = (cx + vals[-2], cy + vals[-1]) if rel else (vals[-2], vals[-1])
+            p0 = (cx, cy)
+            p1 = ((cx + vals[0], cy + vals[1]) if rel else (vals[0], vals[1]))
+            p2 = ((cx + vals[2], cy + vals[3]) if rel else (vals[2], vals[3]))
+            if upper == "Q":
+                p1, p2 = p1, p2
+            for k in range(1, steps + 1):
+                t = k / steps
+                mt = 1 - t
+                bx = (mt ** 3) * p0[0] + 3 * mt * mt * t * p1[0] + 3 * mt * t * t * p2[0] + t ** 3 * px
+                by = (mt ** 3) * p0[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t ** 3 * py
+                cur.append((bx, by))
+            cx, cy = px, py
+        elif upper == "A":
+            x, y = vals[-2], vals[-1]
+            cx, cy = (cx + x, cy + y) if rel else (x, y)
+            cur.append((cx, cy))
+        else:
+            continue
+
+    if cur:
+        subs.append(cur)
+    return [s for s in subs if len(s) >= 2]
+
+
 def segments_of(tag, a):
     """Vertex list of a connector element, or None when it is decoration."""
     if tag == "line":
         return [(fnum(a, "x1"), fnum(a, "y1")), (fnum(a, "x2"), fnum(a, "y2"))]
     if tag in ("polyline", "polygon"):
         pts = parse_points(a.get("points", ""))
-        return pts if len(pts) >= 2 else None
-    if tag == "path":
-        d = a.get("d", "")
-        # 只有纯 M/L 折线才算连接线：带曲线、弧、或 H/V 简写的多为装饰图形
-        if any(c in d for c in CURVE_CMDS) or re.search(r"[HVhv]", d):
+        if len(pts) < 2:
             return None
-        nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", d)]
-        pts = list(zip(nums[0::2], nums[1::2]))
-        return pts if len(pts) >= 2 else None
+        if tag == "polygon":
+            xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+            if max(xs) - min(xs) < 16 and max(ys) - min(ys) < 16:
+                return None          # 实心小三角是箭头装饰（PlantUML 就这么画）
+        return pts
+    if tag == "path":
+        subs = path_polylines(a.get("d", ""))
+        # 多个 M 的是装饰图形（actor 四肢、组合片段标签），不是单根连线
+        return subs[0] if len(subs) == 1 else None
     return None
 
 
@@ -138,6 +235,9 @@ def collect_nodes(svg):
         tag, raw = m.group(1), m.group(2)
         a = attrs_of(raw)
         if tag == "rect":
+            # 没有描边的矩形是文字底垫（时序图消息标签），不是图元
+            if not has_stroke(a):
+                continue
             x, y, w, h = (fnum(a, "x"), fnum(a, "y"),
                           fnum(a, "width"), fnum(a, "height"))
             if w <= 0 or h <= 0:
@@ -284,9 +384,12 @@ def check_node_overlap(svg):
     for i in range(len(nodes)):
         for j in range(i + 1, len(nodes)):
             a, b = nodes[i]["box"], nodes[j]["box"]
-            if box_contains(a, b) or box_contains(b, a):
+            same = (abs(a[0] - b[0]) < 1 and abs(a[1] - b[1]) < 1
+                    and abs(a[2] - b[2]) < 1 and abs(a[3] - b[3]) < 1)
+            # 严格嵌套是合法的分组框（系统边界套节点），但完全同位置同尺寸是复制事故
+            if not same and (box_contains(a, b) or box_contains(b, a)):
                 continue
-            if box_overlap(a, b):
+            if same or box_overlap(a, b):
                 cx = (max(a[0], b[0]) + min(a[2], b[2])) / 2
                 cy = (max(a[1], b[1]) + min(a[3], b[3])) / 2
                 issues.append({
@@ -405,10 +508,10 @@ def check_arrows(svg, tolerance, warn_band=9.0):
                 continue
             tip = pts[-1]
         elif tag == "path":
-            nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", a.get("d", ""))]
-            if len(nums) < 2:
+            subs = path_polylines(a.get("d", ""))
+            if not subs:
                 continue
-            tip = (nums[-2], nums[-1])
+            tip = subs[0][-1]
         else:
             continue
 
@@ -568,11 +671,11 @@ def bbox_of(tag, a):
         xs, ys = [p[0] for p in pts], [p[1] for p in pts]
         return min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
     if tag == "path":
-        nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", a.get("d", ""))]
-        pairs = list(zip(nums[0::2], nums[1::2]))
-        if not pairs:
+        subs = path_polylines(a.get("d", ""))
+        pts = [p for sub in subs for p in sub]
+        if not pts:
             return None
-        xs, ys = [p[0] for p in pairs], [p[1] for p in pairs]
+        xs, ys = [p[0] for p in pts], [p[1] for p in pts]
         return min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
     return None
 

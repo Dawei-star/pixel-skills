@@ -1,0 +1,23 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "u", "text": "农技员"},
+    {"id": "w", "text": "移动端"},
+    {"id": "g", "text": "接口网关"},
+    {"id": "s", "text": "识别服务"},
+    {"id": "m", "text": "模型引擎"},
+    {"id": "d", "text": "数据库"}
+  ],
+  "messages": [
+    {"from": "u", "to": "w", "text": "上传巡田照片"},
+    {"from": "w", "to": "g", "text": "POST /infer"},
+    {"from": "g", "to": "g", "text": "校验令牌"},
+    {"from": "g", "to": "s", "text": "转发推理请求"},
+    {"from": "s", "to": "d", "text": "查询地块信息"},
+    {"from": "d", "to": "s", "text": "地块记录", "kind": "return"},
+    {"from": "s", "to": "m", "text": "调用模型"},
+    {"from": "m", "to": "s", "text": "置信度与标签", "kind": "return"},
+    {"from": "s", "to": "g", "text": "推理结果", "kind": "return"},
+    {"from": "g", "to": "w", "text": "返回 JSON", "kind": "return"}
+  ]
+}

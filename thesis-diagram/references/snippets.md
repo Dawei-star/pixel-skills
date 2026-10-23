@@ -79,6 +79,9 @@
 
 ## PlantUML 活动图判断节点（必加，否则有三大硬伤）
 
+> 只在**确定走 PlantUML** 时才用这段（比如要泳道、并发分叉条、嵌套判定）。有严格菱形要求就走 `layout.py`；
+> 用 UML 还是 GB 1526，先问用户（SKILL.md「流程类图：先问，再画」）。
+
 PlantUML 新版 activity 语法的默认画法有三个问题：① 条件文字顶破菱形边框；
 ② if/endif 汇合处自动画一个**空心小菱形**（UML 合并节点，教材流程图里看着像画错）；
 ③ 连线为绕进空心菱形而产生拐弯。统一样式里必须加：
@@ -90,7 +93,10 @@ skinparam ConditionStyle Inside
 skinparam ConditionEndStyle hline
 ```
 
-注意 `ConditionStyle Diamond` 是"空菱形 + 文字挂在外面"，不符合教材惯例，不要用。
+注意 `ConditionStyle Diamond` 是"空菱形 + 文字挂在外"，不符合教材惯例，不要用。
+
+代价要讲清楚：`ConditionStyle Inside` 出来的是**六边形**（上下边平），不是四边菱形，实测任何字数都是 6 个顶点。
+要求严格菱形时只能换通道（`layout.py` 的 `linear` 或手写），别指望调 skinparam 调成菱形。
 分支本身以 `stop` 结束时不存在汇合，`hline` 不生效也无需处理。
 
 ---

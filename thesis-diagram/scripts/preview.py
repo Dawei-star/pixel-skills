@@ -73,6 +73,30 @@ def points(raw):
     return list(zip(nums[0::2], nums[1::2]))
 
 
+def dashed_seg(draw, p1, p2, color, width, scale, dash=5.0, gap=3.0):
+    """PIL 没有原生虚线，按段拆开画。"""
+    (x1, y1), (x2, y2) = p1, p2
+    length = math.hypot(x2 - x1, y2 - y1)
+    if length < 1e-6:
+        return
+    ux, uy = (x2 - x1) / length, (y2 - y1) / length
+    on, off = dash * scale, gap * scale
+    pos = 0.0
+    while pos < length:
+        end = min(pos + on, length)
+        draw.line([(x1 + ux * pos, y1 + uy * pos),
+                   (x1 + ux * end, y1 + uy * end)], fill=color, width=width)
+        pos = end + off
+
+
+def stroke_path(draw, pts, color, width, scale, dashed):
+    if not dashed:
+        draw.line(pts, fill=color, width=width, joint="curve")
+        return
+    for a, b in zip(pts, pts[1:]):
+        dashed_seg(draw, a, b, color, width, scale)
+
+
 def arrowhead(draw, pts, scale, filled=True, color=(44, 44, 42)):
     if len(pts) < 2:
         return
@@ -119,13 +143,16 @@ def main():
         a = attrs(raw)
         sw = fnum(a, "stroke-width", 1.2)
         w = max(1, int(round(sw * s)))
+        dashes = "dasharray" in raw
 
         if tag == "rect":
             x, y = fnum(a, "x") * s, fnum(a, "y") * s
             ww, hh = fnum(a, "width") * s, fnum(a, "height") * s
             r = fnum(a, "rx") * s
             box = [x, y, x + ww, y + hh]
-            if r > 0:
+            if "stroke" not in a:
+                draw.rectangle(box, fill="white")      # 文字底垫，不描边
+            elif r > 0:
                 draw.rounded_rectangle(box, radius=r, outline=stroke, width=w)
             else:
                 draw.rectangle(box, outline=stroke, width=w)
@@ -140,19 +167,22 @@ def main():
                          fill=stroke if fill not in ("#fff", "#FFFFFF", "none") else None,
                          outline=stroke, width=w)
         elif tag == "line":
-            p = [(fnum(a, "x1"), fnum(a, "y1")), (fnum(a, "x2"), fnum(a, "y2"))]
-            draw.line([(x * s, y * s) for x, y in p], fill=stroke, width=w)
+            p = [(fnum(a, "x1") * s, fnum(a, "y1") * s),
+                 (fnum(a, "x2") * s, fnum(a, "y2") * s)]
+            stroke_path(draw, p, stroke, w, s, dashes)
             if "marker-end" in raw:
-                arrowhead(draw, p, s, filled="url(#ar)" in raw or "url(#tri)" in raw)
+                arrowhead(draw, [(x / s, y / s) for x, y in p], s,
+                          filled="url(#ar)" in raw or "url(#tri)" in raw)
         elif tag in ("polyline", "polygon"):
-            p = points(a.get("points", ""))
-            if len(p) < 2:
+            pts = points(a.get("points", ""))
+            if len(pts) < 2:
                 continue
-            draw.line([(x * s, y * s) for x, y in p], fill=stroke, width=w, joint="curve")
+            scaled = [(x * s, y * s) for x, y in pts]
+            stroke_path(draw, scaled, stroke, w, s, dashes)
             if tag == "polygon":
-                draw.polygon([(x * s, y * s) for x, y in p], outline=stroke, width=w)
+                draw.polygon(scaled, outline=stroke, width=w)
             if "marker-end" in raw:
-                arrowhead(draw, p, s, filled="url(#ar)" in raw or "url(#tri)" in raw)
+                arrowhead(draw, pts, s, filled="url(#ar)" in raw or "url(#tri)" in raw)
         elif tag == "text":
             content = re.sub(r"<[^>]+>", "", inner)
             content = (content.replace("&lt;", "<").replace("&gt;", ">")

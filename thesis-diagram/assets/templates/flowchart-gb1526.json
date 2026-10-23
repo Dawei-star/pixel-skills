@@ -1,0 +1,114 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {
+      "id": "s",
+      "text": "开始",
+      "shape": "terminator"
+    },
+    {
+      "id": "a",
+      "text": "提交申请",
+      "shape": "process"
+    },
+    {
+      "id": "d1",
+      "text": "是否信息完整？",
+      "shape": "decision"
+    },
+    {
+      "id": "x",
+      "text": "退回补充",
+      "shape": "process",
+      "col": -1
+    },
+    {
+      "id": "e1",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1
+    },
+    {
+      "id": "b",
+      "text": "审核材料",
+      "shape": "process"
+    },
+    {
+      "id": "d2",
+      "text": "是否通过审核？",
+      "shape": "decision"
+    },
+    {
+      "id": "c",
+      "text": "出具结果",
+      "shape": "process"
+    },
+    {
+      "id": "y",
+      "text": "记录驳回原因",
+      "shape": "process",
+      "col": 1
+    },
+    {
+      "id": "m",
+      "text": "归档",
+      "shape": "process"
+    },
+    {
+      "id": "e",
+      "text": "结束",
+      "shape": "terminator"
+    }
+  ],
+  "edges": [
+    [
+      "s",
+      "a"
+    ],
+    [
+      "a",
+      "d1"
+    ],
+    {
+      "from": "d1",
+      "to": "b",
+      "label": "是"
+    },
+    {
+      "from": "d1",
+      "to": "x",
+      "label": "否"
+    },
+    [
+      "x",
+      "e1"
+    ],
+    [
+      "b",
+      "d2"
+    ],
+    {
+      "from": "d2",
+      "to": "c",
+      "label": "是"
+    },
+    {
+      "from": "d2",
+      "to": "y",
+      "label": "否"
+    },
+    [
+      "c",
+      "m"
+    ],
+    [
+      "y",
+      "m"
+    ],
+    [
+      "m",
+      "e"
+    ]
+  ]
+}

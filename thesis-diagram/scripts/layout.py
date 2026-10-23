@@ -28,6 +28,9 @@ STROKE = "#2C2C2A"
 SW_SHAPE = 1.2
 SW_EDGE = 1.1
 FS = 12.0
+# 图内文字统一用无衬线中文字体。SVG 不写 font-family 时浏览器会退到 serif，
+# 同一张图里就会出现"椭圆里是宋体、参与者名是雅黑"的两套字形。
+FONT = "Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif"
 
 GAP_Y = 26          # 相邻两层的净间距
 BRANCH_DX = 96      # 判定分支相对中线的水平偏移
@@ -102,9 +105,11 @@ class Prim:
     def render(self, dx, dy):
         k = self.kind
         if k == "rect":
+            edge = ("" if getattr(self, "plain", False)
+                    else ' stroke="{}" stroke-width="{}"'.format(STROKE, SW_SHAPE))
             return ('<rect x="{:.1f}" y="{:.1f}" width="{:.1f}" height="{:.1f}" rx="{:.1f}" '
-                    'fill="#fff" stroke="{}" stroke-width="{}"/>'
-                    .format(self.x + dx, self.y + dy, self.w, self.h, self.rx, STROKE, SW_SHAPE))
+                    'fill="#fff"{}/>'
+                    .format(self.x + dx, self.y + dy, self.w, self.h, self.rx, edge))
         if k == "ellipse":
             return ('<ellipse cx="{:.1f}" cy="{:.1f}" rx="{:.1f}" ry="{:.1f}" '
                     'fill="#fff" stroke="{}" stroke-width="{}"/>'
@@ -132,10 +137,12 @@ class Prim:
         if k == "text":
             fill = getattr(self, "fill", "auto")
             fill_attr = "" if fill == "auto" else ' fill="{}"'.format(fill)
-            size = "" if abs(self.fs - FS) < 1e-6 else ' font-size="{:.1f}"'.format(self.fs)
-            return ('<text x="{:.1f}" y="{:.1f}" text-anchor="{}" dominant-baseline="central"{}{}>{}</text>'
-                    .format(self.x + dx, self.y + dy, self.anchor, size, fill_attr,
-                            self.content))
+            # font-size 一律显式写出：早先"等于 FS 就省略"的写法假定根节点有默认字号，
+            # 而根节点并没有 → 正文全部按浏览器默认 16px 渲染，与外圈 10.5px 的用例大小不一。
+            return ('<text x="{:.1f}" y="{:.1f}" text-anchor="{}" dominant-baseline="central" '
+                    'font-family="{}" font-size="{:.1f}"{}>{}</text>'
+                    .format(self.x + dx, self.y + dy, self.anchor, FONT, self.fs,
+                            fill_attr, self.content))
         raise ValueError(k)
 
     def extra(self):
@@ -176,6 +183,9 @@ class LinearLayout:
             self.nodes[n["id"]] = n
             self.order.append(n["id"])
         self.edges = [self._edge(e) for e in spec.get("edges", [])]
+        # gb1526：处理框直角、开始/结束用跑道形（节点 shape 给 terminator）。
+        # 不写 style 时沿用 UML 活动图画法（圆角动作框、实心圆起、带环圆止）。
+        self.style = spec.get("style", "uml")
         for e in self.edges:
             for key in ("from", "to"):
                 if e[key] not in self.nodes:
@@ -219,6 +229,7 @@ class LinearLayout:
             outs.setdefault(e["from"], []).append(e)
 
         back = self._back_edges(outs)
+        self._back_pairs = {(e["from"], e["to"]) for e in back}
         fwd = [e for e in self.edges if e not in back]
 
         rank = {nid: 0 for nid in self.order}
@@ -269,7 +280,9 @@ class LinearLayout:
         for nid, n in self.nodes.items():
             if n["shape"] != "decision":
                 continue
-            targets = [e["to"] for e in self.edges if e["from"] == nid]
+            targets = [e["to"] for e in self.edges
+                       if e["from"] == nid
+                       and (e["from"], e["to"]) not in getattr(self, "_back_pairs", set())]
             if len(targets) < 2:
                 continue
             used = {self.nodes[t]["col"] for t in targets if self.nodes[t]["_col_set"]}
@@ -337,9 +350,11 @@ class LinearLayout:
 
     def _assign_x(self):
         branch_nodes = [n for n in self.nodes.values() if n["col"] != 0]
+        trunk_w = max((n["w"] for n in self.nodes.values() if n["col"] == 0), default=0)
         dx = BRANCH_DX
         if branch_nodes:
-            dx = max(dx, max(n["w"] for n in branch_nodes) / 2 + 22)
+            # 只按分支框半宽算会漏掉主干框自己的半宽，两边各占一半通道就叠在一起了。
+            dx = max(dx, (max(n["w"] for n in branch_nodes) + trunk_w) / 2 + 26)
         self.dx = dx
         for n in self.nodes.values():
             n["cx"] = n["col"] * dx
@@ -367,7 +382,7 @@ class LinearLayout:
                     (cx - w / 2 + s, cy - h / 2), (cx + w / 2, cy - h / 2),
                     (cx + w / 2 - s, cy + h / 2), (cx - w / 2, cy + h / 2)]))
             else:
-                rx = h / 2 if shape == "terminator" else 8
+                rx = h / 2 if shape == "terminator" else (0 if self.style == "gb1526" else 8)
                 self.prims.append(Prim("rect", x=cx - w / 2, y=cy - h / 2, w=w, h=h, rx=rx))
             if n.get("text"):
                 fs = 11.5 if shape == "decision" else FS
@@ -537,7 +552,7 @@ class UsecaseLayout:
         for n in all_uc:
             self.prims.append(Prim("ellipse", cx=n["cx"], cy=n["cy"],
                                    rx=n["rx"], ry=n["ry"]))
-            fs = FS if n in self.primary else 10.5
+            fs = FS  # 主用例与被包含用例同号；早先给次列 10.5，同一张图里两种字号
             self.prims.append(Prim("text", x=n["cx"], y=n["cy"],
                                    content=n.get("text", ""), fs=fs, anchor="middle"))
 
@@ -616,9 +631,11 @@ class UsecaseLayout:
                                    fs=8.5, anchor="middle", fill="#5F5E5A"))
 
     def _actor_anchor(self, aid):
+        """关联线起点必须落在小人的手臂末端（ax+16），不是它外面 2px。
+        早先写 +18，导出后手臂与连线之间有一道肉眼可见的断口。"""
         for a in self.actors:
             if a.get("id") == aid:
-                return a["_ax"] + 18, a["_ay"] + 24
+                return a["_ax"] + 16, a["_ay"] + 24
         return None
 
     @staticmethod
@@ -628,6 +645,142 @@ class UsecaseLayout:
         if denom < 1e-9:
             return n["cx"], n["cy"] - n["ry"]
         return n["cx"] + dx / denom, n["cy"] + dy / denom
+
+
+# ---------------------------------------------------------------- 时序图版式
+
+class SequenceLayout:
+    """消息序号直接当 y 轴、参与者序号直接当 x 轴——两个轴都是算出来的，没有求解过程。"""
+
+    BOX_H = 26
+    MSG_GAP = 38
+    HALF_BAR = 6
+    SIDE_PAD = 8
+
+    def __init__(self, spec):
+        self.parts = [dict(p) for p in spec.get("participants", [])]
+        if len(self.parts) < 2:
+            raise SystemExit("时序图至少要两个参与者")
+        for p in self.parts:
+            p["id"] = p.get("id") or p.get("text")
+            if not p["id"]:
+                raise SystemExit("participants 里每项都要有 id 或 text")
+        ids = {p["id"] for p in self.parts}
+        if len(ids) != len(self.parts):
+            raise SystemExit("参与者 id 有重复")
+
+        self.msgs = []
+        for raw in spec.get("messages", []):
+            m = dict(raw)
+            for key in ("from", "to"):
+                if m.get(key) not in ids:
+                    raise SystemExit(f'消息引用了未声明的参与者 "{m.get(key)}"')
+            m.setdefault("kind", "call")
+            if m["kind"] not in ("call", "return"):
+                raise SystemExit(f'消息 kind 只能是 call / return，收到 "{m["kind"]}"')
+            self.msgs.append(m)
+        if not self.msgs:
+            raise SystemExit("时序图至少要有一条消息")
+        self.prims = []
+
+    def run(self):
+        for p in self.parts:
+            p["w"] = max(76, text_w(p.get("text", "")) + 24)
+
+        spacing = max(118, max(p["w"] for p in self.parts) + 42)
+        x = max(p["w"] for p in self.parts) / 2 + 14
+        for p in self.parts:
+            p["cx"] = x
+            p["cy"] = 14 + self.BOX_H / 2
+            p["bottom"] = 14 + self.BOX_H
+            x += spacing
+
+        y = self.parts[0]["bottom"] + 34
+        for m in self.msgs:
+            m["y"] = y
+            y += self.MSG_GAP
+        self.height = y - self.MSG_GAP + 40
+
+        bars = self._bars()
+
+        for p in self.parts:
+            self.prims.append(Prim("rect", x=p["cx"] - p["w"] / 2, y=14,
+                                   w=p["w"], h=self.BOX_H, rx=0))
+            self.prims.append(Prim("text", x=p["cx"], y=p["cy"],
+                                   content=p.get("text", ""), fs=FS, anchor="middle"))
+
+        for p in self.parts:
+            self.prims.append(Prim("line", x1=p["cx"], y1=p["bottom"],
+                                   x2=p["cx"], y2=self.height - 20, dashed=True))
+
+        for p in self.parts:
+            if p["id"] in bars:
+                top, bottom = bars[p["id"]]
+                self.prims.append(Prim("rect", x=p["cx"] - self.HALF_BAR, y=top,
+                                       w=self.HALF_BAR * 2, h=bottom - top, rx=0))
+
+        for m in self.msgs:
+            self._message(m, bars)
+        return self.prims
+
+    def _bars(self):
+        """被"调用"过的一端才画激活条。
+
+        判据是收到过 call（不是 return）：发起者只会收到返回，所以保持裸生命线；
+        区间取该参与者全部相关消息的 y 范围，两端各放 8px。
+        """
+        involved, called = {}, set()
+        for m in self.msgs:
+            for side in (m["from"], m["to"]):
+                involved.setdefault(side, []).append(m["y"])
+            if m["kind"] == "call":
+                called.add(m["to"])
+
+        bars = {}
+        for p in self.parts:
+            if p.get("active") is False:
+                continue
+            if p["id"] not in called:
+                continue
+            ys = involved[p["id"]]
+            bars[p["id"]] = (min(ys) - self.SIDE_PAD, max(ys) + self.SIDE_PAD)
+        return bars
+
+    def _message(self, m, bars):
+        src = next(p for p in self.parts if p["id"] == m["from"])
+        dst = next(p for p in self.parts if p["id"] == m["to"])
+        y = m["y"]
+        same = src is dst
+        dx = 1 if (same or dst["cx"] > src["cx"]) else -1
+        x1 = src["cx"] + (dx * self.HALF_BAR if src["id"] in bars else 0)
+        x2 = dst["cx"] - (dx * self.HALF_BAR if dst["id"] in bars else 0)
+
+        if same:
+            self._self_message(src, m, dx)
+            return
+
+        dashed = m["kind"] == "return"
+        self.prims.append(Prim("line", x1=x1, y1=y, x2=x2, y2=y,
+                               marker="aro" if dashed else "ar", dashed=dashed))
+        if m.get("text"):
+            self._label(m["text"], (x1 + x2) / 2, y - 8)
+
+    def _label(self, text, cx, cy):
+        """消息文字压一条白底，免得跟虚生命线糊在一起。"""
+        w = text_w(text, 9.5) + 10
+        self.prims.append(Prim("rect", x=cx - w / 2, y=cy - 7, w=w, h=14,
+                               rx=0, plain=True))
+        self.prims.append(Prim("text", x=cx, y=cy, content=text, fs=9.5, anchor="middle"))
+
+    def _self_message(self, p, m, dx):
+        """自调用画成一个向右的回环，不占额外的 y。"""
+        y = m["y"]
+        arm = p["cx"] + self.HALF_BAR * dx
+        pts = [(arm, y), (arm + 26 * dx, y), (arm + 26 * dx, y + 18), (arm, y + 18)]
+        self.prims.append(Prim("polyline", pts=pts, marker="ar",
+                               dashed=m["kind"] == "return"))
+        if m.get("text"):
+            self._label(m["text"], arm + 34 * dx, y + 6)
 
 
 # ---------------------------------------------------------------- 输出
@@ -643,8 +796,9 @@ def write_svg(prims, path, pad=16.0):
     H = maxy - miny + pad * 2
 
     body = "\n".join(p.render(dx, dy) for p in prims)
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {:.0f} {:.0f}">\n'
-           '{}\n{}\n</svg>\n').format(round(W), round(H), MARKERS, body)
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {:.0f} {:.0f}" '
+           'font-family="{}" font-size="{:.0f}">\n{}\n{}\n</svg>\n'
+           ).format(round(W), round(H), FONT, FS, MARKERS, body)
     Path(path).write_text(svg, encoding="utf-8")
     return round(W), round(H)
 
@@ -662,10 +816,21 @@ def main():
         prims = LinearLayout(spec).run()
     elif layout == "usecase":
         prims = UsecaseLayout(spec).run()
+    elif layout == "sequence":
+        prims = SequenceLayout(spec).run()
     else:
-        raise SystemExit(f'未知版式 "{layout}"；可用：linear, usecase')
+        raise SystemExit(f'未知版式 "{layout}"；可用：linear, usecase, sequence')
 
     W, H = write_svg(prims, args.out)
+    if layout == "linear":
+        # 两套符号混用比用错更致命：UML 样式里出现跑道形终止符（或反之）当场提醒。
+        terms = [n["id"] for n in spec.get("nodes", []) if n.get("shape") == "terminator"]
+        if terms and spec.get("style", "uml") != "gb1526":
+            print(f"⚠ 未声明 style=gb1526，却用了跑道形终止符（{', '.join(terms)}）："
+                  f"这是 GB 1526 的起止符号，与 UML 活动图混用了", file=sys.stderr)
+        if not terms and spec.get("style") == "gb1526":
+            print("⚠ style=gb1526 但没有任何 terminator 节点：GB 1526 的起止应是跑道形",
+                  file=sys.stderr)
     print(f"{args.out}  {W}×{H}  {len(prims)} 个图元", file=sys.stderr)
 
 
