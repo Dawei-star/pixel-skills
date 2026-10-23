@@ -1,0 +1,20 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "s", "text": "学生"},
+    {"id": "w", "text": "选课界面"},
+    {"id": "c", "text": "选课服务"},
+    {"id": "d", "text": "教务数据库"}
+  ],
+  "messages": [
+    {"from": "s", "to": "w", "text": "选择课程并提交"},
+    {"from": "w", "to": "c", "text": "选课请求"},
+    {"from": "c", "to": "c", "text": "校验时间冲突"},
+    {"from": "c", "to": "d", "text": "查询剩余名额"},
+    {"from": "d", "to": "c", "text": "剩余名额 3", "kind": "return"},
+    {"from": "c", "to": "d", "text": "写入选课记录"},
+    {"from": "d", "to": "c", "text": "写入成功", "kind": "return"},
+    {"from": "c", "to": "w", "text": "选课成功", "kind": "return"},
+    {"from": "w", "to": "s", "text": "刷新课表", "kind": "return"}
+  ]
+}

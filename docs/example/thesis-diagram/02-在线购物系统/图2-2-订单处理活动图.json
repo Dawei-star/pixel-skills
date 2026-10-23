@@ -1,0 +1,40 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {"id": "s", "text": "开始", "shape": "terminator"},
+    {"id": "a", "text": "顾客提交订单", "shape": "process"},
+    {"id": "b", "text": "汇总购物车商品", "shape": "process"},
+    {"id": "d1", "text": "是否库存充足？", "shape": "decision"},
+    {"id": "x", "text": "提示缺货商品", "shape": "process", "col": -1},
+    {"id": "e1", "text": "结束", "shape": "terminator", "col": -1},
+    {"id": "c", "text": "锁定库存", "shape": "process"},
+    {"id": "d", "text": "生成待支付订单", "shape": "process"},
+    {"id": "e2", "text": "发起在线支付", "shape": "process"},
+    {"id": "d2", "text": "是否支付成功？", "shape": "decision"},
+    {"id": "f", "text": "订单置为已支付", "shape": "process"},
+    {"id": "g", "text": "通知商家备货", "shape": "process"},
+    {"id": "y", "text": "取消订单", "shape": "process", "col": 1, "rank": 8},
+    {"id": "z", "text": "释放锁定库存", "shape": "process", "col": 1, "rank": 9},
+    {"id": "i", "text": "返回订单处理结果", "shape": "process"},
+    {"id": "e", "text": "结束", "shape": "terminator"}
+  ],
+  "edges": [
+    ["s", "a"],
+    ["a", "b"],
+    ["b", "d1"],
+    {"from": "d1", "to": "c", "label": "是"},
+    {"from": "d1", "to": "x", "label": "否"},
+    ["x", "e1"],
+    ["c", "d"],
+    ["d", "e2"],
+    ["e2", "d2"],
+    {"from": "d2", "to": "f", "label": "是"},
+    {"from": "d2", "to": "y", "label": "否"},
+    ["f", "g"],
+    ["g", "i"],
+    ["y", "z"],
+    ["z", "i"],
+    ["i", "e"]
+  ]
+}

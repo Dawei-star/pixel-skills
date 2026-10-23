@@ -1,0 +1,65 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 影片 {
+  - 影片编号 : String
+  - 片名 : String
+  - 时长 : int
+  - 上映日期 : Date
+  + 查询排片()
+}
+
+class 影厅 {
+  - 影厅编号 : String
+  - 名称 : String
+  - 座位行数 : int
+  - 座位列数 : int
+  + 总座位数() : int
+}
+
+class 场次 {
+  - 场次编号 : String
+  - 放映时间 : DateTime
+  - 票价 : double
+  + 剩余座位() : int
+  + 是否可售() : bool
+}
+
+class 座位 {
+  - 座位编号 : String
+  - 行号 : int
+  - 列号 : int
+  - 座位状态 : 枚举
+  + 锁定()
+  + 释放()
+}
+
+class 票券 {
+  - 票券编号 : String
+  - 取票码 : String
+  - 出票时间 : DateTime
+  - 票面状态 : 枚举
+  + 核销()
+  + 退票()
+}
+
+影片 "1" -down- "0..*" 场次 : 排映
+影厅 "1" -right- "0..*" 场次 : 安排
+影厅 "1" -down- "1..*" 座位 : 包含
+场次 "1" -down- "0..*" 票券 : 售出
+座位 "1" -down- "0..*" 票券 : 对应
+@enduml

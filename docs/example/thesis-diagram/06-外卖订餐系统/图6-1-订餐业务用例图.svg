@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374 792" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+<rect x="86.0" y="16.0" width="272.0" height="760.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="222.0" y="31.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.5">外卖订餐系统</text>
+<ellipse cx="150.0" cy="80.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="80.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">点餐下单</text>
+<ellipse cx="150.0" cy="210.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="210.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">订单评价</text>
+<ellipse cx="150.0" cy="340.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="340.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">接单确认</text>
+<ellipse cx="150.0" cy="470.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="470.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">更新出餐状态</text>
+<ellipse cx="150.0" cy="600.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="600.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">接单配送</text>
+<ellipse cx="150.0" cy="730.0" rx="52.0" ry="20.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="150.0" y="730.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">确认送达</text>
+<ellipse cx="298.0" cy="60.0" rx="44.0" ry="18.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="298.0" y="60.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">在线支付</text>
+<ellipse cx="298.0" cy="710.0" rx="48.0" ry="18.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="298.0" y="710.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">上传送达凭证</text>
+<circle cx="32.0" cy="145.0" r="9.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.4"/>
+<line x1="32.0" y1="154.0" x2="32.0" y2="181.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="16.0" y1="169.0" x2="48.0" y2="169.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="181.0" x2="21.0" y2="203.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="181.0" x2="43.0" y2="203.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<text x="32.0" y="221.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">用户</text>
+<circle cx="32.0" cy="405.0" r="9.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.4"/>
+<line x1="32.0" y1="414.0" x2="32.0" y2="441.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="16.0" y1="429.0" x2="48.0" y2="429.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="441.0" x2="21.0" y2="463.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="441.0" x2="43.0" y2="463.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<text x="32.0" y="481.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">商家</text>
+<circle cx="32.0" cy="665.0" r="9.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.4"/>
+<line x1="32.0" y1="674.0" x2="32.0" y2="701.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="16.0" y1="689.0" x2="48.0" y2="689.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="701.0" x2="21.0" y2="723.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<line x1="32.0" y1="701.0" x2="43.0" y2="723.0" stroke="#2C2C2A" stroke-width="1.1"/>
+<text x="32.0" y="741.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">骑手</text>
+<line x1="48.0" y1="169.0" x2="129.0" y2="98.3" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="48.0" y1="169.0" x2="114.1" y2="195.5" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="48.0" y1="429.0" x2="129.0" y2="358.3" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="48.0" y1="429.0" x2="114.1" y2="455.5" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="48.0" y1="689.0" x2="129.0" y2="618.3" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="48.0" y1="689.0" x2="114.1" y2="715.5" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="199.1" y1="73.4" x2="256.2" y2="65.6" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+<text x="227.6" y="60.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="8.5" fill="#5F5E5A">«include»</text>
+<line x1="199.1" y1="723.4" x2="252.8" y2="716.1" stroke="#2C2C2A" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#aro)"/>
+<text x="226.0" y="710.7" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="8.5" fill="#5F5E5A">«include»</text>
+</svg>

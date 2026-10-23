@@ -1,0 +1,23 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "p", "text": "患者"},
+    {"id": "t", "text": "挂号终端"},
+    {"id": "s", "text": "挂号服务"},
+    {"id": "d", "text": "号源数据库"},
+    {"id": "m", "text": "短信平台"}
+  ],
+  "messages": [
+    {"from": "p", "to": "t", "text": "选择科室与日期"},
+    {"from": "t", "to": "s", "text": "查询可预约号源"},
+    {"from": "s", "to": "d", "text": "读取号源余量"},
+    {"from": "d", "to": "s", "text": "号源列表", "kind": "return"},
+    {"from": "s", "to": "t", "text": "返回可约时段", "kind": "return"},
+    {"from": "p", "to": "t", "text": "确认预约"},
+    {"from": "t", "to": "s", "text": "提交预约请求"},
+    {"from": "s", "to": "d", "text": "锁定号源并写预约记录"},
+    {"from": "d", "to": "s", "text": "预约编号", "kind": "return"},
+    {"from": "s", "to": "m", "text": "发送预约成功短信"},
+    {"from": "s", "to": "t", "text": "预约成功凭条", "kind": "return"}
+  ]
+}

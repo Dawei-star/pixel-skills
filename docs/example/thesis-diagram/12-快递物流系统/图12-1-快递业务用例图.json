@@ -1,0 +1,24 @@
+{
+  "layout": "usecase",
+  "boundary": "快递物流系统",
+  "actors": [
+    {"id": "s", "text": "寄件人"},
+    {"id": "c", "text": "快递员"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "寄件下单", "col": 0},
+    {"id": "u2", "text": "查询物流", "col": 0},
+    {"id": "u3", "text": "揽收扫描", "col": 0},
+    {"id": "u4", "text": "派送签收", "col": 0},
+    {"id": "c1", "text": "运费计算", "col": 1},
+    {"id": "c2", "text": "上传签收凭证", "col": 1}
+  ],
+  "edges": [
+    {"from": "s", "to": "u1", "kind": "assoc"},
+    {"from": "s", "to": "u2", "kind": "assoc"},
+    {"from": "c", "to": "u3", "kind": "assoc"},
+    {"from": "c", "to": "u4", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u4", "to": "c2", "kind": "include"}
+  ]
+}

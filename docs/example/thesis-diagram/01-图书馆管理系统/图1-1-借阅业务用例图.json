@@ -1,0 +1,28 @@
+{
+  "layout": "usecase",
+  "boundary": "图书馆管理系统",
+  "actors": [
+    {"id": "r", "text": "读者"},
+    {"id": "a", "text": "图书管理员"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "查询馆藏", "col": 0},
+    {"id": "u2", "text": "借阅图书", "col": 0},
+    {"id": "u3", "text": "归还图书", "col": 0},
+    {"id": "u4", "text": "维护书目", "col": 0},
+    {"id": "u5", "text": "读者管理", "col": 0},
+    {"id": "c1", "text": "身份认证", "col": 1},
+    {"id": "c2", "text": "计算逾期费", "col": 1},
+    {"id": "c3", "text": "更新馆藏状态", "col": 1}
+  ],
+  "edges": [
+    {"from": "r", "to": "u1", "kind": "assoc"},
+    {"from": "r", "to": "u2", "kind": "assoc"},
+    {"from": "r", "to": "u3", "kind": "assoc"},
+    {"from": "a", "to": "u4", "kind": "assoc"},
+    {"from": "a", "to": "u5", "kind": "assoc"},
+    {"from": "u2", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"},
+    {"from": "u4", "to": "c3", "kind": "include"}
+  ]
+}

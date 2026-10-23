@@ -1,0 +1,23 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 65
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam stateBorderThickness 1.0
+skinparam stateBorderColor #181818
+skinparam stateBackgroundColor #FFFFFF
+hide empty description
+
+[*] --> 上传中
+上传中 --> 正常 : 校验通过
+上传中 --> 已失败 : 中断
+已失败 --> [*]
+正常 --> 回收站 : 删除
+回收站 --> 正常 : 恢复
+回收站 --> 已清除 : 清除
+已清除 --> [*]
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 学生 {
+  - 学号 : String
+  - 姓名 : String
+  - 年级 : int
+  + 选课(课程号)
+  + 退课(课程号)
+}
+
+class 课程 {
+  - 课程号 : String
+  - 课程名 : String
+  - 学分 : double
+  - 容量 : int
+  + 剩余名额() : int
+}
+
+class 选课记录 {
+  - 记录编号 : String
+  - 选课时间 : DateTime
+  - 状态 : 枚举
+  + 是否有效() : bool
+}
+
+class 成绩 {
+  - 平时成绩 : double
+  - 卷面成绩 : double
+  - 总评成绩 : double
+  + 计算绩点() : double
+}
+
+class 教师 {
+  - 工号 : String
+  - 姓名 : String
+  - 职称 : String
+  + 录入成绩()
+  + 查看选课名单()
+}
+
+教师 "1" -down- "0..*" 课程 : 主讲
+学生 "1" -down- "0..*" 选课记录 : 选修
+课程 "1" -right- "0..*" 选课记录 : 被选
+选课记录 "1" -down- "1" 成绩 : 产生
+@enduml

@@ -1,0 +1,21 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "c", "text": "顾客"},
+    {"id": "w", "text": "购物车页面"},
+    {"id": "o", "text": "订单服务"},
+    {"id": "s", "text": "库存服务"},
+    {"id": "p", "text": "支付服务"}
+  ],
+  "messages": [
+    {"from": "c", "to": "w", "text": "点击提交订单"},
+    {"from": "w", "to": "o", "text": "提交订单请求"},
+    {"from": "o", "to": "s", "text": "锁定商品库存"},
+    {"from": "s", "to": "o", "text": "锁定成功", "kind": "return"},
+    {"from": "o", "to": "o", "text": "计算优惠与运费"},
+    {"from": "o", "to": "p", "text": "创建支付单"},
+    {"from": "p", "to": "o", "text": "支付流水号", "kind": "return"},
+    {"from": "o", "to": "w", "text": "订单号与支付链接", "kind": "return"},
+    {"from": "w", "to": "c", "text": "跳转支付页面", "kind": "return"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "layout": "usecase",
+  "boundary": "智能停车场系统",
+  "actors": [
+    {"id": "o", "text": "车主"},
+    {"id": "a", "text": "管理员"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "车辆入场", "col": 0},
+    {"id": "u2", "text": "停车缴费", "col": 0},
+    {"id": "u3", "text": "车辆出场", "col": 0},
+    {"id": "u4", "text": "月卡办理", "col": 0},
+    {"id": "u5", "text": "车位监控", "col": 0},
+    {"id": "c1", "text": "车牌识别", "col": 1},
+    {"id": "c2", "text": "停车计费", "col": 1}
+  ],
+  "edges": [
+    {"from": "o", "to": "u1", "kind": "assoc"},
+    {"from": "o", "to": "u2", "kind": "assoc"},
+    {"from": "o", "to": "u3", "kind": "assoc"},
+    {"from": "a", "to": "u4", "kind": "assoc"},
+    {"from": "a", "to": "u5", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"}
+  ]
+}

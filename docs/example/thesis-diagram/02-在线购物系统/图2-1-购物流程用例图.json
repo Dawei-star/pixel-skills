@@ -1,0 +1,30 @@
+{
+  "layout": "usecase",
+  "boundary": "在线购物系统",
+  "actors": [
+    {"id": "g", "text": "游客"},
+    {"id": "c", "text": "顾客"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "注册账号", "col": 0},
+    {"id": "u2", "text": "浏览商品", "col": 0},
+    {"id": "u3", "text": "管理购物车", "col": 0},
+    {"id": "u4", "text": "提交订单", "col": 0},
+    {"id": "u5", "text": "在线支付", "col": 0},
+    {"id": "u6", "text": "申请退货", "col": 0},
+    {"id": "c1", "text": "校验库存", "col": 1},
+    {"id": "c2", "text": "身份认证", "col": 1},
+    {"id": "c3", "text": "生成退款单", "col": 1}
+  ],
+  "edges": [
+    {"from": "g", "to": "u1", "kind": "assoc"},
+    {"from": "g", "to": "u2", "kind": "assoc"},
+    {"from": "c", "to": "u3", "kind": "assoc"},
+    {"from": "c", "to": "u4", "kind": "assoc"},
+    {"from": "c", "to": "u5", "kind": "assoc"},
+    {"from": "c", "to": "u6", "kind": "assoc"},
+    {"from": "u4", "to": "c1", "kind": "include"},
+    {"from": "u5", "to": "c2", "kind": "include"},
+    {"from": "u6", "to": "c3", "kind": "include"}
+  ]
+}

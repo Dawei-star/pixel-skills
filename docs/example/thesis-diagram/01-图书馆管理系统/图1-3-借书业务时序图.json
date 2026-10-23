@@ -1,0 +1,20 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "r", "text": "读者"},
+    {"id": "t", "text": "借阅终端"},
+    {"id": "s", "text": "借阅服务"},
+    {"id": "d", "text": "馆藏数据库"}
+  ],
+  "messages": [
+    {"from": "r", "to": "t", "text": "刷读者证"},
+    {"from": "t", "to": "s", "text": "提交借书请求"},
+    {"from": "s", "to": "s", "text": "校验借阅额度"},
+    {"from": "s", "to": "d", "text": "查询图书状态"},
+    {"from": "d", "to": "s", "text": "在馆可借", "kind": "return"},
+    {"from": "s", "to": "d", "text": "写入借阅记录"},
+    {"from": "d", "to": "s", "text": "记录编号、应还日期", "kind": "return"},
+    {"from": "s", "to": "t", "text": "借阅成功", "kind": "return"},
+    {"from": "t", "to": "r", "text": "打印借阅凭条", "kind": "return"}
+  ]
+}

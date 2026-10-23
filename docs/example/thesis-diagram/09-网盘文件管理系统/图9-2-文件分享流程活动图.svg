@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 472 888" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+<rect x="191.8" y="16.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="30.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">开始</text>
+<rect x="173.8" y="70.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="85.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">选中待分享文件</text>
+<rect x="173.8" y="126.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="141.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">设置权限与有效期</text>
+<rect x="173.8" y="182.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="197.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提交分享请求</text>
+<polygon points="235.8,238.0 305.5,270.0 235.8,302.0 166.0,270.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="270.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否文件属于本人？</text>
+<rect x="16.0" y="328.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="343.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提示无分享权限</text>
+<rect x="34.0" y="385.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="399.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<rect x="173.8" y="328.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="343.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">生成分享链接</text>
+<rect x="173.8" y="384.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="399.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">将链接发送给访客</text>
+<rect x="173.8" y="440.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="455.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">访客打开分享链接</text>
+<polygon points="235.8,496.0 297.8,528.0 235.8,560.0 173.8,528.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="528.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否链接有效？</text>
+<rect x="16.0" y="586.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="601.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提示链接已失效</text>
+<rect x="34.0" y="660.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="674.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<rect x="173.8" y="586.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="601.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">校验访问密码</text>
+<polygon points="235.8,642.0 297.8,674.0 235.8,706.0 173.8,674.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="674.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否密码正确？</text>
+<rect x="331.5" y="732.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="393.5" y="747.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提示密码错误</text>
+<rect x="349.5" y="789.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="393.5" y="803.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<rect x="173.8" y="732.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="747.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提供预览与下载</text>
+<rect x="173.8" y="788.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="803.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">记录访问日志</text>
+<rect x="191.8" y="844.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="235.8" y="858.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<line x1="235.8" y1="44.0" x2="235.8" y2="70.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="100.0" x2="235.8" y2="126.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="156.0" x2="235.8" y2="182.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="212.0" x2="235.8" y2="238.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="302.0" x2="235.8" y2="328.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="251.8" y="315.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="166.0,270.0 78.0,270.0 78.0,328.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="122.0" y="260.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="78.0" y1="358.0" x2="78.0" y2="385.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="358.0" x2="235.8" y2="384.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="414.0" x2="235.8" y2="440.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="470.0" x2="235.8" y2="496.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="560.0" x2="235.8" y2="586.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="251.8" y="573.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="173.8,528.0 78.0,528.0 78.0,586.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="125.9" y="518.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="78.0" y1="616.0" x2="78.0" y2="660.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="616.0" x2="235.8" y2="642.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="706.0" x2="235.8" y2="732.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="251.8" y="719.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="297.8,674.0 393.5,674.0 393.5,732.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="345.6" y="664.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="393.5" y1="762.0" x2="393.5" y2="789.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="762.0" x2="235.8" y2="788.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="235.8" y1="818.0" x2="235.8" y2="844.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+</svg>

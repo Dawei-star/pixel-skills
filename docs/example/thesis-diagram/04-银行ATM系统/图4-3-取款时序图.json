@@ -1,0 +1,22 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "u", "text": "储户"},
+    {"id": "t", "text": "ATM终端"},
+    {"id": "h", "text": "银行主机"},
+    {"id": "d", "text": "账务数据库"}
+  ],
+  "messages": [
+    {"from": "u", "to": "t", "text": "插入银行卡"},
+    {"from": "t", "to": "h", "text": "上送卡号与密码"},
+    {"from": "h", "to": "d", "text": "校验账户凭证"},
+    {"from": "d", "to": "h", "text": "验证通过", "kind": "return"},
+    {"from": "u", "to": "t", "text": "输入取款金额"},
+    {"from": "t", "to": "h", "text": "取款请求"},
+    {"from": "h", "to": "d", "text": "查询可用余额"},
+    {"from": "d", "to": "h", "text": "余额 3200 元", "kind": "return"},
+    {"from": "h", "to": "h", "text": "扣减余额并记账"},
+    {"from": "h", "to": "t", "text": "批准出钞", "kind": "return"},
+    {"from": "t", "to": "u", "text": "出钞并打印凭条", "kind": "return"}
+  ]
+}

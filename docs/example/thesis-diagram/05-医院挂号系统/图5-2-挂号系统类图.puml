@@ -1,0 +1,62 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 患者 {
+  - 患者编号 : String
+  - 姓名 : String
+  - 身份证号 : String
+  - 联系电话 : String
+  + 预约挂号()
+  + 取消预约()
+}
+
+class 医生 {
+  - 医生工号 : String
+  - 姓名 : String
+  - 职称 : String
+  + 接诊叫号()
+  + 开具处方()
+}
+
+class 科室 {
+  - 科室编号 : String
+  - 科室名称 : String
+  - 楼层位置 : String
+  + 查询在岗医生()
+}
+
+class 预约记录 {
+  - 预约编号 : String
+  - 就诊日期 : Date
+  - 时段 : String
+  - 状态 : 枚举
+  + 是否可取消() : bool
+}
+
+class 病历 {
+  - 病历编号 : String
+  - 主诉 : String
+  - 诊断结论 : String
+  - 就诊时间 : DateTime
+  + 追加医嘱()
+}
+
+科室 "1" -down- "0..*" 医生 : 隶属
+患者 "1" -down- "0..*" 预约记录 : 发起
+医生 "1" -right- "0..*" 预约记录 : 接诊
+预约记录 "1" -down- "0..1" 病历 : 生成
+@enduml

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 464 922" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#2C2C2A"/></marker>
+<marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1.5 1.5 L9 5 L1.5 8.5" fill="none" stroke="#2C2C2A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M1.5 1.5 L10.5 6 L1.5 10.5 Z" fill="#FFFFFF" stroke="#2C2C2A" stroke-width="1.1" stroke-linejoin="round"/></marker>
+<marker id="crow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#2C2C2A" stroke-width="1.2" stroke-linecap="round"/></marker>
+</defs>
+<rect x="188.0" y="16.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="30.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">开始</text>
+<rect x="170.0" y="70.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="85.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">学生填写报修单</text>
+<rect x="166.0" y="126.0" width="132.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="141.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">选择宿舍与故障类型</text>
+<rect x="170.0" y="182.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="197.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">提交报修申请</text>
+<polygon points="232.0,238.0 294.0,270.0 232.0,302.0 170.0,270.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="270.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否信息完整？</text>
+<rect x="16.0" y="328.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="343.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">退回补充信息</text>
+<rect x="34.0" y="385.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="399.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<rect x="170.0" y="328.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="343.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">生成待处理维修单</text>
+<rect x="170.0" y="384.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="399.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">宿管员审核派单</text>
+<polygon points="232.0,440.0 296.0,472.0 232.0,504.0 168.0,472.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="472.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否需外部维修？</text>
+<rect x="16.0" y="530.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="78.0" y="545.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">联系后勤维修队</text>
+<rect x="324.0" y="530.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="386.0" y="545.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">指派楼内维修工</text>
+<rect x="170.0" y="620.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="635.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">维修工上门处理</text>
+<polygon points="232.0,676.0 294.0,708.0 232.0,740.0 170.0,708.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="708.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="11.5">是否维修完成？</text>
+<rect x="324.0" y="766.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="386.0" y="781.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">挂起并记录原因</text>
+<rect x="342.0" y="823.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="386.0" y="837.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<rect x="170.0" y="766.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="781.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">学生确认维修结果</text>
+<rect x="170.0" y="822.0" width="124.0" height="30.0" rx="0.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="837.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">关闭维修单</text>
+<rect x="188.0" y="878.0" width="88.0" height="28.0" rx="14.0" fill="#fff" stroke="#2C2C2A" stroke-width="1.2"/>
+<text x="232.0" y="892.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="12.0">结束</text>
+<polyline points="78.0,560.0 78.0,598.0 232.0,598.0" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+<polyline points="386.0,560.0 386.0,598.0 232.0,598.0" fill="none" stroke="#2C2C2A" stroke-width="1.1"/>
+<circle cx="232.0" cy="598.0" r="2.8" fill="#2C2C2A" stroke="#2C2C2A" stroke-width="1.2"/>
+<line x1="232.0" y1="598.0" x2="232.0" y2="620.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="44.0" x2="232.0" y2="70.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="100.0" x2="232.0" y2="126.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="156.0" x2="232.0" y2="182.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="212.0" x2="232.0" y2="238.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="302.0" x2="232.0" y2="328.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="248.0" y="315.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="170.0,270.0 78.0,270.0 78.0,328.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="124.0" y="260.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="78.0" y1="358.0" x2="78.0" y2="385.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="358.0" x2="232.0" y2="384.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="414.0" x2="232.0" y2="440.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<polyline points="168.0,472.0 78.0,472.0 78.0,530.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="123.0" y="462.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="296.0,472.0 386.0,472.0 386.0,530.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="341.0" y="462.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="232.0" y1="650.0" x2="232.0" y2="676.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="740.0" x2="232.0" y2="766.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="248.0" y="753.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">是</text>
+<polyline points="294.0,708.0 386.0,708.0 386.0,766.0" fill="none" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<text x="340.0" y="698.0" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="10.0">否</text>
+<line x1="386.0" y1="796.0" x2="386.0" y2="823.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="796.0" x2="232.0" y2="822.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="232.0" y1="852.0" x2="232.0" y2="878.0" stroke="#2C2C2A" stroke-width="1.1" marker-end="url(#ar)"/>
+</svg>

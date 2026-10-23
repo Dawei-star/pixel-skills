@@ -1,0 +1,64 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 车主 {
+  - 车主编号 : String
+  - 姓名 : String
+  - 手机号 : String
+  - 月卡状态 : 枚举
+  + 绑定车牌()
+  + 办理月卡()
+}
+
+class 车辆 {
+  - 车牌号 : String
+  - 车型 : String
+  - 车主编号 : String
+  + 查询入场记录()
+}
+
+class 停车位 {
+  - 车位编号 : String
+  - 区域 : String
+  - 车位类型 : 枚举
+  - 占用状态 : 枚举
+  + 占用()
+  + 释放()
+}
+
+class 停车订单 {
+  - 订单编号 : String
+  - 入场时间 : DateTime
+  - 出场时间 : DateTime
+  - 应收金额 : double
+  + 计算时长() : int
+  + 计算费用() : double
+}
+
+class 收费记录 {
+  - 流水号 : String
+  - 支付方式 : 枚举
+  - 实收金额 : double
+  - 支付时间 : DateTime
+  + 冲正()
+}
+
+车主 "1" -down- "0..*" 车辆 : 拥有
+车辆 "1" -down- "0..*" 停车订单 : 产生
+停车位 "1" -right- "0..*" 停车订单 : 占用
+停车订单 "1" -down- "1" 收费记录 : 对应
+@enduml

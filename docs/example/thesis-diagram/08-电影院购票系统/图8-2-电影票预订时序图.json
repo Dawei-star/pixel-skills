@@ -1,0 +1,24 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "v", "text": "观众"},
+    {"id": "c", "text": "购票客户端"},
+    {"id": "t", "text": "票务服务"},
+    {"id": "p", "text": "支付网关"},
+    {"id": "s", "text": "座位库存"}
+  ],
+  "messages": [
+    {"from": "v", "to": "c", "text": "选择场次与座位"},
+    {"from": "c", "to": "t", "text": "提交锁座请求"},
+    {"from": "t", "to": "s", "text": "锁定指定座位"},
+    {"from": "s", "to": "t", "text": "锁定成功，保留 15 分钟", "kind": "return"},
+    {"from": "t", "to": "c", "text": "锁座成功", "kind": "return"},
+    {"from": "c", "to": "t", "text": "提交订单"},
+    {"from": "t", "to": "t", "text": "计算票价与优惠"},
+    {"from": "t", "to": "p", "text": "发起支付"},
+    {"from": "p", "to": "t", "text": "支付成功回执", "kind": "return"},
+    {"from": "t", "to": "s", "text": "座位置为已售"},
+    {"from": "s", "to": "t", "text": "更新完成", "kind": "return"},
+    {"from": "t", "to": "c", "text": "出票成功与取票码", "kind": "return"}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {"id": "s", "text": "开始", "shape": "terminator"},
+    {"id": "a", "text": "用户提交订单并支付", "shape": "process"},
+    {"id": "b", "text": "平台推送新订单", "shape": "process"},
+    {"id": "d1", "text": "是否商家接单？", "shape": "decision"},
+    {"id": "x", "text": "订单取消并原路退款", "shape": "process", "col": -1},
+    {"id": "e1", "text": "结束", "shape": "terminator", "col": -1},
+    {"id": "c", "text": "商家备餐", "shape": "process"},
+    {"id": "d", "text": "平台发布配送任务", "shape": "process"},
+    {"id": "e", "text": "骑手到店取餐", "shape": "process"},
+    {"id": "f", "text": "骑手配送", "shape": "process"},
+    {"id": "g", "text": "送达并上传凭证", "shape": "process"},
+    {"id": "h", "text": "用户确认收货并评价", "shape": "process"},
+    {"id": "i", "text": "结束", "shape": "terminator"}
+  ],
+  "edges": [
+    ["s", "a"],
+    ["a", "b"],
+    ["b", "d1"],
+    {"from": "d1", "to": "c", "label": "是"},
+    {"from": "d1", "to": "x", "label": "否"},
+    ["x", "e1"],
+    ["c", "d"],
+    ["d", "e"],
+    ["e", "f"],
+    ["f", "g"],
+    ["g", "h"],
+    ["h", "i"]
+  ]
+}

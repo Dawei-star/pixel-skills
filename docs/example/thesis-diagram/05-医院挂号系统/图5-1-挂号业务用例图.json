@@ -1,0 +1,28 @@
+{
+  "layout": "usecase",
+  "boundary": "医院挂号系统",
+  "actors": [
+    {"id": "p", "text": "患者"},
+    {"id": "d", "text": "医生"},
+    {"id": "n", "text": "护士"},
+    {"id": "a", "text": "管理员"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "预约挂号", "col": 0},
+    {"id": "u2", "text": "取消预约", "col": 0},
+    {"id": "u3", "text": "接诊叫号", "col": 0},
+    {"id": "u4", "text": "分诊登记", "col": 0},
+    {"id": "u5", "text": "排班维护", "col": 0},
+    {"id": "c1", "text": "号源校验", "col": 1},
+    {"id": "c2", "text": "调阅病历", "col": 1}
+  ],
+  "edges": [
+    {"from": "p", "to": "u1", "kind": "assoc"},
+    {"from": "p", "to": "u2", "kind": "assoc"},
+    {"from": "d", "to": "u3", "kind": "assoc"},
+    {"from": "n", "to": "u4", "kind": "assoc"},
+    {"from": "a", "to": "u5", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"}
+  ]
+}

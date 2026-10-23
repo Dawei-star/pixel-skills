@@ -1,0 +1,27 @@
+{
+  "layout": "usecase",
+  "boundary": "网盘文件管理系统",
+  "actors": [
+    {"id": "u", "text": "用户"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "上传文件", "col": 0},
+    {"id": "u2", "text": "下载文件", "col": 0},
+    {"id": "u3", "text": "分享文件", "col": 0},
+    {"id": "u4", "text": "管理文件", "col": 0},
+    {"id": "c1", "text": "格式校验", "col": 1},
+    {"id": "c2", "text": "生成分享链接", "col": 1},
+    {"id": "c3", "text": "删除文件", "col": 1},
+    {"id": "c4", "text": "重命名文件", "col": 1}
+  ],
+  "edges": [
+    {"from": "u", "to": "u1", "kind": "assoc"},
+    {"from": "u", "to": "u2", "kind": "assoc"},
+    {"from": "u", "to": "u3", "kind": "assoc"},
+    {"from": "u", "to": "u4", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"},
+    {"from": "u4", "to": "c3", "kind": "include"},
+    {"from": "u4", "to": "c4", "kind": "include"}
+  ]
+}

@@ -1,0 +1,28 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam stateBorderThickness 1.0
+skinparam stateBorderColor #181818
+skinparam stateBackgroundColor #FFFFFF
+hide empty description
+
+[*] --> 待揽收
+待揽收 --> 已揽收 : 揽件
+待揽收 --> 已取消 : 超时
+已揽收 --> 运输中 : 发出
+运输中 --> 派送中 : 到站
+派送中 --> 已签收 : 签收
+派送中 --> 异常件 : 异常
+异常件 --> 派送中 : 重派
+异常件 --> 退回中 : 退回
+退回中 --> 已退回 : 签收
+已签收 --> [*]
+已退回 --> [*]
+已取消 --> [*]
+@enduml

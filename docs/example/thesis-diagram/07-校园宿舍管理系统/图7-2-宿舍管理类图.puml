@@ -1,0 +1,62 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 学生 {
+  - 学号 : String
+  - 姓名 : String
+  - 学院 : String
+  + 申请入住()
+  + 提交报修()
+}
+
+class 宿舍 {
+  - 宿舍编号 : String
+  - 楼栋 : String
+  - 房间号 : String
+  - 床位数 : int
+  + 空余床位() : int
+}
+
+class 床位 {
+  - 床位编号 : String
+  - 床位号 : String
+  - 占用状态 : 枚举
+  + 分配给学生(学号)
+  + 释放()
+}
+
+class 维修单 {
+  - 维修单号 : String
+  - 报修内容 : String
+  - 提交时间 : DateTime
+  - 处理状态 : 枚举
+  + 指派维修工()
+  + 结单()
+}
+
+class 宿管员 {
+  - 工号 : String
+  - 姓名 : String
+  + 分配宿舍()
+  + 处理维修单()
+}
+
+宿舍 "1" -down- "1..*" 床位 : 包含
+学生 "1" -down- "0..1" 床位 : 占用
+学生 "1" -down- "0..*" 维修单 : 提交
+宿管员 "1" -down- "0..*" 维修单 : 处理
+@enduml

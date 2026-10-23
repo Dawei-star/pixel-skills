@@ -1,0 +1,200 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {
+      "id": "s",
+      "text": "开始",
+      "shape": "terminator"
+    },
+    {
+      "id": "a",
+      "text": "选中待分享文件",
+      "shape": "process"
+    },
+    {
+      "id": "b",
+      "text": "设置权限与有效期",
+      "shape": "process"
+    },
+    {
+      "id": "c",
+      "text": "提交分享请求",
+      "shape": "process"
+    },
+    {
+      "id": "d1",
+      "text": "是否文件属于本人？",
+      "shape": "decision"
+    },
+    {
+      "id": "x",
+      "text": "提示无分享权限",
+      "shape": "process",
+      "col": -1
+    },
+    {
+      "id": "e1",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1
+    },
+    {
+      "id": "d",
+      "text": "生成分享链接",
+      "shape": "process"
+    },
+    {
+      "id": "e",
+      "text": "将链接发送给访客",
+      "shape": "process"
+    },
+    {
+      "id": "f",
+      "text": "访客打开分享链接",
+      "shape": "process"
+    },
+    {
+      "id": "d2",
+      "text": "是否链接有效？",
+      "shape": "decision"
+    },
+    {
+      "id": "y",
+      "text": "提示链接已失效",
+      "shape": "process",
+      "col": -1,
+      "rank": 9
+    },
+    {
+      "id": "e2",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1,
+      "rank": 10
+    },
+    {
+      "id": "g",
+      "text": "校验访问密码",
+      "shape": "process"
+    },
+    {
+      "id": "d3",
+      "text": "是否密码正确？",
+      "shape": "decision"
+    },
+    {
+      "id": "z",
+      "text": "提示密码错误",
+      "shape": "process",
+      "col": 1,
+      "rank": 11
+    },
+    {
+      "id": "e3",
+      "text": "结束",
+      "shape": "terminator",
+      "col": 1,
+      "rank": 12
+    },
+    {
+      "id": "h",
+      "text": "提供预览与下载",
+      "shape": "process"
+    },
+    {
+      "id": "i",
+      "text": "记录访问日志",
+      "shape": "process"
+    },
+    {
+      "id": "j",
+      "text": "结束",
+      "shape": "terminator"
+    }
+  ],
+  "edges": [
+    [
+      "s",
+      "a"
+    ],
+    [
+      "a",
+      "b"
+    ],
+    [
+      "b",
+      "c"
+    ],
+    [
+      "c",
+      "d1"
+    ],
+    {
+      "from": "d1",
+      "to": "d",
+      "label": "是"
+    },
+    {
+      "from": "d1",
+      "to": "x",
+      "label": "否"
+    },
+    [
+      "x",
+      "e1"
+    ],
+    [
+      "d",
+      "e"
+    ],
+    [
+      "e",
+      "f"
+    ],
+    [
+      "f",
+      "d2"
+    ],
+    {
+      "from": "d2",
+      "to": "g",
+      "label": "是"
+    },
+    {
+      "from": "d2",
+      "to": "y",
+      "label": "否"
+    },
+    [
+      "y",
+      "e2"
+    ],
+    [
+      "g",
+      "d3"
+    ],
+    {
+      "from": "d3",
+      "to": "h",
+      "label": "是"
+    },
+    {
+      "from": "d3",
+      "to": "z",
+      "label": "否"
+    },
+    [
+      "z",
+      "e3"
+    ],
+    [
+      "h",
+      "i"
+    ],
+    [
+      "i",
+      "j"
+    ]
+  ]
+}

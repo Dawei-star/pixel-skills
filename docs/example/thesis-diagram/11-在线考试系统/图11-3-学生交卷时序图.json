@@ -1,0 +1,23 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "s", "text": "学生"},
+    {"id": "c", "text": "考试客户端"},
+    {"id": "e", "text": "考试服务"},
+    {"id": "j", "text": "判分服务"},
+    {"id": "d", "text": "答卷库"}
+  ],
+  "messages": [
+    {"from": "s", "to": "c", "text": "点击交卷"},
+    {"from": "c", "to": "e", "text": "提交答卷"},
+    {"from": "e", "to": "e", "text": "校验考试时段"},
+    {"from": "e", "to": "d", "text": "写入答卷并加锁"},
+    {"from": "d", "to": "e", "text": "答卷编号", "kind": "return"},
+    {"from": "e", "to": "j", "text": "请求客观题判分"},
+    {"from": "j", "to": "e", "text": "客观题得分", "kind": "return"},
+    {"from": "e", "to": "d", "text": "回写得分与状态"},
+    {"from": "d", "to": "e", "text": "写入成功", "kind": "return"},
+    {"from": "e", "to": "c", "text": "交卷成功", "kind": "return"},
+    {"from": "c", "to": "s", "text": "显示交卷提示", "kind": "return"}
+  ]
+}

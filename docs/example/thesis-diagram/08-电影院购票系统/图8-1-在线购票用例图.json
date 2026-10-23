@@ -1,0 +1,25 @@
+{
+  "layout": "usecase",
+  "boundary": "电影院在线购票系统",
+  "actors": [
+    {"id": "v", "text": "观众"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "查询电影", "col": 0},
+    {"id": "u2", "text": "选择场次", "col": 0},
+    {"id": "u3", "text": "选座购票", "col": 0},
+    {"id": "u4", "text": "申请退票", "col": 0},
+    {"id": "c1", "text": "锁定座位", "col": 1},
+    {"id": "c2", "text": "在线支付", "col": 1},
+    {"id": "c3", "text": "释放座位", "col": 1}
+  ],
+  "edges": [
+    {"from": "v", "to": "u1", "kind": "assoc"},
+    {"from": "v", "to": "u2", "kind": "assoc"},
+    {"from": "v", "to": "u3", "kind": "assoc"},
+    {"from": "v", "to": "u4", "kind": "assoc"},
+    {"from": "u3", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"},
+    {"from": "u4", "to": "c3", "kind": "include"}
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {
+      "id": "s",
+      "text": "开始",
+      "shape": "terminator"
+    },
+    {
+      "id": "a",
+      "text": "学生登录考试系统",
+      "shape": "process"
+    },
+    {
+      "id": "d1",
+      "text": "是否通过身份核验？",
+      "shape": "decision"
+    },
+    {
+      "id": "x",
+      "text": "禁止进入考场",
+      "shape": "process",
+      "col": -1
+    },
+    {
+      "id": "e1",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1
+    },
+    {
+      "id": "b",
+      "text": "加载试卷与倒计时",
+      "shape": "process"
+    },
+    {
+      "id": "c",
+      "text": "学生作答当前题目",
+      "shape": "process"
+    },
+    {
+      "id": "d0",
+      "text": "答案实时暂存",
+      "shape": "process"
+    },
+    {
+      "id": "d2",
+      "text": "是否继续答题？",
+      "shape": "decision"
+    },
+    {
+      "id": "d3",
+      "text": "是否到点交卷？",
+      "shape": "decision"
+    },
+    {
+      "id": "f",
+      "text": "系统自动交卷",
+      "shape": "process",
+      "col": -1
+    },
+    {
+      "id": "g",
+      "text": "学生手动交卷",
+      "shape": "process",
+      "col": 1
+    },
+    {
+      "id": "h",
+      "text": "提交答卷并冻结",
+      "shape": "process"
+    },
+    {
+      "id": "i",
+      "text": "客观题自动判分",
+      "shape": "process"
+    },
+    {
+      "id": "j",
+      "text": "教师在线阅卷",
+      "shape": "process"
+    },
+    {
+      "id": "k",
+      "text": "汇总总评成绩",
+      "shape": "process"
+    },
+    {
+      "id": "l",
+      "text": "发布成绩供查询",
+      "shape": "process"
+    },
+    {
+      "id": "e",
+      "text": "结束",
+      "shape": "terminator"
+    }
+  ],
+  "edges": [
+    [
+      "s",
+      "a"
+    ],
+    [
+      "a",
+      "d1"
+    ],
+    {
+      "from": "d1",
+      "to": "b",
+      "label": "是"
+    },
+    {
+      "from": "d1",
+      "to": "x",
+      "label": "否"
+    },
+    [
+      "x",
+      "e1"
+    ],
+    [
+      "b",
+      "c"
+    ],
+    [
+      "c",
+      "d0"
+    ],
+    [
+      "d0",
+      "d2"
+    ],
+    {
+      "from": "d2",
+      "to": "c",
+      "label": "是"
+    },
+    {
+      "from": "d2",
+      "to": "d3",
+      "label": "否"
+    },
+    {
+      "from": "d3",
+      "to": "f",
+      "label": "是"
+    },
+    {
+      "from": "d3",
+      "to": "g",
+      "label": "否"
+    },
+    [
+      "f",
+      "h"
+    ],
+    [
+      "g",
+      "h"
+    ],
+    [
+      "h",
+      "i"
+    ],
+    [
+      "i",
+      "j"
+    ],
+    [
+      "j",
+      "k"
+    ],
+    [
+      "k",
+      "l"
+    ],
+    [
+      "l",
+      "e"
+    ]
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "layout": "usecase",
+  "boundary": "学生选课系统",
+  "actors": [
+    {"id": "s", "text": "学生"},
+    {"id": "t", "text": "教师"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "选课", "col": 0},
+    {"id": "u2", "text": "退课", "col": 0},
+    {"id": "u3", "text": "查询成绩", "col": 0},
+    {"id": "u4", "text": "录入成绩", "col": 0},
+    {"id": "u5", "text": "查看选课名单", "col": 0},
+    {"id": "c1", "text": "校验选课容量", "col": 1},
+    {"id": "c2", "text": "计算绩点", "col": 1}
+  ],
+  "edges": [
+    {"from": "s", "to": "u1", "kind": "assoc"},
+    {"from": "s", "to": "u2", "kind": "assoc"},
+    {"from": "s", "to": "u3", "kind": "assoc"},
+    {"from": "t", "to": "u4", "kind": "assoc"},
+    {"from": "t", "to": "u5", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u4", "to": "c2", "kind": "include"}
+  ]
+}

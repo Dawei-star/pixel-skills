@@ -1,0 +1,29 @@
+{
+  "layout": "usecase",
+  "boundary": "外卖订餐系统",
+  "actors": [
+    {"id": "u", "text": "用户"},
+    {"id": "m", "text": "商家"},
+    {"id": "r", "text": "骑手"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "点餐下单", "col": 0},
+    {"id": "u2", "text": "订单评价", "col": 0},
+    {"id": "m1", "text": "接单确认", "col": 0},
+    {"id": "m2", "text": "更新出餐状态", "col": 0},
+    {"id": "r1", "text": "接单配送", "col": 0},
+    {"id": "r2", "text": "确认送达", "col": 0},
+    {"id": "c1", "text": "在线支付", "col": 1},
+    {"id": "c2", "text": "上传送达凭证", "col": 1}
+  ],
+  "edges": [
+    {"from": "u", "to": "u1", "kind": "assoc"},
+    {"from": "u", "to": "u2", "kind": "assoc"},
+    {"from": "m", "to": "m1", "kind": "assoc"},
+    {"from": "m", "to": "m2", "kind": "assoc"},
+    {"from": "r", "to": "r1", "kind": "assoc"},
+    {"from": "r", "to": "r2", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "r2", "to": "c2", "kind": "include"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "layout": "usecase",
+  "boundary": "银行ATM系统",
+  "actors": [
+    {"id": "u", "text": "储户"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "查询余额", "col": 0},
+    {"id": "u2", "text": "取款", "col": 0},
+    {"id": "u3", "text": "存款", "col": 0},
+    {"id": "u4", "text": "转账", "col": 0},
+    {"id": "c1", "text": "身份验证", "col": 1},
+    {"id": "c2", "text": "余额校验", "col": 1}
+  ],
+  "edges": [
+    {"from": "u", "to": "u1", "kind": "assoc"},
+    {"from": "u", "to": "u2", "kind": "assoc"},
+    {"from": "u", "to": "u3", "kind": "assoc"},
+    {"from": "u", "to": "u4", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u2", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c1", "kind": "include"},
+    {"from": "u4", "to": "c1", "kind": "include"},
+    {"from": "u2", "to": "c2", "kind": "include"}
+  ]
+}

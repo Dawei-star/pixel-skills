@@ -1,0 +1,25 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 55
+skinparam ranksep 85
+left to right direction
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam stateBorderThickness 1.0
+skinparam stateBorderColor #181818
+skinparam stateBackgroundColor #FFFFFF
+hide empty description
+
+[*] --> 在馆
+在馆 --> 已借出 : 借出
+已借出 --> 在馆 : 归还
+已借出 --> 逾期 : 超期
+逾期 --> 在馆 : 缴罚款归还
+逾期 --> 遗失 : 报失
+遗失 --> [*] : 赔偿
+在馆 --> 已注销 : 剔旧
+已注销 --> [*]
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 45
+skinparam ranksep 55
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 12
+skinparam ArrowColor #181818
+skinparam ArrowThickness 1.0
+skinparam classBorderThickness 1.0
+skinparam classBorderColor #181818
+skinparam classBackgroundColor #FFFFFF
+skinparam classFontStyle bold
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+
+class 读者 {
+  - 读者编号 : String
+  - 姓名 : String
+  - 借阅额度 : int
+  + 借阅图书(ISBN)
+  + 归还图书(记录编号)
+}
+
+class 图书 {
+  - ISBN : String
+  - 书名 : String
+  - 作者 : String
+  - 馆藏状态 : 枚举
+  + 是否可借() : bool
+}
+
+class 借阅记录 {
+  - 记录编号 : String
+  - 借出日期 : Date
+  - 应还日期 : Date
+  - 归还日期 : Date
+  + 计算逾期天数() : int
+}
+
+class 图书管理员 {
+  - 工号 : String
+  - 姓名 : String
+  + 办理借还()
+  + 维护书目()
+}
+
+class 罚款记录 {
+  - 罚款编号 : String
+  - 金额 : double
+  - 缴纳状态 : 枚举
+  + 计算罚金(逾期天数) : double
+}
+
+读者 "1" -down- "0..*" 借阅记录 : 发起
+图书 "1" -down- "0..*" 借阅记录 : 被借
+图书管理员 "1" -down- "0..*" 借阅记录 : 办理
+借阅记录 "1" -down- "0..1" 罚款记录 : 产生
+@enduml

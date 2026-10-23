@@ -1,0 +1,26 @@
+{
+  "layout": "usecase",
+  "boundary": "校园宿舍管理系统",
+  "actors": [
+    {"id": "s", "text": "学生"},
+    {"id": "a", "text": "管理员"}
+  ],
+  "nodes": [
+    {"id": "u1", "text": "入住登记", "col": 0},
+    {"id": "u2", "text": "退宿申请", "col": 0},
+    {"id": "u3", "text": "提交报修", "col": 0},
+    {"id": "u4", "text": "分配宿舍", "col": 0},
+    {"id": "u5", "text": "处理报修", "col": 0},
+    {"id": "c1", "text": "床位校验", "col": 1},
+    {"id": "c2", "text": "生成维修单", "col": 1}
+  ],
+  "edges": [
+    {"from": "s", "to": "u1", "kind": "assoc"},
+    {"from": "s", "to": "u2", "kind": "assoc"},
+    {"from": "s", "to": "u3", "kind": "assoc"},
+    {"from": "a", "to": "u4", "kind": "assoc"},
+    {"from": "a", "to": "u5", "kind": "assoc"},
+    {"from": "u1", "to": "c1", "kind": "include"},
+    {"from": "u3", "to": "c2", "kind": "include"}
+  ]
+}

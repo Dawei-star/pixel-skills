@@ -1,0 +1,23 @@
+{
+  "layout": "sequence",
+  "participants": [
+    {"id": "s", "text": "寄件人"},
+    {"id": "c", "text": "快递员终端"},
+    {"id": "o", "text": "订单服务"},
+    {"id": "l", "text": "物流中心"},
+    {"id": "r", "text": "收件人"}
+  ],
+  "messages": [
+    {"from": "s", "to": "c", "text": "提交寄件信息"},
+    {"from": "c", "to": "o", "text": "创建寄件订单"},
+    {"from": "o", "to": "o", "text": "计算运费与时效"},
+    {"from": "o", "to": "c", "text": "运单号与面单", "kind": "return"},
+    {"from": "c", "to": "s", "text": "打印面单并收款", "kind": "return"},
+    {"from": "c", "to": "o", "text": "揽收扫描上报"},
+    {"from": "o", "to": "l", "text": "推送揽收信息"},
+    {"from": "l", "to": "l", "text": "分拣与中转"},
+    {"from": "l", "to": "r", "text": "派送上门"},
+    {"from": "r", "to": "l", "text": "签收确认", "kind": "return"},
+    {"from": "l", "to": "o", "text": "回传签收状态"}
+  ]
+}

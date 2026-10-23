@@ -1,0 +1,200 @@
+{
+  "layout": "linear",
+  "style": "gb1526",
+  "nodes": [
+    {
+      "id": "s",
+      "text": "开始",
+      "shape": "terminator"
+    },
+    {
+      "id": "a",
+      "text": "插入银行卡",
+      "shape": "process"
+    },
+    {
+      "id": "b",
+      "text": "输入交易密码",
+      "shape": "process"
+    },
+    {
+      "id": "d1",
+      "text": "是否密码正确？",
+      "shape": "decision"
+    },
+    {
+      "id": "x",
+      "text": "提示密码错误并退卡",
+      "shape": "process",
+      "col": -1
+    },
+    {
+      "id": "e1",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1
+    },
+    {
+      "id": "c",
+      "text": "选择取款业务",
+      "shape": "process"
+    },
+    {
+      "id": "d",
+      "text": "输入取款金额",
+      "shape": "process"
+    },
+    {
+      "id": "d2",
+      "text": "是否在单笔限额内？",
+      "shape": "decision"
+    },
+    {
+      "id": "y",
+      "text": "提示超出限额",
+      "shape": "process",
+      "col": -1,
+      "rank": 7
+    },
+    {
+      "id": "e2",
+      "text": "结束",
+      "shape": "terminator",
+      "col": -1,
+      "rank": 8
+    },
+    {
+      "id": "e",
+      "text": "查询账户余额",
+      "shape": "process"
+    },
+    {
+      "id": "d3",
+      "text": "是否余额充足？",
+      "shape": "decision"
+    },
+    {
+      "id": "z",
+      "text": "提示余额不足",
+      "shape": "process",
+      "col": 1,
+      "rank": 9
+    },
+    {
+      "id": "e3",
+      "text": "结束",
+      "shape": "terminator",
+      "col": 1,
+      "rank": 10
+    },
+    {
+      "id": "f",
+      "text": "扣减账户余额",
+      "shape": "process"
+    },
+    {
+      "id": "g",
+      "text": "指令出钞",
+      "shape": "process"
+    },
+    {
+      "id": "h",
+      "text": "打印交易凭条",
+      "shape": "process"
+    },
+    {
+      "id": "i",
+      "text": "退出银行卡",
+      "shape": "process"
+    },
+    {
+      "id": "e4",
+      "text": "结束",
+      "shape": "terminator"
+    }
+  ],
+  "edges": [
+    [
+      "s",
+      "a"
+    ],
+    [
+      "a",
+      "b"
+    ],
+    [
+      "b",
+      "d1"
+    ],
+    {
+      "from": "d1",
+      "to": "c",
+      "label": "是"
+    },
+    {
+      "from": "d1",
+      "to": "x",
+      "label": "否"
+    },
+    [
+      "x",
+      "e1"
+    ],
+    [
+      "c",
+      "d"
+    ],
+    [
+      "d",
+      "d2"
+    ],
+    {
+      "from": "d2",
+      "to": "e",
+      "label": "是"
+    },
+    {
+      "from": "d2",
+      "to": "y",
+      "label": "否"
+    },
+    [
+      "y",
+      "e2"
+    ],
+    [
+      "e",
+      "d3"
+    ],
+    {
+      "from": "d3",
+      "to": "f",
+      "label": "是"
+    },
+    {
+      "from": "d3",
+      "to": "z",
+      "label": "否"
+    },
+    [
+      "z",
+      "e3"
+    ],
+    [
+      "f",
+      "g"
+    ],
+    [
+      "g",
+      "h"
+    ],
+    [
+      "h",
+      "i"
+    ],
+    [
+      "i",
+      "e4"
+    ]
+  ]
+}

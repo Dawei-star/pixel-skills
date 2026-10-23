@@ -53,6 +53,7 @@ Pixel Skills is a set of agent skills that turn an objective reference — a nat
 - **看** [在线手册](https://www.axxiu.cn/project/GAIe9QK1/) → 六类图的符号定义、正误对照、交付前自查清单
 - **说** `帮我画个用例图` → 按 GB 1526 / UML 2.5 出源码
 - **说** `这张流程图规范吗` → 跑脚本查箭头贴合、文字越界、终止符形状
+- **样例** [样题](/docs/example/thesis-diagram/测试题目.txt) → [输出](/docs/example/thesis-diagram/index.html)
 - **附** 20 个正误图例，独立 SVG，坐标可直接抄
 
 ### [webpage-cloner](webpage-cloner/) —— 网页截图转前端代码
